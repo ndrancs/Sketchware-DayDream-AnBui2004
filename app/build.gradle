@@ -111,8 +111,8 @@ dependencies {
     implementation "androidx.cardview:cardview:1.0.0"
     implementation "androidx.viewpager:viewpager:1.1.0"
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
-    implementation "com.google.android.material:material:1.14.0-alpha05"
-    implementation "com.airbnb.android:lottie:6.6.9"
+    implementation "com.google.android.material:material:1.14.0-alpha06"
+    implementation "com.airbnb.android:lottie:6.7.1"
     implementation "com.google.android.flexbox:flexbox:3.0.0"
 
     implementation "com.github.bumptech.glide:glide:5.0.5"
@@ -148,8 +148,8 @@ dependencies {
 
     implementation 'io.noties.markwon:core:4.6.2'
 
-    implementation "com.squareup.okhttp3:okhttp:5.1.0"
-    implementation "com.squareup.okio:okio:3.16.0"
+    implementation "com.squareup.okhttp3:okhttp:5.3.0"
+    implementation "com.squareup.okio:okio:3.16.2"
 
     android26Implementation "org.eclipse.jdt:ecj:3.26.0"
     android33Implementation "org.eclipse.jdt:ecj:3.34.0"
@@ -176,7 +176,7 @@ dependencies {
     if (analyticsEnabled) {
         new File("$projectDir/google-services.json").text = secrets
     }
-    implementation platform("com.google.firebase:firebase-bom:34.3.0")
+    implementation platform("com.google.firebase:firebase-bom:34.5.0")
     implementation "com.google.firebase:firebase-crashlytics"
     implementation "com.google.firebase:firebase-analytics"
     implementation "com.google.firebase:firebase-messaging"

@@ -22,6 +22,8 @@ import mod.jbk.editor.manage.library.ExcludeBuiltInLibrariesActivity;
 import mod.pranav.viewbinding.ViewBindingBuilder;
 import pro.sketchware.utility.FileUtil;
 
+
+//DR
 public class Lx {
 
     /**
@@ -1099,9 +1101,9 @@ public class Lx {
 
         if (!type.equals("include") && !type.equals("#")) {
             if (viewBinding) {
-                initializer = name + " = " +
-                        "binding." +
-                        ViewBindingBuilder.generateParameterFromId(name) + ";";
+//                initializer = name + " = " +
+//                        "binding." +
+//                        ViewBindingBuilder.generateParameterFromId(name) + ";";
             } else {
                 initializer = name + " = " +
                         (isInFragment ? "_view.findViewById(R.id." : "findViewById(R.id.") +
