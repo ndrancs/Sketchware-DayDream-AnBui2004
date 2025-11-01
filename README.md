@@ -1,7 +1,3 @@
-<p align="center">
-  <img src="assets/Sketchware-Pro.png" style="width: 30%;" />
-</p>
-
 # Important!
 Based on and always including updates from [Sketchware Pro](https://github.com/Sketchware-Pro/Sketchware-Pro). Please backup all your projects if using this version. We will not be responsible if any unexpected problems occur.
 
