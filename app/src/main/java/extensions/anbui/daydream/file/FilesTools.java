@@ -1,11 +1,17 @@
 package extensions.anbui.daydream.file;
 
+import android.Manifest;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Build;
+import android.os.Environment;
 import android.provider.DocumentsContract;
 import android.util.Log;
 
+import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 
 import java.io.File;
@@ -18,6 +24,8 @@ import java.nio.file.Paths;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.StandardCopyOption;
 import java.nio.file.attribute.BasicFileAttributes;
+
+import mod.agus.jcoderz.dx.cf.code.ConcreteMethod;
 
 public class FilesTools {
     public static String TAG = "FilesTools";
@@ -171,6 +179,18 @@ public class FilesTools {
             activity.startActivity(intent);
         } catch (Exception e) {
             Log.e(TAG, "openFolderSAF: " + e.getMessage());
+        }
+    }
+
+    public static boolean isPermissionGranted(Context context) {
+        return ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED;
+    }
+
+    public static boolean isPermissionGranted30(Context context) {
+        if (Build.VERSION.SDK_INT >= 30) {
+            return Environment.isExternalStorageManager();
+        } else {
+            return ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED;
         }
     }
 

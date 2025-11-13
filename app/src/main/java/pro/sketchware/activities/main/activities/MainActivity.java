@@ -41,6 +41,7 @@ import java.util.Objects;
 import a.a.a.DB;
 import a.a.a.GB;
 import extensions.anbui.daydream.configs.Configs;
+import extensions.anbui.daydream.file.FilesTools;
 import extensions.anbui.daydream.git.GitQuickLook;
 import mod.hey.studios.project.backup.BackupFactory;
 import mod.hey.studios.project.backup.BackupRestoreManager;
@@ -59,6 +60,7 @@ import pro.sketchware.utility.FileUtil;
 import pro.sketchware.utility.SketchwareUtil;
 import pro.sketchware.utility.UI;
 
+//DR
 public class MainActivity extends BasePermissionAppCompatActivity {
     private static final String PROJECTS_FRAGMENT_TAG = "projects_fragment";
     private static final String PROJECTS_STORE_FRAGMENT_TAG = "projects_store_fragment";
@@ -252,25 +254,6 @@ public class MainActivity extends BasePermissionAppCompatActivity {
                     }
                 }).copyFile(data);
             }
-        } else if (!ConfigActivity.isSettingEnabled(ConfigActivity.SETTING_CRITICAL_UPDATE_REMINDER)) {
-            BottomSheetDialogView bottomSheetDialog = getBottomSheetDialogView();
-            bottomSheetDialog.getPositiveButton().setEnabled(false);
-
-            CountDownTimer countDownTimer = new CountDownTimer(10000, 1000) {
-                @Override
-                public void onTick(long millisUntilFinished) {
-                    bottomSheetDialog.setPositiveButtonText(millisUntilFinished / 1000 + "");
-                }
-
-                @Override
-                public void onFinish() {
-                    bottomSheetDialog.setPositiveButtonText("View changes");
-                    bottomSheetDialog.getPositiveButton().setEnabled(true);
-                }
-            };
-            countDownTimer.start();
-
-            if (!isFinishing()) bottomSheetDialog.show();
         }
 
         binding.bottomNav.setOnItemSelectedListener(item -> {
@@ -425,6 +408,27 @@ public class MainActivity extends BasePermissionAppCompatActivity {
         }
 
         GitQuickLook.cleanUp(this);
+
+        if (!ConfigActivity.isSettingEnabled(ConfigActivity.SETTING_CRITICAL_UPDATE_REMINDER) && FilesTools.isPermissionGranted(this)) {
+            BottomSheetDialogView bottomSheetDialog = getBottomSheetDialogView();
+            bottomSheetDialog.getPositiveButton().setEnabled(false);
+
+            CountDownTimer countDownTimer = new CountDownTimer(3000, 1000) {
+                @Override
+                public void onTick(long millisUntilFinished) {
+                    bottomSheetDialog.setPositiveButtonText(millisUntilFinished / 1000 + "");
+                }
+
+                @Override
+                public void onFinish() {
+                    bottomSheetDialog.setPositiveButtonText("View changes");
+                    bottomSheetDialog.getPositiveButton().setEnabled(true);
+                }
+            };
+            countDownTimer.start();
+
+            if (!isFinishing()) bottomSheetDialog.show();
+        }
     }
 
     private void allFilesAccessCheck() {
