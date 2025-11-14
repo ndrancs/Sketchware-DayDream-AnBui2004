@@ -10,7 +10,7 @@ object JavaCodeGenerator {
         return if (isUseLambda) {
             processEventLogicCodeWithLambda(
                 componentName,
-                "setOnClickListener(_view",
+                "setOnClickListener(_v",
                 logic,
                 "public void onClick"
             )
@@ -27,7 +27,7 @@ object JavaCodeGenerator {
         return if (isUseLambda) {
             processEventLogicCodeWithLambda(
                 componentName,
-                "setOnLongClickListener(_view",
+                "setOnLongClickListener(_v",
                 logic,
                 "public boolean onLongClick"
             )
