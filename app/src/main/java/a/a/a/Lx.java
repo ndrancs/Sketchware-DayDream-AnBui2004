@@ -1638,7 +1638,7 @@ public class Lx {
 
     public static String getListenerCode(String eventName, String componentName, String eventLogic) {
         return switch (eventName) {
-            case "onClickListener" -> JavaCodeGenerator.setOnClickEvent(componentName, eventLogic);
+            case "onClickListener" -> JavaCodeGenerator.setOnClickListenerEvent(componentName, eventLogic);
             case "sensorEventListener" -> {
                 String sensorEventListenerName = "_" + componentName + "_sensor_listener";
                 yield sensorEventListenerName + " = new SensorEventListener() {\r\n"
@@ -1780,10 +1780,7 @@ public class Lx {
                     "_" + componentName + "_reset_password_listener = new OnCompleteListener<Void>() {\r\n"
                             + eventLogic + "\r\n"
                             + "};";
-            case "onCheckChangedListener" ->
-                    componentName + ".setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {\r\n"
-                            + eventLogic + "\r\n"
-                            + "});";
+            case "onCheckChangedListener" -> JavaCodeGenerator.setOnCheckedChangedListenerEvent(componentName, eventLogic);
             case "onUploadProgressListener" ->
                     "_" + componentName + "_upload_progress_listener = new OnProgressListener<UploadTask.TaskSnapshot>() {\r\n"
                             + eventLogic + "\r\n"

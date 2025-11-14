@@ -9,6 +9,7 @@ import java.util.HashMap;
 
 import a.a.a.Gx;
 import a.a.a.oq;
+import extensions.anbui.daydream.java.JavaCodeGenerator;
 import mod.hey.studios.util.Helper;
 import mod.jbk.util.LogUtil;
 import mod.jbk.util.OldResourceIdMapper;
@@ -459,10 +460,7 @@ public class EventsHandler {
     /// listeners codes
     public static String getListenerCode(String name, String var, String param) {
         return switch (name) {
-            case " onLongClickListener" ->
-                    var + ".setOnLongClickListener(new View.OnLongClickListener() {\r\n" +
-                            param + "\r\n" +
-                            "});";
+            case " onLongClickListener" -> JavaCodeGenerator.setOnLongClickListenerEvent(var, param);
             case "onSwipeRefreshLayoutListener" ->
                     var + ".setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {\r\n" +
                             param + "\r\n" +

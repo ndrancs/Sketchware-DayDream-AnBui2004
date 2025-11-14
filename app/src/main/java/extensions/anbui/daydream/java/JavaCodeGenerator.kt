@@ -5,18 +5,73 @@ import extensions.anbui.daydream.project.ProjectBuildConfigs
 
 object JavaCodeGenerator {
     @JvmStatic
-    fun setOnClickEvent(componentName : String, logic : String) : String {
+    fun setOnClickListenerEvent(componentName: String, logic: String): String {
         val isUseLambda = !ProjectBuildConfigs.isUseJava7(Configs.currentProjectID)
+        return if (isUseLambda) {
+            processEventLogicCodeWithLambda(
+                componentName,
+                "setOnClickListener(_view",
+                logic,
+                "public void onClick"
+            )
+        } else {
+            componentName + ".setOnClickListener(new View.OnClickListener() {\r\n" +
+                    logic +
+                    "\r\n});"
+        }
+    }
+
+    @JvmStatic
+    fun setOnLongClickListenerEvent(componentName: String, logic: String): String {
+        val isUseLambda = !ProjectBuildConfigs.isUseJava7(Configs.currentProjectID)
+        return if (isUseLambda) {
+            processEventLogicCodeWithLambda(
+                componentName,
+                "setOnLongClickListener(_view",
+                logic,
+                "public boolean onLongClick"
+            )
+        } else {
+            componentName + ".setOnLongClickListener(new View.OnLongClickListener() {\r\n" +
+                    logic +
+                    "\r\n});"
+        }
+    }
+
+    @JvmStatic
+    fun setOnCheckedChangedListenerEvent(componentName: String, logic: String): String {
+        val isUseLambda = !ProjectBuildConfigs.isUseJava7(Configs.currentProjectID)
+        return if (isUseLambda) {
+            processEventLogicCodeWithLambda(
+                componentName,
+                "setOnCheckedChangeListener((_param1, _param2)",
+                logic,
+                "public void onCheckedChanged"
+            )
+        } else {
+            componentName + ".setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {\r\n" +
+                    logic +
+                    "\r\n});"
+        }
+    }
+
+    @JvmStatic
+    fun processEventLogicCodeWithLambda(
+        componentName: String,
+        eventListener: String,
+        logic: String,
+        eventInside: String
+    ): String {
         var processedLogic = logic
 
-        if (!logic.isEmpty() && isUseLambda) {
+        if (!logic.isEmpty()) {
             processedLogic = processedLogic.replaceFirst(
                 Regex("^\\s*@Override\\s*\\r?\\n", RegexOption.MULTILINE),
                 ""
             )
 
             processedLogic = processedLogic.replaceFirst(
-                Regex("^\\s*public void onClick\\([^)]*\\)\\s*\\{\\s*\\r?\\n", RegexOption.MULTILINE),
+                Regex("^\\s*$eventInside\\([^)]*\\)\\s*\\{\\s*\\r?\\n", RegexOption.MULTILINE),
                 ""
             )
 
@@ -24,18 +79,12 @@ object JavaCodeGenerator {
         }
 
         val lines = processedLogic.lines().filter { it.isNotBlank() }
-        val isSingleLine = lines.size == 1
+        val isSingleLine = lines.size == 1 && !processedLogic.isEmpty()
 
-        return if (isUseLambda) {
-            "$componentName.setOnClickListener( v -> " +
-                    (if (isSingleLine) "" else "{\r\n") +
-                    (if (isSingleLine) processedLogic.substringBeforeLast(";") else processedLogic) +
-                    (if (isSingleLine) "" else  "\r\n}") +
-                    ");"
-        } else {
-            componentName + ".setOnClickListener(new View.OnClickListener() {\r\n" +
-                    processedLogic +
-                    "\r\n});"
-        }
+        return "$componentName.$eventListener -> " +
+                (if (isSingleLine) "" else "{\r\n") +
+                (if (isSingleLine) processedLogic.substringBeforeLast(";") else processedLogic) +
+                (if (isSingleLine) "" else "\r\n}") +
+                ");"
     }
 }
