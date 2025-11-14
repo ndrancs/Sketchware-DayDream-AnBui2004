@@ -155,7 +155,21 @@ public class BuiltInLibraries {
     public static String JETBRAINS_ANNOTATIONS = "org-jetbrains-annotations-23.0.0";
     public static String JUNIT_JUNIT = "junit-4.13.2";
     public static String JETBRAINS_KOTLIN_STDLIB = "kotlin-stdlib-2.0.21";
+//    public static String KERMIT_ANDROID = "kermit-android-2.0.4";
+//    public static String KERMIT_CORE_ANDROID = "kermit-core-android-2.0.4";
     public static String KOTLIN_STDLIB_JDK7 = "kotlin-stdlib-jdk7-1.6.21";
+//    public static String KTOR_CLIENT_CONTENT_NEGOTIATION_JVM = "ktor-client-content-negotiation-jvm-3.0.1";
+//    public static String KTOR_CLIENT_CORE_JVM = "ktor-client-core-jvm-3.0.1";
+//    public static String KTOR_EVENTS_JVM = "ktor-events-jvm-3.0.1";
+//    public static String KTOR_HTTP_JVM = "ktor-http-jvm-3.0.1";
+//    public static String KTOR_IO_JVM = "ktor-io-jvm-3.0.1";
+//    public static String KTOR_SERIALIZATION_JVM = "ktor-serialization-jvm-3.0.1";
+//    public static String KTOR_SERIALIZATION_KOTLINX_JVM = "ktor-serialization-kotlinx-jvm-3.0.1";
+//    public static String KTOR_SERIALIZATION_KOTLINX_JSON_JVM = "ktor-serialization-kotlinx-json-jvm-3.0.1";
+//    public static String KTOR_SSE_JVM = "ktor-sse-jvm-3.0.1";
+//    public static String KTOR_UTILS_JVM = "ktor-utils-jvm-3.0.1";
+//    public static String KTOR_WEBSOCKETS_JVM = "ktor-websockets-jvm-3.0.1";
+//    public static String KTOR_WEBSOCKETS_SERIALIZATION_JVM = "ktor-websocket-serialization-jvm-3.0.1";
     public static String LOTTIE = "lottie-3.4.0";
     public static String MATERIAL = "material-1.14.0-alpha06";
     public static String OKHTTP = "okhttp-3.9.1";
@@ -169,7 +183,12 @@ public class BuiltInLibraries {
     public static String ORG_JETBRAINS_KOTLINX_KOTLINX_COROUTINES_CORE_ANDROID = "kotlinx-coroutines-core-android-1.6.4";
     public static String ORG_JETBRAINS_KOTLINX_KOTLINX_COROUTINES_CORE_JVM = "kotlinx-coroutines-core-jvm-1.7.3";
     public static String ORG_JETBRAINS_KOTLINX_KOTLINX_COROUTINES_PLAY_SERVICES = "kotlinx-coroutines-play-services-1.9.0";
+//    public static String ORG_JETBRAINS_KOTLINX_KOTLINX_DATETIME_JVM = "kotlinx-datetime-jvm-0.7.1-0.6.x-compat";
+//    public static String ORG_JETBRAINS_KOTLINX_KOTLINX_IO_BYTESTRING_JVM = "kotlinx-io-bytestring-jvm-0.5.4";
+//    public static String ORG_JETBRAINS_KOTLINX_KOTLINX_IO_CORE_JVM = "kotlinx-io-core-jvm-0.5.4";
     public static String ORG_JETBRAINS_KOTLINX_KOTLINX_SERIALIZATION_CORE_JVM = "kotlinx-serialization-core-jvm-1.6.3";
+//    public static String ORG_JETBRAINS_KOTLINX_KOTLINX_SERIALIZATION_JSON_JVM = "kotlinx-serialization-json-jvm-1.9.0";
+//    public static String ORG_JETBRAINS_KOTLINX_KOTLINX_SERIALIZATION_JSON_IO_JVM = "kotlinx-serialization-json-io-jvm-1.9.0";
     public static String ORG_JETBRAINS_KOTLINX_KOTLINX_SERIALIZATION_PROTOBUF_JVM = "kotlinx-serialization-protobuf-jvm-1.6.3";
     public static String ORG_JETBRAINS_KOTLIN_KOTLIN_STDLIB_JDK8 = "kotlin-stdlib-jdk8-1.6.21";
     public static String ORG_JSPECIFY_JSPECIFY = "jspecify-1.0.0";
@@ -195,6 +214,8 @@ public class BuiltInLibraries {
     public static String PLAY_SERVICES_PLACES_PLACEREPORT = "play-services-places-placereport-17.0.0";
     public static String PLAY_SERVICES_STATS = "play-services-stats-17.1.0";
     public static String PLAY_SERVICES_TASKS = "play-services-tasks-18.3.2";
+//    public static String SLF4J_API = "slf4j-api-2.0.16";
+//    public static String SUPABASE_KT_ANDROID = "supabase-kt-android-3.0.2";
     public static String USER_MESSAGING_PLATFORM = "user-messaging-platform-2.0.0";
     public static String WAVE_SIDE_BAR = "wave-side-bar";
     public static String ANDROID_YOUTUBE_PLAYER = "android-youtube-player-10.0.5";
@@ -222,8 +243,17 @@ public class BuiltInLibraries {
                     ORG_JETBRAINS_KOTLIN_KOTLIN_ANDROID_EXTENSIONS_RUNTIME)),
             new BuiltInLibrary(ORG_JETBRAINS_KOTLIN_KOTLIN_ANDROID_EXTENSIONS_RUNTIME, List.of(JETBRAINS_KOTLIN_STDLIB)),
 
+//            new BuiltInLibrary(ORG_JETBRAINS_KOTLINX_KOTLINX_DATETIME_JVM, List.of(JETBRAINS_KOTLIN_STDLIB)),
+//
+//            new BuiltInLibrary(ORG_JETBRAINS_KOTLINX_KOTLINX_IO_CORE_JVM, List.of(JETBRAINS_KOTLIN_STDLIB, ORG_JETBRAINS_KOTLINX_KOTLINX_IO_BYTESTRING_JVM)),
+//            new BuiltInLibrary(ORG_JETBRAINS_KOTLINX_KOTLINX_IO_BYTESTRING_JVM, List.of(JETBRAINS_KOTLIN_STDLIB)),
+
             new BuiltInLibrary(ORG_JETBRAINS_KOTLINX_ATOMICFU_JVM, List.of(JETBRAINS_KOTLIN_STDLIB)),
             new BuiltInLibrary(ORG_JETBRAINS_KOTLINX_KOTLINX_SERIALIZATION_CORE_JVM, List.of(JETBRAINS_KOTLIN_STDLIB)),
+//            new BuiltInLibrary(ORG_JETBRAINS_KOTLINX_KOTLINX_SERIALIZATION_JSON_JVM, List.of(JETBRAINS_KOTLIN_STDLIB,
+//                    ORG_JETBRAINS_KOTLINX_KOTLINX_SERIALIZATION_CORE_JVM)),
+//            new BuiltInLibrary(ORG_JETBRAINS_KOTLINX_KOTLINX_SERIALIZATION_JSON_IO_JVM, List.of(JETBRAINS_KOTLIN_STDLIB,
+//                    ORG_JETBRAINS_KOTLINX_KOTLINX_SERIALIZATION_CORE_JVM, KTOR_SERIALIZATION_KOTLINX_JSON_JVM)),
             new BuiltInLibrary(ORG_JETBRAINS_KOTLINX_KOTLINX_SERIALIZATION_PROTOBUF_JVM, List.of(JETBRAINS_KOTLIN_STDLIB,
                     ORG_JETBRAINS_KOTLINX_KOTLINX_SERIALIZATION_CORE_JVM)),
             //==========Kotlin==========
@@ -637,7 +667,51 @@ public class BuiltInLibraries {
             new BuiltInLibrary(COM_GOOGLE_ERRORPRONE_ERROR_PRONE_ANNOTATIONS, List.of(JUNIT_JUNIT)),
             new BuiltInLibrary(JUNIT_JUNIT, List.of(ORG_HAMCREAST_HAMCREAST_CORE)),
             new BuiltInLibrary(ORG_HAMCREAST_HAMCREAST_CORE),
+//            new BuiltInLibrary(SLF4J_API),
             //==========Test==========
+
+            //==========Supabase==========
+//            new BuiltInLibrary(SUPABASE_KT_ANDROID, List.of(ANDROIDX_LIFECYCLE_PROCESS, KERMIT_ANDROID,
+//                    KTOR_CLIENT_CORE_JVM, KTOR_CLIENT_CONTENT_NEGOTIATION_JVM, KTOR_SERIALIZATION_KOTLINX_JSON_JVM,
+//                    ORG_JETBRAINS_KOTLINX_KOTLINX_DATETIME_JVM, JETBRAINS_KOTLIN_STDLIB,
+//                    ORG_JETBRAINS_KOTLINX_KOTLINX_COROUTINES_CORE_JVM, ORG_JETBRAINS_KOTLINX_ATOMICFU_JVM)),
+            //==========Supabase==========
+
+            //==========Kermit==========
+//            new BuiltInLibrary(KERMIT_ANDROID, List.of(KERMIT_CORE_ANDROID, JETBRAINS_KOTLIN_STDLIB)),
+//            new BuiltInLibrary(KERMIT_CORE_ANDROID, List.of(JETBRAINS_KOTLIN_STDLIB)),
+            //==========Kermit==========
+
+            //==========Ktor==========
+//            new BuiltInLibrary(KTOR_CLIENT_CORE_JVM, List.of(KTOR_HTTP_JVM, KTOR_EVENTS_JVM,
+//                    KTOR_WEBSOCKETS_SERIALIZATION_JVM, KTOR_SSE_JVM, ORG_JETBRAINS_KOTLINX_KOTLINX_COROUTINES_CORE_JVM,
+//                    JETBRAINS_KOTLIN_STDLIB, SLF4J_API)),
+//            new BuiltInLibrary(KTOR_CLIENT_CONTENT_NEGOTIATION_JVM, List.of(KTOR_CLIENT_CORE_JVM, KTOR_SERIALIZATION_JVM,
+//                    JETBRAINS_KOTLIN_STDLIB, ORG_JETBRAINS_KOTLINX_KOTLINX_COROUTINES_CORE_JVM, SLF4J_API)),
+//            new BuiltInLibrary(KTOR_EVENTS_JVM, List.of(KTOR_HTTP_JVM, KTOR_UTILS_JVM, ORG_JETBRAINS_KOTLINX_KOTLINX_COROUTINES_CORE_JVM,
+//                    JETBRAINS_KOTLIN_STDLIB, SLF4J_API)),
+//            new BuiltInLibrary(KTOR_HTTP_JVM, List.of(KTOR_UTILS_JVM, ORG_JETBRAINS_KOTLINX_KOTLINX_COROUTINES_CORE_JVM,
+//                    JETBRAINS_KOTLIN_STDLIB, ORG_JETBRAINS_KOTLINX_KOTLINX_SERIALIZATION_CORE_JVM, SLF4J_API)),
+//            new BuiltInLibrary(KTOR_UTILS_JVM, List.of(KTOR_IO_JVM, ORG_JETBRAINS_KOTLINX_KOTLINX_COROUTINES_CORE_JVM,
+//                    JETBRAINS_KOTLIN_STDLIB, ORG_JETBRAINS_KOTLINX_KOTLINX_SERIALIZATION_CORE_JVM, SLF4J_API)),
+//            new BuiltInLibrary(KTOR_IO_JVM, List.of(JETBRAINS_KOTLIN_STDLIB, ORG_JETBRAINS_KOTLINX_KOTLINX_COROUTINES_CORE_JVM,
+//                    ORG_JETBRAINS_KOTLINX_KOTLINX_IO_CORE_JVM, SLF4J_API)),
+//            new BuiltInLibrary(KTOR_WEBSOCKETS_SERIALIZATION_JVM, List.of(KTOR_HTTP_JVM, KTOR_SERIALIZATION_JVM, JETBRAINS_KOTLIN_STDLIB, ORG_JETBRAINS_KOTLINX_KOTLINX_COROUTINES_CORE_JVM,
+//                    SLF4J_API)),
+//            new BuiltInLibrary(KTOR_SERIALIZATION_JVM, List.of(KTOR_HTTP_JVM, KTOR_WEBSOCKETS_JVM, JETBRAINS_KOTLIN_STDLIB, ORG_JETBRAINS_KOTLINX_KOTLINX_COROUTINES_CORE_JVM,
+//                    SLF4J_API)),
+//            new BuiltInLibrary(KTOR_WEBSOCKETS_JVM, List.of(KTOR_HTTP_JVM, JETBRAINS_KOTLIN_STDLIB, ORG_JETBRAINS_KOTLINX_KOTLINX_COROUTINES_CORE_JVM,
+//                    SLF4J_API)),
+//            new BuiltInLibrary(KTOR_SSE_JVM, List.of(KTOR_HTTP_JVM, JETBRAINS_KOTLIN_STDLIB, ORG_JETBRAINS_KOTLINX_KOTLINX_COROUTINES_CORE_JVM,
+//                    SLF4J_API)),
+//            new BuiltInLibrary(KTOR_SERIALIZATION_KOTLINX_JVM, List.of(KTOR_HTTP_JVM, KTOR_SERIALIZATION_JVM,
+//                    JETBRAINS_KOTLIN_STDLIB, ORG_JETBRAINS_KOTLINX_KOTLINX_COROUTINES_CORE_JVM, ORG_JETBRAINS_KOTLINX_KOTLINX_SERIALIZATION_CORE_JVM,
+//                    SLF4J_API)),
+//            new BuiltInLibrary(KTOR_SERIALIZATION_KOTLINX_JSON_JVM, List.of(KTOR_HTTP_JVM, KTOR_SERIALIZATION_KOTLINX_JSON_JVM,
+//                    JETBRAINS_KOTLIN_STDLIB, ORG_JETBRAINS_KOTLINX_KOTLINX_COROUTINES_CORE_JVM, ORG_JETBRAINS_KOTLINX_KOTLINX_SERIALIZATION_CORE_JVM,
+//                    ORG_JETBRAINS_KOTLINX_KOTLINX_SERIALIZATION_JSON_JVM, ORG_JETBRAINS_KOTLINX_KOTLINX_SERIALIZATION_JSON_IO_JVM,
+//                    SLF4J_API)),
+            //==========Ktor==========
     };
 
     public static File getLibraryPath(String libraryName) {

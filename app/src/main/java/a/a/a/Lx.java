@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 
+import extensions.anbui.daydream.java.JavaCodeGenerator;
 import mod.agus.jcoderz.editor.event.ManageEvent;
 import mod.agus.jcoderz.handle.component.ConstVarComponent;
 import mod.hey.studios.build.BuildSettings;
@@ -1637,10 +1638,7 @@ public class Lx {
 
     public static String getListenerCode(String eventName, String componentName, String eventLogic) {
         return switch (eventName) {
-            case "onClickListener" ->
-                    componentName + ".setOnClickListener(new View.OnClickListener() {\r\n" +
-                            eventLogic + "\r\n" +
-                            "});";
+            case "onClickListener" -> JavaCodeGenerator.setOnClickEvent(componentName, eventLogic);
             case "sensorEventListener" -> {
                 String sensorEventListenerName = "_" + componentName + "_sensor_listener";
                 yield sensorEventListenerName + " = new SensorEventListener() {\r\n"
