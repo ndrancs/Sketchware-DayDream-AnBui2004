@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import a.a.a.Gx;
 import a.a.a.Lx;
+import extensions.anbui.daydream.java.JavaCodeGenerator;
 import mod.hilal.saif.events.EventsHandler;
 import pro.sketchware.R;
 import pro.sketchware.blocks.generator.components.analyzers.BlockReturnAnalyzer;
@@ -828,13 +829,7 @@ public class ManageEvent {
                     "_" + targetId + "_rewarded_ad_load_callback = new RewardedAdLoadCallback() {\r\n" +
                             listenerLogic + "\r\n" +
                             "};";
-            case "onUserEarnedRewardListener" ->
-                    "_" + targetId + "_on_user_earned_reward_listener = new OnUserEarnedRewardListener() {\r\n" +
-                            "@Override\r\npublic void onUserEarnedReward(RewardItem _param1) {\r\n" +
-                            "int _rewardAmount = _param1.getAmount();\r\n" +
-                            "String _rewardType = _param1.getType();\r\n" +
-                            listenerLogic + "\r\n" +
-                            "}\r\n};";
+            case "onUserEarnedRewardListener" -> JavaCodeGenerator.setOnUserEarnedRewardListenerEvent(targetId, listenerLogic);
             default -> EventsHandler.getListenerCode(listenerName, targetId, listenerLogic);
         };
     }
