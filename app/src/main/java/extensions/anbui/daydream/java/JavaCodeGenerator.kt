@@ -6,8 +6,7 @@ import extensions.anbui.daydream.project.ProjectBuildConfigs
 object JavaCodeGenerator {
     @JvmStatic
     fun setOnClickListenerEvent(componentName: String, logic: String): String {
-        val isUseLambda = !ProjectBuildConfigs.isUseJava7(Configs.currentProjectID)
-        return if (isUseLambda) {
+        return if (isUseLambda(Configs.currentProjectID)) {
             processEventLogicCodeWithLambda(
                 componentName,
                 "setOnClickListener(_v",
@@ -23,8 +22,7 @@ object JavaCodeGenerator {
 
     @JvmStatic
     fun setOnLongClickListenerEvent(componentName: String, logic: String): String {
-        val isUseLambda = !ProjectBuildConfigs.isUseJava7(Configs.currentProjectID)
-        return if (isUseLambda) {
+        return if (isUseLambda(Configs.currentProjectID)) {
             processEventLogicCodeWithLambda(
                 componentName,
                 "setOnLongClickListener(_v",
@@ -40,8 +38,7 @@ object JavaCodeGenerator {
 
     @JvmStatic
     fun setOnCheckedChangedListenerEvent(componentName: String, logic: String): String {
-        val isUseLambda = !ProjectBuildConfigs.isUseJava7(Configs.currentProjectID)
-        return if (isUseLambda) {
+        return if (isUseLambda(Configs.currentProjectID)) {
             processEventLogicCodeWithLambda(
                 componentName,
                 "setOnCheckedChangeListener((_param1, _param2)",
@@ -57,8 +54,7 @@ object JavaCodeGenerator {
 
     @JvmStatic
     fun setOnUserEarnedRewardListenerEvent(rewardedAdID: String, logic: String): String {
-        val isUseLambda = !ProjectBuildConfigs.isUseJava7(Configs.currentProjectID)
-        return if (isUseLambda) {
+        return if (isUseLambda(Configs.currentProjectID)) {
             processNewListenerEventLogicCodeWithLambda(
                 "_" + rewardedAdID + "_on_user_earned_reward_listener",
                 "_param1",
@@ -100,8 +96,7 @@ object JavaCodeGenerator {
             processedLogic = processedLogic.substringBeforeLast("\r\n}")
         }
 
-        val lines = processedLogic.lines().filter { it.isNotBlank() }
-        val isSingleLine = lines.size == 1 && !processedLogic.isEmpty()
+        val isSingleLine = isUseSingleLineLambda(logic)
 
         return "$componentName.$eventListener -> " +
                 (if (isSingleLine) "" else "{\r\n") +
@@ -133,12 +128,28 @@ object JavaCodeGenerator {
             processedLogic = processedLogic.substringBeforeLast("\r\n}")
         }
 
-        val lines = processedLogic.lines().filter { it.isNotBlank() }
-        val isSingleLine = lines.size == 1 && !processedLogic.isEmpty()
+        val isSingleLine = isUseSingleLineLambda(logic)
 
         return "$componentName = $newVaribles -> " +
                 (if (isSingleLine) "" else "{\r\n") +
                 processedLogic +
                 (if (isSingleLine) "" else "\r\n};")
+    }
+
+    @JvmStatic
+    fun isUseSingleLineLambda(logic : String) : Boolean {
+        val lines = logic.lines().filter { it.isNotBlank() }
+        return lines.size == 1 &&
+                !logic.isEmpty() &&
+                !logic.startsWith("if (") &&
+                !logic.startsWith("for (") &&
+                !logic.startsWith("while (") &&
+                !logic.startsWith("do ") &&
+                !logic.startsWith("try ")
+    }
+
+    @JvmStatic
+    fun isUseLambda(projectID : String) : Boolean {
+        return !ProjectBuildConfigs.isUseJava7(projectID)
     }
 }

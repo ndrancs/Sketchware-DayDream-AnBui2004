@@ -14,6 +14,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
+import extensions.anbui.daydream.utils.TextUtils;
 import mod.hey.studios.editor.manage.block.ExtraBlockInfo;
 import mod.hey.studios.editor.manage.block.v2.BlockLoader;
 import mod.hey.studios.moreblock.ReturnMoreblockManager;
@@ -384,7 +385,9 @@ public class Fx {
                 break;
             case "if":
                 stack = bean.subStack1;
-                opcode = String.format("if (%s) {\r\n%s\r\n}", params.get(0), stack >= 0 ? a(String.valueOf(stack), "") : "");
+                String logic = a(String.valueOf(stack), "");
+                opcode = String.format(!logic.isEmpty() && TextUtils.isSingleLine(logic) ? "if (%s) %s" : (logic.isEmpty() ? "if (%s) {%s}" : "if (%s) {\r\n%s\r\n}"),
+                        params.get(0), stack >= 0 ? logic : "");
                 break;
             case "ifElse":
                 stack = bean.subStack1;
