@@ -3,3 +3,4 @@ local.properties
 /.idea/
 /.kotlin/
 /build/
+/hs_err_pid*.log

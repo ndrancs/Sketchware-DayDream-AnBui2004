@@ -5,6 +5,51 @@ import extensions.anbui.daydream.project.ProjectBuildConfigs
 
 object JavaCodeGenerator {
     @JvmStatic
+    fun ifLogic(condition : String, logic: String): String {
+        if (logic.isEmpty() || condition == "false") return ""
+
+        if (condition == "true") {
+            return logic
+        }
+
+        return java.lang.String.format(
+            if (isUseSingleLineLambda(logic)) "if (%s) %s" else "if (%s) {\r\n%s\r\n}",
+            condition, logic
+        )
+    }
+
+    @JvmStatic
+    fun ifElseLogic(condition : String, logicIf : String, logicElse : String): String {
+        if (logicIf.isEmpty() && logicElse.isEmpty()) {
+            return ""
+        } else if (!logicIf.isEmpty() && logicElse.isEmpty()) {
+            return ifLogic(condition, logicIf)
+        } else if (logicIf.isEmpty() && !logicElse.isEmpty()) {
+            return ifLogic("!($condition)", logicElse)
+        }
+
+        if (condition == "true") {
+            return logicIf
+        } else if (condition == "false") {
+            return logicElse
+        }
+
+        val isSingleLine = isUseSingleLineLambda(logicIf) && isUseSingleLineLambda(logicElse)
+
+        return if (!logicElse.isEmpty()) {
+            String.format(
+                if (isSingleLine) "if (%s) %s else %s" else "if (%s) {\r\n%s\r\n} else {\r\n%s\r\n}",
+                condition,
+                logicIf,
+                logicElse
+            )
+        } else {
+            ifLogic(condition, logicIf)
+        }
+    }
+
+
+    @JvmStatic
     fun setOnClickListenerEvent(componentName: String, logic: String): String {
         return if (isUseLambda(Configs.currentProjectID)) {
             processEventLogicCodeWithLambda(
@@ -96,7 +141,7 @@ object JavaCodeGenerator {
             processedLogic = processedLogic.substringBeforeLast("\r\n}")
         }
 
-        val isSingleLine = isUseSingleLineLambda(logic)
+        val isSingleLine = isUseSingleLineLambda(processedLogic)
 
         return "$componentName.$eventListener -> " +
                 (if (isSingleLine) "" else "{\r\n") +
@@ -128,7 +173,7 @@ object JavaCodeGenerator {
             processedLogic = processedLogic.substringBeforeLast("\r\n}")
         }
 
-        val isSingleLine = isUseSingleLineLambda(logic)
+        val isSingleLine = isUseSingleLineLambda(processedLogic)
 
         return "$componentName = $newVaribles -> " +
                 (if (isSingleLine) "" else "{\r\n") +
@@ -139,13 +184,16 @@ object JavaCodeGenerator {
     @JvmStatic
     fun isUseSingleLineLambda(logic : String) : Boolean {
         val lines = logic.lines().filter { it.isNotBlank() }
-        return lines.size == 1 &&
-                !logic.isEmpty() &&
-                !logic.startsWith("if (") &&
-                !logic.startsWith("for (") &&
-                !logic.startsWith("while (") &&
-                !logic.startsWith("do ") &&
-                !logic.startsWith("try ")
+
+        if (lines.size == 1 && !logic.isEmpty()) {
+            return !logic.startsWith("if (") &&
+                    !logic.startsWith("for (") &&
+                    !logic.startsWith("while (") &&
+                    !logic.startsWith("do ") &&
+                    !logic.startsWith("try ")
+        }
+
+        return false
     }
 
     @JvmStatic

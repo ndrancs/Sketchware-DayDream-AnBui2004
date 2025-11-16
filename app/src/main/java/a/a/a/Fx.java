@@ -14,6 +14,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
+import extensions.anbui.daydream.java.JavaCodeGenerator;
 import extensions.anbui.daydream.utils.TextUtils;
 import mod.hey.studios.editor.manage.block.ExtraBlockInfo;
 import mod.hey.studios.editor.manage.block.v2.BlockLoader;
@@ -385,16 +386,14 @@ public class Fx {
                 break;
             case "if":
                 stack = bean.subStack1;
-                String logic = a(String.valueOf(stack), "");
-                opcode = String.format(!logic.isEmpty() && TextUtils.isSingleLine(logic) ? "if (%s) %s" : (logic.isEmpty() ? "if (%s) {%s}" : "if (%s) {\r\n%s\r\n}"),
-                        params.get(0), stack >= 0 ? logic : "");
+                opcode = JavaCodeGenerator.ifLogic(params.get(0), a(String.valueOf(stack), ""));
                 break;
             case "ifElse":
                 stack = bean.subStack1;
                 String ifBlock = stack >= 0 ? a(String.valueOf(stack), "") : "";
                 stack = bean.subStack2;
                 String elseBlock = stack >= 0 ? a(String.valueOf(stack), "") : "";
-                opcode = String.format("if (%s) {\r\n%s\r\n} else {\r\n%s\r\n}", params.get(0), ifBlock, elseBlock);
+                opcode = JavaCodeGenerator.ifElseLogic(params.get(0), ifBlock, elseBlock);
                 break;
             case "break":
                 opcode = "break;";
