@@ -48,6 +48,54 @@ object JavaCodeGenerator {
         }
     }
 
+    @JvmStatic
+    fun timerDelay(componentName : String, logic : String, delay : String): String {
+        if (logic.isEmpty()) {
+            return ""
+        }
+
+        return String.format(
+            "%s = new TimerTask() {\n@Override\npublic void run() {\n" + runOnUiThreadFormat(
+                logic
+            ) + "\n}\n};\n_timer.schedule(%s, (int)(%s));",
+            componentName,
+            if (isUseSingleLineLambda(logic)) logic.dropLast(1) else logic,
+            componentName,
+            delay
+        )
+    }
+
+    @JvmStatic
+    fun timerRepeatEvery(componentName : String, logic : String, delay : String, every : String): String {
+        if (logic.isEmpty()) {
+            return ""
+        }
+
+        return String.format(
+            "%s = new TimerTask() {\n@Override\npublic void run() {\n" + runOnUiThreadFormat(
+                logic
+            ) + "\n}\n};\n_timer.scheduleAtFixedRate(%s, (int)(%s), (int)(%s));",
+            componentName,
+            if (isUseSingleLineLambda(logic)) logic.dropLast(1) else logic,
+            componentName,
+            delay,
+            every
+        )
+    }
+
+    @JvmStatic
+    fun runOnUiThreadFormat(logic : String): String {
+        return if (isUseLambda(Configs.currentProjectID)) {
+            if (isUseSingleLineLambda(logic)) {
+                "runOnUiThread(() -> %s);"
+            } else {
+                "runOnUiThread(() -> {\r\n%s\r\n});"
+            }
+        } else {
+            "runOnUiThread(new Runnable() {\r\n@Override\r\npublic void run() {\r\n%s\r\n}\r\n});"
+        }
+    }
+
 
     @JvmStatic
     fun setOnClickListenerEvent(componentName: String, logic: String): String {

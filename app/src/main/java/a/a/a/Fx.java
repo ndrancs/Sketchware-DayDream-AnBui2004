@@ -896,14 +896,10 @@ public class Fx {
                 opcode = String.format("%s.vibrate((long)(%s));", params.get(0), params.get(1));
                 break;
             case "timerAfter":
-                String onRun = (bean.subStack1 >= 0) ? a(String.valueOf(bean.subStack1), "") : "";
-
-                opcode = String.format("%s = new TimerTask() {\n@Override\npublic void run() {\nrunOnUiThread(new Runnable() {\n@Override\npublic void run() {\n%s\n}\n});\n}\n};\n_timer.schedule(%s, (int)(%s));", params.get(0), onRun, params.get(0), params.get(1));
+                opcode = JavaCodeGenerator.timerDelay(params.get(0), (bean.subStack1 >= 0) ? a(String.valueOf(bean.subStack1), "") : "", params.get(1));
                 break;
             case "timerEvery":
-                onRun = (bean.subStack1 >= 0) ? a(String.valueOf(bean.subStack1), "") : "";
-
-                opcode = String.format("%s = new TimerTask() {\n@Override\npublic void run() {\nrunOnUiThread(new Runnable() {\n@Override\npublic void run() {\n%s\n}\n});\n}\n};\n_timer.scheduleAtFixedRate(%s, (int)(%s), (int)(%s));", params.get(0), onRun, params.get(0), params.get(1), params.get(2));
+                opcode = JavaCodeGenerator.timerRepeatEvery(params.get(0), (bean.subStack1 >= 0) ? a(String.valueOf(bean.subStack1), "") : "", params.get(1), params.get(2));
                 break;
             case "timerCancel":
                 opcode = String.format("%s.cancel();", params.get(0));
