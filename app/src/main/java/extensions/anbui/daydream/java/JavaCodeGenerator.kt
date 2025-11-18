@@ -12,10 +12,11 @@ object JavaCodeGenerator {
             return logic
         }
 
-        return java.lang.String.format(
-            if (isUseSingleLineLambda(logic)) "if (%s) %s" else "if (%s) {\r\n%s\r\n}",
-            condition, logic
-        )
+        return if (isUseSingleLineLambda(logic)) {
+            "if ($condition) $logic"
+        } else {
+            "if ($condition) {\r\n$logic\r\n}"
+        }
     }
 
     @JvmStatic
@@ -36,15 +37,16 @@ object JavaCodeGenerator {
 
         val isSingleLine = isUseSingleLineLambda(logicIf) && isUseSingleLineLambda(logicElse)
 
-        return if (!logicElse.isEmpty()) {
-            String.format(
-                if (isSingleLine) "if (%s) %s else %s" else "if (%s) {\r\n%s\r\n} else {\r\n%s\r\n}",
-                condition,
-                logicIf,
-                logicElse
-            )
-        } else {
+        return if (logicElse.isEmpty()) {
             ifLogic(condition, logicIf)
+        } else if (logicIf.isEmpty()) {
+            ifLogic("!($condition)", logicElse)
+        } else {
+            if (isSingleLine) {
+                "if ($condition) $logicIf else $logicElse"
+            } else {
+                "if ($condition) {\r\n$logicIf\r\n} else {\r\n$logicElse\r\n}"
+            }
         }
     }
 
