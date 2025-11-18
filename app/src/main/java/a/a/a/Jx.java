@@ -731,8 +731,7 @@ public class Jx {
                 "ArrayList<Double> _result = new ArrayList<Double>();" + EOL +
                 "SparseBooleanArray _arr = _list.getCheckedItemPositions();" + EOL +
                 "for (int _iIdx = 0; _iIdx < _arr.size(); _iIdx++) {" + EOL +
-                "if (_arr.valueAt(_iIdx))" + EOL +
-                "_result.add((double)_arr.keyAt(_iIdx));" + EOL +
+                "if (_arr.valueAt(_iIdx)) _result.add((double)_arr.keyAt(_iIdx));" + EOL +
                 "}" + EOL +
                 "return _result;" + EOL +
                 "}" + EOL +

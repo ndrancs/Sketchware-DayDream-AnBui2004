@@ -5,7 +5,7 @@ import extensions.anbui.daydream.project.ProjectBuildConfigs
 
 object JavaCodeGenerator {
     @JvmStatic
-    fun ifLogic(condition : String, logic: String): String {
+    fun ifLogic(condition: String, logic: String): String {
         if (logic.isEmpty() || condition == "false") return ""
 
         if (condition == "true") {
@@ -19,7 +19,7 @@ object JavaCodeGenerator {
     }
 
     @JvmStatic
-    fun ifElseLogic(condition : String, logicIf : String, logicElse : String): String {
+    fun ifElseLogic(condition: String, logicIf: String, logicElse: String): String {
         if (logicIf.isEmpty() && logicElse.isEmpty()) {
             return ""
         } else if (!logicIf.isEmpty() && logicElse.isEmpty()) {
@@ -49,7 +49,7 @@ object JavaCodeGenerator {
     }
 
     @JvmStatic
-    fun timerDelay(componentName : String, logic : String, delay : String): String {
+    fun timerDelay(componentName: String, logic: String, delay: String): String {
         if (logic.isEmpty()) {
             return ""
         }
@@ -66,7 +66,12 @@ object JavaCodeGenerator {
     }
 
     @JvmStatic
-    fun timerRepeatEvery(componentName : String, logic : String, delay : String, every : String): String {
+    fun timerRepeatEvery(
+        componentName: String,
+        logic: String,
+        delay: String,
+        every: String
+    ): String {
         if (logic.isEmpty()) {
             return ""
         }
@@ -84,7 +89,7 @@ object JavaCodeGenerator {
     }
 
     @JvmStatic
-    fun runOnUiThreadFormat(logic : String): String {
+    fun runOnUiThreadFormat(logic: String): String {
         return if (isUseLambda(Configs.currentProjectID)) {
             if (isUseSingleLineLambda(logic)) {
                 "runOnUiThread(() -> %s);"
@@ -230,7 +235,7 @@ object JavaCodeGenerator {
     }
 
     @JvmStatic
-    fun isUseSingleLineLambda(logic : String) : Boolean {
+    fun isUseSingleLineLambda(logic: String): Boolean {
         val lines = logic.lines().filter { it.isNotBlank() }
 
         if (lines.size == 1 && !logic.isEmpty()) {
@@ -245,7 +250,47 @@ object JavaCodeGenerator {
     }
 
     @JvmStatic
-    fun isUseLambda(projectID : String) : Boolean {
+    fun isUseLambda(projectID: String): Boolean {
         return !ProjectBuildConfigs.isUseJava7(projectID)
+    }
+
+    @JvmStatic
+    fun compareEqualNumbers(number1: String, number2: String): String {
+        var processedLogic = "$number1 == $number2"
+
+        if (processedLogic.contains(".length()") &&
+            (processedLogic.contains("== 0") || processedLogic.contains("0 =="))
+        ) {
+            processedLogic = processedLogic.replace(".length()", ".isEmpty()")
+            processedLogic = processedLogic.replace(" == 0", "")
+            processedLogic = processedLogic.replace("0 == ", "")
+        }
+
+        return processedLogic
+    }
+
+    @JvmStatic
+    fun compareSmallerNumbers(number1: String, number2: String): String {
+        var processedLogic = "$number1 < $number2"
+
+        if (processedLogic.contains(".length()") && processedLogic.contains("< 1")) {
+            processedLogic = processedLogic.replace(".length()", ".isEmpty()")
+            processedLogic = processedLogic.replace(" < 1", "")
+        }
+
+        return processedLogic
+    }
+
+    @JvmStatic
+    fun compareLargerNumbers(number1: String, number2: String): String {
+        var processedLogic = "$number1 > $number2"
+
+        if (processedLogic.contains(".length()") && processedLogic.contains("> 0")) {
+            processedLogic = "!$processedLogic"
+            processedLogic = processedLogic.replace(".length()", ".isEmpty()")
+            processedLogic = processedLogic.replace(" > 0", "")
+        }
+
+        return processedLogic
     }
 }

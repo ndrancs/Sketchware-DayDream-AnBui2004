@@ -410,12 +410,16 @@ public class Fx {
             case "*":
             case "/":
             case "%":
-            case ">":
-            case "<":
                 opcode = String.format("%s %s %s", params.get(0), bean.opCode, params.get(1));
                 break;
+            case ">":
+                opcode = JavaCodeGenerator.compareLargerNumbers(params.get(0), params.get(1));
+                break;
+            case "<":
+                opcode = JavaCodeGenerator.compareSmallerNumbers(params.get(0), params.get(1));
+                break;
             case "=":
-                opcode = String.format("%s == %s", params.get(0), params.get(1));
+                opcode = JavaCodeGenerator.compareEqualNumbers(params.get(0), params.get(1));
                 break;
             case "&&":
             case "||":
