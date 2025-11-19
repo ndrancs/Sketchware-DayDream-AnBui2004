@@ -56,15 +56,11 @@ object JavaCodeGenerator {
             return ""
         }
 
-        return String.format(
-            "%s = new TimerTask() {\n@Override\npublic void run() {\n" + runOnUiThreadFormat(
+        return "$componentName = new TimerTask() {\r\n@Override\r\npublic void run() {\r\n${
+            runOnUiThread(
                 logic
-            ) + "\n}\n};\n_timer.schedule(%s, (int)(%s));",
-            componentName,
-            if (isUseSingleLineLambda(logic)) logic.dropLast(1) else logic,
-            componentName,
-            delay
-        )
+            )
+        }\r\n}\r\n};\r\n_timer.schedule($componentName, (int)$delay);"
     }
 
     @JvmStatic
@@ -78,28 +74,28 @@ object JavaCodeGenerator {
             return ""
         }
 
-        return String.format(
-            "%s = new TimerTask() {\n@Override\npublic void run() {\n" + runOnUiThreadFormat(
+        return "$componentName = new TimerTask() {\r\n@Override\r\npublic void run() {\r\n${
+            runOnUiThread(
                 logic
-            ) + "\n}\n};\n_timer.scheduleAtFixedRate(%s, (int)(%s), (int)(%s));",
-            componentName,
-            if (isUseSingleLineLambda(logic)) logic.dropLast(1) else logic,
-            componentName,
-            delay,
-            every
-        )
+            )
+        }\r\n}\r\n};\r\n_timer.scheduleAtFixedRate($componentName, (int)$delay, (int)$every);"
     }
 
     @JvmStatic
-    fun runOnUiThreadFormat(logic: String): String {
+    fun timerCancel(componentName: String) : String {
+        return "try { $componentName.cancel(); } catch (Exception ignored) {}"
+    }
+
+    @JvmStatic
+    fun runOnUiThread(logic: String): String {
         return if (isUseLambda(Configs.currentProjectID)) {
             if (isUseSingleLineLambda(logic)) {
-                "runOnUiThread(() -> %s);"
+                "runOnUiThread(() -> ${logic.dropLast(1)});"
             } else {
-                "runOnUiThread(() -> {\r\n%s\r\n});"
+                "runOnUiThread(() -> {\r\n$logic\r\n});"
             }
         } else {
-            "runOnUiThread(new Runnable() {\r\n@Override\r\npublic void run() {\r\n%s\r\n}\r\n});"
+            "runOnUiThread(new Runnable() {\r\n@Override\r\npublic void run() {\r\n$logic\r\n}\r\n});"
         }
     }
 

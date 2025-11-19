@@ -906,7 +906,7 @@ public class Fx {
                 opcode = JavaCodeGenerator.timerRepeatEvery(params.get(0), (bean.subStack1 >= 0) ? a(String.valueOf(bean.subStack1), "") : "", params.get(1), params.get(2));
                 break;
             case "timerCancel":
-                opcode = String.format("%s.cancel();", params.get(0));
+                opcode = JavaCodeGenerator.timerCancel(params.get(0));
                 break;
             case "firebaseAdd":
                 opcode = String.format("%s.child(%s).updateChildren(%s);", params.get(0), params.get(1), params.get(2));
