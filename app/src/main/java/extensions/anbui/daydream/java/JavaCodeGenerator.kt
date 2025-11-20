@@ -137,8 +137,8 @@ object JavaCodeGenerator {
         return if (isUseLambda(Configs.currentProjectID)) {
             processEventLogicCodeWithLambda(
                 componentName,
-                "setOnCheckedChangeListener((_param1, _param2)",
-                logic,
+                "setOnCheckedChangeListener((_buttonView, _isChecked)",
+                logic.replace("final boolean _isChecked = _param2;\r\n", ""),
                 "public void onCheckedChanged"
             )
         } else {
@@ -237,11 +237,14 @@ object JavaCodeGenerator {
         val lines = logic.lines().filter { it.isNotBlank() }
 
         if (lines.size == 1 && !logic.isEmpty()) {
-            return !logic.startsWith("if (") &&
+            return !logic.startsWith("//") &&
+                    !logic.startsWith("*/") &&
+                    !logic.startsWith("if (") &&
                     !logic.startsWith("for (") &&
                     !logic.startsWith("while (") &&
                     !logic.startsWith("do ") &&
-                    !logic.startsWith("try ")
+                    !logic.startsWith("try ") &&
+                    !logic.startsWith("final ")
         }
 
         return false
