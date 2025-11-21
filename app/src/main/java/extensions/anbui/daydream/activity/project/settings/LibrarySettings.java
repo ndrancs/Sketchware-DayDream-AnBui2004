@@ -9,6 +9,7 @@ import java.util.Objects;
 
 import extensions.anbui.daydream.configs.Configs;
 import extensions.anbui.daydream.library.LibraryUtils;
+import extensions.anbui.daydream.project.DRProjectTracker;
 import extensions.anbui.daydream.project.ProjectBuildConfigs;
 import extensions.anbui.daydream.project.ProjectConfigs;
 import extensions.anbui.daydream.project.ProjectLibrary;
@@ -26,6 +27,7 @@ public class LibrarySettings extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         if (getIntent().hasExtra("sc_id")) {
             projectID = getIntent().getStringExtra("sc_id");
+            DRProjectTracker.startNow(projectID);
         } else {
             finish();
             return;

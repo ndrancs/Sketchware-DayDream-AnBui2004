@@ -13,11 +13,13 @@ import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.besome.sketch.export.ExportProjectActivity;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import java.util.Objects;
 
 import extensions.anbui.daydream.configs.Configs;
+import extensions.anbui.daydream.project.DRProjectTracker;
 import extensions.anbui.daydream.ui.DialogUtils;
 import extensions.anbui.daydream.file.FileUtils;
 import extensions.anbui.daydream.git.GitUtils;
@@ -151,6 +153,10 @@ public class GitPushActivity extends AppCompatActivity {
     }
 
     private void startPushProject() {
+        if (pushSourceCode) {
+            if (!DRProjectTracker.isAllowBuildNow(this)) return;
+        }
+
         View progressView = LayoutInflater.from(this).inflate(R.layout.progress_msg_box, null);
         LinearLayout linear_progress = progressView.findViewById(R.id.layout_progress);
         linear_progress.setPadding(0,0,0,0);

@@ -21,6 +21,7 @@ import java.util.Objects;
 
 import extensions.anbui.daydream.configs.Configs;
 import extensions.anbui.daydream.git.GitQuickLook;
+import extensions.anbui.daydream.project.DRProjectTracker;
 import extensions.anbui.daydream.tools.project.RemoveCore;
 import extensions.anbui.daydream.ui.DialogUtils;
 import extensions.anbui.daydream.file.FileUtils;
@@ -395,7 +396,7 @@ public class DayDreamGitActionsActivity extends AppCompatActivity {
                 progressDialog.dismiss();
                 if (finalResult) {
                     Intent intent = new Intent(this, DesignActivity.class);
-                    Configs.currentProjectID = Configs.defaultQuickLookProjectID;
+                    DRProjectTracker.startNow(Configs.defaultQuickLookProjectID);
                     ProjectTracker.setScId(Configs.currentProjectID);
                     intent.putExtra("sc_id", Configs.currentProjectID);
                     intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);

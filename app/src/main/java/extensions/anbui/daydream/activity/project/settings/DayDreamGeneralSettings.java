@@ -10,6 +10,7 @@ import java.util.Objects;
 
 import extensions.anbui.daydream.activity.project.DayDreamBackupTool;
 import extensions.anbui.daydream.library.LibraryUtils;
+import extensions.anbui.daydream.project.DRProjectTracker;
 import extensions.anbui.daydream.settings.DayDreamProjectSettings;
 import pro.sketchware.databinding.ActivityDaydreamGeneralSettingsBinding;
 
@@ -23,6 +24,7 @@ public class DayDreamGeneralSettings extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         if (getIntent().hasExtra("sc_id")) {
             projectID = getIntent().getStringExtra("sc_id");
+            DRProjectTracker.startNow(projectID);
         } else {
             finish();
             return;

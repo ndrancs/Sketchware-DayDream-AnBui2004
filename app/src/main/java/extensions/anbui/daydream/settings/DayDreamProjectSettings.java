@@ -12,6 +12,7 @@ import java.util.Map;
 
 import extensions.anbui.daydream.configs.Configs;
 import extensions.anbui.daydream.file.FileUtils;
+import extensions.anbui.daydream.project.DRProjectTracker;
 import extensions.anbui.daydream.project.ProjectUtils;
 
 public class DayDreamProjectSettings {
@@ -433,6 +434,11 @@ public class DayDreamProjectSettings {
     }
 
     public static String readDayDreamDataFile(String projectID) {
+        if (!DRProjectTracker.getConfigData().isEmpty()) {
+            Log.i(TAG, "readDayDreamDataFile: Data retrieved from DRProjectTracker.");
+            return DRProjectTracker.getConfigData();
+        }
+
         String contentProjectFile = FileUtils.readTextFile(FileUtils.getInternalStorageDir() + Configs.projectDataFolderDir + projectID + "/DataDayDream.json");
         if (contentProjectFile.isEmpty()) contentProjectFile = "{}";
         Log.i(TAG, "readDayDreamDataFile: " + projectID + " " + contentProjectFile);

@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.Objects;
 
+import extensions.anbui.daydream.project.DRProjectTracker;
 import extensions.anbui.daydream.settings.DayDreamProjectSettings;
 import pro.sketchware.databinding.ActivityDaydreamPermissionSettingsBinding;
 
@@ -20,6 +21,7 @@ public class PermissionSettings extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         if (getIntent().hasExtra("sc_id")) {
             projectID = getIntent().getStringExtra("sc_id");
+            DRProjectTracker.startNow(projectID);
         } else {
             finish();
             return;
@@ -29,7 +31,7 @@ public class PermissionSettings extends AppCompatActivity {
         setContentView(binding.getRoot());
         setSupportActionBar(binding.toolbar);
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
-        binding.toolbar.setNavigationOnClickListener(view -> onBackPressed());
+        binding.toolbar.setNavigationOnClickListener(view -> finish());
         initialize();
     }
 

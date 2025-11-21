@@ -10,6 +10,7 @@ import java.util.Objects;
 
 import extensions.anbui.daydream.activity.project.git.DayDreamGitActionsActivity;
 import extensions.anbui.daydream.library.LibraryUtils;
+import extensions.anbui.daydream.project.DRProjectTracker;
 import extensions.anbui.daydream.tools.project.DayDreamCleanUpTemporaryFiles;
 import extensions.anbui.daydream.tools.project.DayDreamCloneTool;
 import pro.sketchware.databinding.ActivityDaydreamProjectToolBinding;
@@ -24,6 +25,7 @@ public class DayDreamProjectTool extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         if (getIntent().hasExtra("sc_id")) {
             projectID = getIntent().getStringExtra("sc_id");
+            DRProjectTracker.startNow(projectID);
         } else {
             finish();
             return;

@@ -22,6 +22,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import java.io.File;
 import java.util.Objects;
 
+import extensions.anbui.daydream.project.DRProjectTracker;
 import extensions.anbui.daydream.ui.DialogUtils;
 import extensions.anbui.daydream.file.FileUtils;
 import extensions.anbui.daydream.git.DayDreamGitConfigs;
@@ -65,6 +66,7 @@ public class DayDreamBackupTool extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         if (getIntent().hasExtra("sc_id")) {
             projectID = getIntent().getStringExtra("sc_id");
+            DRProjectTracker.startNow(projectID);
         } else {
             finish();
             return;

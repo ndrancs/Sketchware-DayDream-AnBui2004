@@ -46,6 +46,11 @@ public class ProjectBuildConfigs {
     }
 
     public static String readDataFile(String projectID) {
+        if (!DRProjectTracker.getBuildConfigData().isEmpty()) {
+            Log.i(TAG, "readDataFile: Data retrieved from DRProjectTracker.");
+            return DRProjectTracker.getBuildConfigData();
+        }
+
         String contentProjectFile = FileUtils.readTextFile(FileUtils.getInternalStorageDir() + Configs.projectDataFolderDir + projectID + "/build_config");
         if (contentProjectFile.isEmpty()) contentProjectFile = "{}";
         Log.i(TAG, "readDataFile: " + contentProjectFile);

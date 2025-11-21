@@ -51,6 +51,7 @@ import a.a.a.yB;
 import a.a.a.yq;
 import extensions.anbui.daydream.configs.Configs;
 import extensions.anbui.daydream.fragment.FragmentUtils;
+import extensions.anbui.daydream.project.DRProjectTracker;
 import kellinwood.security.zipsigner.ZipSigner;
 import kellinwood.security.zipsigner.optional.CustomKeySigner;
 import kellinwood.security.zipsigner.optional.LoadKeystoreException;
@@ -170,7 +171,7 @@ public class ExportProjectActivity extends BaseAppCompatActivity {
             sc_id = savedInstanceState.getString("sc_id");
         }
 
-        Configs.currentProjectID = sc_id;
+        DRProjectTracker.startNow(sc_id);
 
         sc_metadata = lC.b(sc_id);
         project_metadata = new yq(getApplicationContext(), wq.d(sc_id), sc_metadata);
@@ -221,6 +222,8 @@ public class ExportProjectActivity extends BaseAppCompatActivity {
         signAPKUIController(0, "");
 
         sign_apk_button.setOnClickListener(view -> {
+            if (!DRProjectTracker.isAllowBuildNow(ExportProjectActivity.this)) return;
+
             MaterialAlertDialogBuilder confirmationDialog = new MaterialAlertDialogBuilder(this);
             confirmationDialog.setTitle("Important note");
             confirmationDialog.setMessage("""
@@ -278,6 +281,8 @@ public class ExportProjectActivity extends BaseAppCompatActivity {
         exportAABUIController(0, "");
 
         export_aab_button.setOnClickListener(view -> {
+            if (!DRProjectTracker.isAllowBuildNow(ExportProjectActivity.this)) return;
+
             MaterialAlertDialogBuilder confirmationDialog = new MaterialAlertDialogBuilder(this);
             confirmationDialog.setTitle("Important note");
             confirmationDialog.setMessage("The generated .aab file must be signed.\nCopy your keystore to /Internal storage/sketchware/keystore/release_key.jks and enter the alias' password.");
@@ -468,6 +473,8 @@ public class ExportProjectActivity extends BaseAppCompatActivity {
 
         //Set On Click
         export_source_button.setOnClickListener(v -> {
+            if (!DRProjectTracker.isAllowBuildNow(ExportProjectActivity.this)) return;
+
             exportSourceUIController(1, "");
             new Thread() {
                 @Override
@@ -779,6 +786,8 @@ public class ExportProjectActivity extends BaseAppCompatActivity {
             String sc_id = activity.get().sc_id;
 
             try {
+                Configs.isBuilding = true;
+
                 onProgress("Deleting temporary files...", 1);
                 FileUtil.deleteFile(project_metadata.projectMyscPath);
 
@@ -1006,6 +1015,8 @@ public class ExportProjectActivity extends BaseAppCompatActivity {
                 onError();
 
                 cancel(true);
+            } finally {
+                Configs.isBuilding = false;
             }
         }
 
@@ -1211,6 +1222,8 @@ public class ExportProjectActivity extends BaseAppCompatActivity {
     //===============Export Source Code================
     private void exportSrc() {
         try {
+            Configs.isBuilding = true;
+
             runOnUiThread(() -> {
                 setStatusWhileExportingSourceCode(1, "Preparing...");
             });
@@ -1326,6 +1339,8 @@ public class ExportProjectActivity extends BaseAppCompatActivity {
                 SketchwareUtil.showAnErrorOccurredDialog(this, Log.getStackTraceString(e));
                 exportSourceUIController(0, "");
             });
+        } finally {
+            Configs.isBuilding = false;
         }
     }
 

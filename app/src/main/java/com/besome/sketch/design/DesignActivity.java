@@ -99,6 +99,7 @@ import extensions.anbui.daydream.configs.Configs;
 import extensions.anbui.daydream.activity.project.git.DayDreamGitActionsActivity;
 import extensions.anbui.daydream.git.DayDreamGitTools;
 import extensions.anbui.daydream.git.GitQuickLook;
+import extensions.anbui.daydream.project.DRProjectTracker;
 import mod.agus.jcoderz.editor.manage.permission.ManagePermissionActivity;
 import mod.agus.jcoderz.editor.manage.resource.ManageResourceActivity;
 import mod.hey.studios.activity.managers.assets.ManageAssetsActivity;
@@ -457,7 +458,7 @@ public class DesignActivity extends BaseAppCompatActivity implements View.OnClic
             sc_id = savedInstanceState.getString("sc_id");
         }
 
-        Configs.currentProjectID = sc_id;
+        DRProjectTracker.startNow(sc_id);
 
         r = new DB(getApplicationContext(), "P1");
         t = new DB(getApplicationContext(), "P12");
@@ -485,6 +486,8 @@ public class DesignActivity extends BaseAppCompatActivity implements View.OnClic
             }
 
             if (currentBuildTask != null && currentBuildTask.isBuilding) return;
+
+            if (!DRProjectTracker.isAllowBuildNow(DesignActivity.this)) return;
 
             BuildTask buildTask = new BuildTask(this);
             currentBuildTask = buildTask;
@@ -677,6 +680,8 @@ public class DesignActivity extends BaseAppCompatActivity implements View.OnClic
         if (!isStoragePermissionGranted()) {
             finish();
         }
+
+        DRProjectTracker.startNow(sc_id);
 
         long freeMegabytes = GB.c();
         if (freeMegabytes < 100L && freeMegabytes > 0L) {
@@ -1149,6 +1154,7 @@ public class DesignActivity extends BaseAppCompatActivity implements View.OnClic
             if (activity == null) return;
 
             activity.runOnUiThread(() -> {
+                DRProjectTracker.startNow(sc_id);
                 updateRunButton(true);
                 activity.r.a("P1I10", true);
                 activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
@@ -1162,6 +1168,7 @@ public class DesignActivity extends BaseAppCompatActivity implements View.OnClic
             if (activity == null) return;
 
             try {
+                Configs.isBuilding = true;
                 isBuilding = true;
                 var q = activity.q;
                 var sc_id = DesignActivity.sc_id;
@@ -1307,6 +1314,7 @@ public class DesignActivity extends BaseAppCompatActivity implements View.OnClic
                 LogUtil.e("DesignActivity$BuildTask", "Failed to build project", tr);
                 activity.indicateCompileErrorOccurred(Log.getStackTraceString(tr));
             } finally {
+                Configs.isBuilding = false;
                 isCanceling = false;
                 isBuilding = false;
                 activity.runOnUiThread(this::onPostExecute);

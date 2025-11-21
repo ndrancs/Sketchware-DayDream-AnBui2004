@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.besome.sketch.beans.ProjectLibraryBean
 import com.besome.sketch.editor.manage.library.material3.Material3LibraryManager
 import extensions.anbui.daydream.configs.Configs
+import extensions.anbui.daydream.project.DRProjectTracker
 import extensions.anbui.daydream.settings.DayDreamProjectSettings
 import pro.sketchware.databinding.ActivityDaydreamThemeSettingsBinding
 
@@ -26,6 +27,7 @@ class ThemeSettings : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         if (intent.hasExtra("sc_id")) {
             projectID = intent.getStringExtra("sc_id")
+            DRProjectTracker.startNow(projectID)
         } else {
             finish()
             return
@@ -53,20 +55,20 @@ class ThemeSettings : AppCompatActivity() {
 
     private fun initialize() {
         binding.swEnabled.setChecked(DayDreamProjectSettings.isUseTheme(projectID))
-        binding.swEnabled.setOnCheckedChangeListener { buttonView, isChecked ->
+        binding.swEnabled.setOnCheckedChangeListener { _, isChecked ->
             DayDreamProjectSettings.setUseTheme(projectID, isChecked)
             universalUIController(isChecked)
         }
-        binding.lnEnabled.setOnClickListener { v -> binding.swEnabled.toggle() }
+        binding.lnEnabled.setOnClickListener { _ -> binding.swEnabled.toggle() }
 
         binding.swDynamiccolor.setChecked(DayDreamProjectSettings.isUseDynamicColor(projectID))
-        binding.swDynamiccolor.setOnCheckedChangeListener { buttonView, isChecked ->
+        binding.swDynamiccolor.setOnCheckedChangeListener { _, isChecked ->
             DayDreamProjectSettings.setUseDynamicColor(
                 projectID,
                 isChecked
             )
         }
-        binding.lnDynamiccolor.setOnClickListener { v -> binding.swDynamiccolor.toggle() }
+        binding.lnDynamiccolor.setOnClickListener { _ -> binding.swDynamiccolor.toggle() }
 
         compatLibraryBean = jC.c(projectID).c()
 
@@ -107,7 +109,7 @@ class ThemeSettings : AppCompatActivity() {
             }
         }
 
-        binding.themeSelector.addOnButtonCheckedListener { group, checkedId, isChecked ->
+        binding.themeSelector.addOnButtonCheckedListener { _, checkedId, isChecked ->
             if (isChecked) {
                 when (checkedId) {
                     binding.selectM2.id -> {
@@ -115,7 +117,8 @@ class ThemeSettings : AppCompatActivity() {
                             Configs.material2Theme)
 
                         binding.lnDynamiccolor.visibility = GONE
-                        material3LibraryManager.appCombatLibraryBean.configurations.put("material3", false)
+                        material3LibraryManager.appCombatLibraryBean.configurations["material3"] =
+                            false
                     }
 
                     binding.selectM3.id -> {
@@ -123,7 +126,8 @@ class ThemeSettings : AppCompatActivity() {
                             Configs.material3Theme)
 
                         binding.lnDynamiccolor.visibility = VISIBLE
-                        material3LibraryManager.appCombatLibraryBean.configurations.put("material3", true)
+                        material3LibraryManager.appCombatLibraryBean.configurations["material3"] =
+                            true
                     }
 
                     binding.selectM3e.id -> {
@@ -133,31 +137,29 @@ class ThemeSettings : AppCompatActivity() {
                         )
 
                         binding.lnDynamiccolor.visibility = VISIBLE
-                        material3LibraryManager.appCombatLibraryBean.configurations.put("material3", true)
+                        material3LibraryManager.appCombatLibraryBean.configurations["material3"] =
+                            true
                     }
                 }
             }
         }
 
-        binding.dnSelector.addOnButtonCheckedListener { group, checkedId, isChecked ->
+        binding.dnSelector.addOnButtonCheckedListener { _, checkedId, isChecked ->
             if (isChecked) {
                 when (checkedId) {
                     binding.selectDay.id -> {
                         DayDreamProjectSettings.setThemeDayNight(projectID, Configs.DayTheme)
-                        material3LibraryManager.appCombatLibraryBean.configurations.put("theme", "Light")
+                        material3LibraryManager.appCombatLibraryBean.configurations["theme"] = "Light"
                     }
 
                     binding.selectNight.id -> {
                         DayDreamProjectSettings.setThemeDayNight(projectID, Configs.NightTheme)
-                        material3LibraryManager.appCombatLibraryBean.configurations.put("theme", "Dark")
+                        material3LibraryManager.appCombatLibraryBean.configurations["theme"] = "Dark"
                     }
 
                     binding.selectDaynight.id -> {
                         DayDreamProjectSettings.setThemeDayNight(projectID, Configs.DayNightTheme)
-                        material3LibraryManager.appCombatLibraryBean.configurations.put(
-                            "theme",
-                            "DayNight"
-                        )
+                        material3LibraryManager.appCombatLibraryBean.configurations["theme"] = "DayNight"
                     }
                 }
             }
@@ -179,7 +181,7 @@ class ThemeSettings : AppCompatActivity() {
     }
 
     private fun saveForSK() {
-        material3LibraryManager.appCombatLibraryBean.configurations.put("dynamic_colors", binding.swDynamiccolor.isChecked)
+        material3LibraryManager.appCombatLibraryBean.configurations["dynamic_colors"] = binding.swDynamiccolor.isChecked
         jC.c(projectID).b(compatLibraryBean)
     }
 

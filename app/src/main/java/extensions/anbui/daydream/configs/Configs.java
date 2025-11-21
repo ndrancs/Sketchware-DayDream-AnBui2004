@@ -6,6 +6,7 @@ import pro.sketchware.SketchApplication;
 
 public class Configs {
     public static int forMinSDK = 33;
+    public static boolean isBuilding = false;
     public static final String universalTAG = "DayDream";
     public static final String mainDataDir = "/.sketchware/";
     public static final String gitFolderDir = mainDataDir + "git/";

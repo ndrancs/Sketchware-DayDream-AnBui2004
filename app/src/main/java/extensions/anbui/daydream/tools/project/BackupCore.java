@@ -17,7 +17,6 @@ import extensions.anbui.daydream.secret.SecretUtils;
 import extensions.anbui.daydream.settings.SkSettings;
 
 import net.lingala.zip4j.ZipFile;
-import net.lingala.zip4j.exception.ZipException;
 
 public class BackupCore {
 
@@ -110,9 +109,6 @@ public class BackupCore {
             }
             backedupFilePath = backupDir + fileName;
             Log.i(TAG, "backup: " + backedupFilePath);
-        } catch (ZipException e) {
-            result = false;
-            Log.e(TAG, Objects.requireNonNull(e.getMessage()));
         } catch (Exception e) {
             result = false;
             Log.e(TAG, Objects.requireNonNull(e.getMessage()));
