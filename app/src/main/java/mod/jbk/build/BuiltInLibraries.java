@@ -2,7 +2,6 @@ package mod.jbk.build;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 
@@ -114,6 +113,7 @@ public class BuiltInLibraries {
     public static String ANDROIDX_VIEWPAGER = "viewpager-1.0.0";
     public static String ANDROIDX_VIEWPAGER2 = "viewpager2-1.0.0";
     public static String ANDROIDX_WORK_RUNTIME = "work-runtime-2.10.3";
+    public static String ANIMAL_SNIFFER_ANNOTATIONS = "animal-sniffer-annotations-1.26";
     public static String CIRCLEIMAGEVIEW = "circleimageview-3.1.0";
     public static String CODEVIEW = "CodeView-0.4.0";
     public static String COM_GOOGLE_ANDROID_GMS_PLAY_SERVICES_MEASUREMENT = "play-services-measurement-23.0.0";
@@ -155,10 +155,10 @@ public class BuiltInLibraries {
     public static String JETBRAINS_ANNOTATIONS = "org-jetbrains-annotations-23.0.0";
     public static String JUNIT_JUNIT = "junit-4.13.2";
     public static String JETBRAINS_KOTLIN_STDLIB = "kotlin-stdlib-2.0.21";
-//    public static String KERMIT_ANDROID = "kermit-android-2.0.4";
+    //    public static String KERMIT_ANDROID = "kermit-android-2.0.4";
 //    public static String KERMIT_CORE_ANDROID = "kermit-core-android-2.0.4";
     public static String KOTLIN_STDLIB_JDK7 = "kotlin-stdlib-jdk7-1.6.21";
-//    public static String KTOR_CLIENT_CONTENT_NEGOTIATION_JVM = "ktor-client-content-negotiation-jvm-3.0.1";
+    //    public static String KTOR_CLIENT_CONTENT_NEGOTIATION_JVM = "ktor-client-content-negotiation-jvm-3.0.1";
 //    public static String KTOR_CLIENT_CORE_JVM = "ktor-client-core-jvm-3.0.1";
 //    public static String KTOR_EVENTS_JVM = "ktor-events-jvm-3.0.1";
 //    public static String KTOR_HTTP_JVM = "ktor-http-jvm-3.0.1";
@@ -172,9 +172,9 @@ public class BuiltInLibraries {
 //    public static String KTOR_WEBSOCKETS_SERIALIZATION_JVM = "ktor-websocket-serialization-jvm-3.0.1";
     public static String LOTTIE = "lottie-3.4.0";
     public static String MATERIAL = "material-1.14.0-alpha07";
-    public static String OKHTTP = "okhttp-3.9.1";
-    public static String OKIO = "okio-1.17.4";
-    public static String OKIO_JVM = "okio-jvm-3.4.0";
+    public static String OKHTTP = "okhttp-4.12.0";
+    public static String OKIO = "okio-1.17.6";
+    public static String OKIO_JVM = "okio-jvm-3.6.0";
     public static String ORG_HAMCREAST_HAMCREAST_CORE = "hamcrest-core-1.3";
     public static String ORG_JETBRAINS_KOTLIN_KOTLIN_ANDROID_EXTENSIONS_RUNTIME = "kotlin-android-extensions-runtime-1.9.22";
     public static String ORG_JETBRAINS_KOTLIN_KOTLIN_PARCELIZE_RUNTIME = "kotlin-parcelize-runtime-1.9.22";
@@ -183,11 +183,11 @@ public class BuiltInLibraries {
     public static String ORG_JETBRAINS_KOTLINX_KOTLINX_COROUTINES_CORE_ANDROID = "kotlinx-coroutines-core-android-1.6.4";
     public static String ORG_JETBRAINS_KOTLINX_KOTLINX_COROUTINES_CORE_JVM = "kotlinx-coroutines-core-jvm-1.7.3";
     public static String ORG_JETBRAINS_KOTLINX_KOTLINX_COROUTINES_PLAY_SERVICES = "kotlinx-coroutines-play-services-1.9.0";
-//    public static String ORG_JETBRAINS_KOTLINX_KOTLINX_DATETIME_JVM = "kotlinx-datetime-jvm-0.7.1-0.6.x-compat";
+    //    public static String ORG_JETBRAINS_KOTLINX_KOTLINX_DATETIME_JVM = "kotlinx-datetime-jvm-0.7.1-0.6.x-compat";
 //    public static String ORG_JETBRAINS_KOTLINX_KOTLINX_IO_BYTESTRING_JVM = "kotlinx-io-bytestring-jvm-0.5.4";
 //    public static String ORG_JETBRAINS_KOTLINX_KOTLINX_IO_CORE_JVM = "kotlinx-io-core-jvm-0.5.4";
     public static String ORG_JETBRAINS_KOTLINX_KOTLINX_SERIALIZATION_CORE_JVM = "kotlinx-serialization-core-jvm-1.6.3";
-//    public static String ORG_JETBRAINS_KOTLINX_KOTLINX_SERIALIZATION_JSON_JVM = "kotlinx-serialization-json-jvm-1.9.0";
+    //    public static String ORG_JETBRAINS_KOTLINX_KOTLINX_SERIALIZATION_JSON_JVM = "kotlinx-serialization-json-jvm-1.9.0";
 //    public static String ORG_JETBRAINS_KOTLINX_KOTLINX_SERIALIZATION_JSON_IO_JVM = "kotlinx-serialization-json-io-jvm-1.9.0";
     public static String ORG_JETBRAINS_KOTLINX_KOTLINX_SERIALIZATION_PROTOBUF_JVM = "kotlinx-serialization-protobuf-jvm-1.6.3";
     public static String ORG_JETBRAINS_KOTLIN_KOTLIN_STDLIB_JDK8 = "kotlin-stdlib-jdk8-1.6.21";
@@ -216,6 +216,7 @@ public class BuiltInLibraries {
     public static String PLAY_SERVICES_TASKS = "play-services-tasks-18.3.2";
 //    public static String SLF4J_API = "slf4j-api-2.0.16";
 //    public static String SUPABASE_KT_ANDROID = "supabase-kt-android-3.0.2";
+    public static String SPOTBUGS_ANNOTATIONS = "spotbugs-annotations-4.9.8";
     public static String USER_MESSAGING_PLATFORM = "user-messaging-platform-2.0.0";
     public static String WAVE_SIDE_BAR = "wave-side-bar";
     public static String ANDROID_YOUTUBE_PLAYER = "android-youtube-player-10.0.5";
@@ -485,7 +486,6 @@ public class BuiltInLibraries {
                     PLAY_SERVICES_BASEMENT, PLAY_SERVICES_TASKS, COM_GOOGLE_FIREBASE_FIREBASE_ANNOTATIONS)),
 
 
-
             //Database
             new BuiltInLibrary(FIREBASE_DATABASE, List.of(FIREBASE_AUTH_INTEROP, FIREBASE_COMMON, FIREBASE_COMPONENTS, FIREBASE_DATABASE_COLLECTION, ANDROIDX_ANNOTATION,
                     PLAY_SERVICES_BASE, PLAY_SERVICES_BASEMENT, PLAY_SERVICES_TASKS, FIREBASE_APPCHECK_INTEROP, JETBRAINS_KOTLIN_STDLIB, ORG_JETBRAINS_KOTLINX_KOTLINX_COROUTINES_CORE_JVM)),
@@ -607,8 +607,8 @@ public class BuiltInLibraries {
             //==========Lottie==========
 
             //==========Okhttp==========
-            new BuiltInLibrary(OKHTTP, List.of(OKIO)),
-            new BuiltInLibrary(OKIO),
+            new BuiltInLibrary(OKHTTP, List.of(OKIO_JVM)),
+            new BuiltInLibrary(OKIO, List.of(ANIMAL_SNIFFER_ANNOTATIONS, SPOTBUGS_ANNOTATIONS, JUNIT_JUNIT)),
             new BuiltInLibrary(OKIO_JVM, List.of(ORG_JETBRAINS_KOTLIN_KOTLIN_STDLIB_JDK8, JETBRAINS_KOTLIN_STDLIB)),
             //==========Okhttp==========
 
@@ -663,10 +663,12 @@ public class BuiltInLibraries {
             //==========Annotations==========
 
             //==========Test==========
+            new BuiltInLibrary(ANIMAL_SNIFFER_ANNOTATIONS),
             new BuiltInLibrary(ORG_JSPECIFY_JSPECIFY),
             new BuiltInLibrary(COM_GOOGLE_ERRORPRONE_ERROR_PRONE_ANNOTATIONS, List.of(JUNIT_JUNIT)),
             new BuiltInLibrary(JUNIT_JUNIT, List.of(ORG_HAMCREAST_HAMCREAST_CORE)),
             new BuiltInLibrary(ORG_HAMCREAST_HAMCREAST_CORE),
+            new BuiltInLibrary(SPOTBUGS_ANNOTATIONS),
 //            new BuiltInLibrary(SLF4J_API),
             //==========Test==========
 
