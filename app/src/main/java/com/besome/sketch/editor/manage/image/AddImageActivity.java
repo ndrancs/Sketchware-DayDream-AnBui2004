@@ -7,6 +7,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.MediaStore;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.widget.CheckBox;
@@ -18,6 +20,7 @@ import android.widget.TextView;
 import com.besome.sketch.beans.ProjectResourceBean;
 import com.besome.sketch.lib.base.BaseDialogActivity;
 import com.besome.sketch.lib.ui.EasyDeleteEditText;
+import com.google.android.material.card.MaterialCardView;
 
 import java.io.File;
 import java.lang.ref.WeakReference;
@@ -33,9 +36,11 @@ import a.a.a.iB;
 import a.a.a.oB;
 import a.a.a.uq;
 import a.a.a.yy;
+import extensions.anbui.daydream.utils.TextUtils;
 import mod.hey.studios.util.Helper;
 import pro.sketchware.R;
 
+//DR
 public class AddImageActivity extends BaseDialogActivity implements View.OnClickListener {
     private ArrayList<ProjectResourceBean> existingImages;
     private TextView tv_add_photo;
@@ -44,14 +49,22 @@ public class AddImageActivity extends BaseDialogActivity implements View.OnClick
     private PB O;
     private EditText ed_input_edittext;
     private EasyDeleteEditText ed_input;
+    private LinearLayout optionsContainer;
     private ImageView tv_desc;
     private CheckBox chk_collection;
     private String sc_id;
     private ArrayList<ProjectResourceBean> images;
     private boolean multipleImagesPicked = false;
     private LinearLayout layout_img_inform = null;
-    private LinearLayout layout_img_modify = null;
+    private MaterialCardView layout_img_modify = null;
     private TextView tv_imgcnt = null;
+    MaterialCardView copyContainer;
+    TextView tvOringinalName;
+    TextView tvRidName;
+    TextView tvXmlName;
+    ImageView ivCopyName;
+    ImageView ivCopyRidName;
+    ImageView ivCopyXmlName;
     private boolean B = false;
     private String imageFilePath = null;
     private int imageRotationDegrees = 0;
@@ -158,8 +171,40 @@ public class AddImageActivity extends BaseDialogActivity implements View.OnClick
         ImageView img_vertical = findViewById(R.id.img_vertical);
         ImageView img_horizontal = findViewById(R.id.img_horizontal);
         ed_input = findViewById(R.id.ed_input);
+        optionsContainer = findViewById(R.id.options_container);
+
+        copyContainer = findViewById(R.id.copy_container);
+        tvOringinalName = findViewById(R.id.tv_copy_name);
+        tvRidName = findViewById(R.id.tv_copy_name_rid);
+        tvXmlName = findViewById(R.id.tv_copy_name_xml);
+        ivCopyName = findViewById(R.id.iv_copy_name);
+        ivCopyRidName = findViewById(R.id.iv_copy_name_rid);
+        ivCopyXmlName = findViewById(R.id.iv_copy_name_xml);
+
+        ivCopyName.setOnClickListener(v -> TextUtils.copyToClipboard(AddImageActivity.this, tvOringinalName.getText().toString()));
+        ivCopyRidName.setOnClickListener(v -> TextUtils.copyToClipboard(AddImageActivity.this, tvRidName.getText().toString()));
+        ivCopyXmlName.setOnClickListener(v -> TextUtils.copyToClipboard(AddImageActivity.this, tvXmlName.getText().toString()));
+
         ed_input_edittext = ed_input.getEditText();
         ed_input_edittext.setPrivateImeOptions("defaultInputmode=english;");
+
+        ed_input_edittext.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void afterTextChanged(Editable s) {
+                initializeCopy(s.toString());
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+        });
+
         ed_input.setHint(getString(R.string.design_manager_image_hint_enter_image_name));
         O = new PB(this, ed_input.getTextInputLayout(), uq.b, getReservedImageNames());
         O.a(1);
@@ -190,15 +235,20 @@ public class AddImageActivity extends BaseDialogActivity implements View.OnClick
             imageScaleY = image.flipVertical;
             O = new PB(this, ed_input.getTextInputLayout(), uq.b, getReservedImageNames(), image.resName);
             O.a(1);
-            ed_input_edittext.setText(image.resName);
-            ed_input_edittext.setEnabled(false);
-            chk_collection.setEnabled(false);
+            //ed_input_edittext.setText(image.resName);
+            //ed_input_edittext.setEnabled(false);
+            //chk_collection.setEnabled(false);
+            ed_input.setVisibility(View.GONE);
+            optionsContainer.setVisibility(View.GONE);
             tv_add_photo.setVisibility(View.GONE);
             if (image.savedPos == 0) {
                 setImageFromFile(a(image));
             } else {
                 setImageFromFile(image.resFullName);
             }
+            initializeCopy(image.resName);
+        } else {
+            copyContainer.setVisibility(View.GONE);
         }
     }
 
@@ -256,6 +306,7 @@ public class AddImageActivity extends BaseDialogActivity implements View.OnClick
         }
         if (ed_input_edittext != null && (ed_input_edittext.getText() == null || ed_input_edittext.getText().length() <= 0)) {
             ed_input_edittext.setText(path.substring(path.lastIndexOf("/") + 1, indexOfFilenameExtension));
+            initializeCopy(ed_input_edittext.getText().toString());
         }
         try {
             imageExifOrientation = iB.a(path);
@@ -449,5 +500,18 @@ public class AddImageActivity extends BaseDialogActivity implements View.OnClick
         public void a(String str) {
             activity.get().h();
         }
+    }
+
+    private void initializeCopy(String name) {
+        if (name.isEmpty()) {
+            copyContainer.setVisibility(View.GONE);
+            return;
+        } else {
+            copyContainer.setVisibility(View.VISIBLE);
+        }
+
+        tvOringinalName.setText(name);
+        tvRidName.setText("R.drawable." + name);
+        tvXmlName.setText("@drawable/" + name);
     }
 }
