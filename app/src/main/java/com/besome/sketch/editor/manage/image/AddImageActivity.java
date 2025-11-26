@@ -36,6 +36,8 @@ import a.a.a.iB;
 import a.a.a.oB;
 import a.a.a.uq;
 import a.a.a.yy;
+import extensions.anbui.daydream.project.DRProjectImage;
+import extensions.anbui.daydream.utils.ImageUtils;
 import extensions.anbui.daydream.utils.TextUtils;
 import mod.hey.studios.util.Helper;
 import pro.sketchware.R;
@@ -74,6 +76,8 @@ public class AddImageActivity extends BaseDialogActivity implements View.OnClick
     private String dir_path = "";
     private boolean editing = false;
     private ProjectResourceBean image = null;
+    ImageView ivInvertColor;
+    boolean isInvertedColor = false;
 
     private void flipImageVertically() {
         if (imageFilePath != null && !imageFilePath.isEmpty()) {
@@ -172,6 +176,20 @@ public class AddImageActivity extends BaseDialogActivity implements View.OnClick
         ImageView img_horizontal = findViewById(R.id.img_horizontal);
         ed_input = findViewById(R.id.ed_input);
         optionsContainer = findViewById(R.id.options_container);
+
+        ivInvertColor = findViewById(R.id.img_invert_color);
+
+        ivInvertColor.setOnClickListener(v -> {
+            if (isInvertedColor) {
+                preview.setColorFilter(null);
+                ivInvertColor.setImageResource(R.drawable.invert_colors_24px);
+            } else {
+                ImageUtils.invertColor(preview);
+                ivInvertColor.setImageResource(R.drawable.invert_colors_off_24px);
+            }
+
+            isInvertedColor = !isInvertedColor;
+        });
 
         copyContainer = findViewById(R.id.copy_container);
         tvOringinalName = findViewById(R.id.tv_copy_name);
@@ -439,6 +457,10 @@ public class AddImageActivity extends BaseDialogActivity implements View.OnClick
                         image.flipVertical = activity.imageScaleY;
                         image.flipHorizontal = activity.imageScaleX;
                         image.isEdited = true;
+                    }
+
+                    if (activity.isInvertedColor) {
+                        DRProjectImage.invertColor(activity.imageFilePath);
                     }
                 } else {
                     var toAdd = new ArrayList<ProjectResourceBean>();
