@@ -7,4 +7,9 @@ object DRProjectImage {
     fun invertColor(imageFilePath : String) {
         ImageUtils.invertColor(imageFilePath, imageFilePath)
     }
+
+    @JvmStatic
+    fun fillColor(color : Int, imageFilePath : String) {
+        ImageUtils.colorizeToSingleColor(color, imageFilePath, imageFilePath)
+    }
 }

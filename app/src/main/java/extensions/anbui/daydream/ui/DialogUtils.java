@@ -16,6 +16,7 @@ import com.google.android.material.color.MaterialColors;
 import java.util.Objects;
 
 import extensions.anbui.daydream.configs.Configs;
+import extensions.anbui.daydream.utils.ColorUtils;
 import pro.sketchware.R;
 
 public class DialogUtils {

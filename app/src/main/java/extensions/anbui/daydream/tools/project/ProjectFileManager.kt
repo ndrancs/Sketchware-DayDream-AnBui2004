@@ -4,7 +4,6 @@ import android.app.Activity
 import android.util.Log
 import android.widget.TextView
 import androidx.core.net.toUri
-import com.android.tools.r8.internal.re
 import com.besome.sketch.export.ExportSource
 import extensions.anbui.daydream.configs.Configs
 import extensions.anbui.daydream.file.FileUtils

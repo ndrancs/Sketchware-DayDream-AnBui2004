@@ -20,12 +20,9 @@ import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.StandardCopyOption;
 import java.nio.file.attribute.BasicFileAttributes;
-
-import mod.agus.jcoderz.dx.cf.code.ConcreteMethod;
 
 public class FilesTools {
     public static String TAG = "FilesTools";
@@ -194,4 +191,8 @@ public class FilesTools {
         }
     }
 
+    public static String getFileName(String path) {
+        File file = new File(path);
+        return file.getName();
+    }
 }

@@ -23,9 +23,15 @@ public class ToolCore {
         Log.i(TAG, "copyToTemp: " + path);
         FileUtils.copyFile(path, FileUtils.getInternalStorageDir() + Configs.tempDayDreamFolderDir);
     }
+
     public static String getTempFilePath(String path) {
         Log.i(TAG, "getTempFilePath: " + path);
         return FileUtils.getInternalStorageDir() + Configs.tempDayDreamFolderDir + path;
+    }
+
+    public static String getTempImageFilePath(String path) {
+        Log.i(TAG, "getTempFilePath: " + path);
+        return FileUtils.getInternalStorageDir() + Configs.tempImageDayDreamFolderDir + path;
     }
 
     public static void cleanOutTheRecyclingBin() {
@@ -100,7 +106,7 @@ public class ToolCore {
                 result.append(content).append("\n");
             }
         }
-        Log.i(TAG, "getAllUsingLocalLib: " + result.toString());
+        Log.i(TAG, "getAllUsingLocalLib: " + result);
         return result.toString();
     }
 

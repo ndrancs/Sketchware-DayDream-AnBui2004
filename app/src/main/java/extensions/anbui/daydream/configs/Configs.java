@@ -31,6 +31,7 @@ public class Configs {
     public static final String tempDayDreamFolderDir = mainDataDir + "daydreamtemp/";
     public static final String tempUnsavedDataDayDreamFolderDir = mainDataDir + "daydreamtemp/bak/";
     public static final String tempBackupDayDreamFolderDir = mainDataDir + "daydreamtemp/backup/";
+    public static final String tempImageDayDreamFolderDir = mainDataDir + "daydreamtemp/image/";
     public static final String recycleBinDayDreamFolderDir = mainDataDir + "recyclebin/";
     public static final String encryptionKey = "sketchwaresecure";
     public static final String defaultQuickLookProjectID = "000";

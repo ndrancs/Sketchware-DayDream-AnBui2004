@@ -43,8 +43,8 @@ public class DayDreamCloneTool {
         new Thread(() -> {
             boolean result = CloneCore.startNow(projectID, progress_text);
             activity.runOnUiThread(() -> {
+                progressDialog.dismiss();
                 if (result) {
-                    progressDialog.dismiss();
                     DialogUtils.oneDialog(activity,
                             "Done",
                             "Cloned your project.",
@@ -57,7 +57,6 @@ public class DayDreamCloneTool {
                         ((MainActivity) activity).n();
                     }
                 } else {
-                    progressDialog.dismiss();
                     DialogUtils.oneDialog(activity,
                             "Error",
                             "Unable to clone your project.",

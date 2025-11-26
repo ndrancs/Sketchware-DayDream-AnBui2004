@@ -42,8 +42,8 @@ public class DayDreamCleanUpTemporaryFiles {
         new Thread(() -> {
             boolean result = CleanUpCore.removeTemporaryFiles(projectID);
             activity.runOnUiThread(() -> {
+                progressDialog.dismiss();
                 if (result) {
-                    progressDialog.dismiss();
                     DialogUtils.oneDialog(activity,
                             "Done",
                             "Cleaned up temporary files.",
@@ -52,7 +52,6 @@ public class DayDreamCleanUpTemporaryFiles {
                             R.drawable.ic_mtrl_check,
                             true, null, null);
                 } else {
-                    progressDialog.dismiss();
                     DialogUtils.oneDialog(activity,
                             "Error",
                             "Unable to clean up temporary files.",

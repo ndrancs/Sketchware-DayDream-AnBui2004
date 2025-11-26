@@ -9,6 +9,7 @@ import android.os.Handler;
 import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.widget.CheckBox;
@@ -25,6 +26,8 @@ import com.google.android.material.card.MaterialCardView;
 import java.io.File;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Objects;
 
 import a.a.a.By;
 import a.a.a.HB;
@@ -36,7 +39,12 @@ import a.a.a.iB;
 import a.a.a.oB;
 import a.a.a.uq;
 import a.a.a.yy;
+import extensions.anbui.daydream.configs.Configs;
+import extensions.anbui.daydream.file.FileUtils;
+import extensions.anbui.daydream.file.FilesTools;
 import extensions.anbui.daydream.project.DRProjectImage;
+import extensions.anbui.daydream.tools.ToolCore;
+import extensions.anbui.daydream.utils.ColorUtils;
 import extensions.anbui.daydream.utils.ImageUtils;
 import extensions.anbui.daydream.utils.TextUtils;
 import mod.hey.studios.util.Helper;
@@ -44,6 +52,7 @@ import pro.sketchware.R;
 
 //DR
 public class AddImageActivity extends BaseDialogActivity implements View.OnClickListener {
+    private final String TAG = "AddImageActivity";
     private ArrayList<ProjectResourceBean> existingImages;
     private TextView tv_add_photo;
     private ImageView preview;
@@ -60,13 +69,10 @@ public class AddImageActivity extends BaseDialogActivity implements View.OnClick
     private LinearLayout layout_img_inform = null;
     private MaterialCardView layout_img_modify = null;
     private TextView tv_imgcnt = null;
-    MaterialCardView copyContainer;
-    TextView tvOringinalName;
-    TextView tvRidName;
-    TextView tvXmlName;
-    ImageView ivCopyName;
-    ImageView ivCopyRidName;
-    ImageView ivCopyXmlName;
+    private MaterialCardView copyContainer;
+    private TextView tvOringinalName;
+    private TextView tvRidName;
+    private TextView tvXmlName;
     private boolean B = false;
     private String imageFilePath = null;
     private int imageRotationDegrees = 0;
@@ -76,8 +82,11 @@ public class AddImageActivity extends BaseDialogActivity implements View.OnClick
     private String dir_path = "";
     private boolean editing = false;
     private ProjectResourceBean image = null;
-    ImageView ivInvertColor;
+    private final HashMap<String, Object> mapPickedColor = new HashMap<>();
+    private ImageView ivInvertColor;
+    private ImageView ivFillColor;
     boolean isInvertedColor = false;
+    String backupOringinalFilePath = "";
 
     private void flipImageVertically() {
         if (imageFilePath != null && !imageFilePath.isEmpty()) {
@@ -96,6 +105,13 @@ public class AddImageActivity extends BaseDialogActivity implements View.OnClick
         if (requestCode == 215 && preview != null) {
             preview.setEnabled(true);
             if (resultCode == RESULT_OK) {
+                preview.setColorFilter(null);
+                mapPickedColor.clear();
+                if (isInvertedColor) {
+                    ivInvertColor.setImageResource(R.drawable.invert_colors_24px);
+                    isInvertedColor = false;
+                }
+
                 tv_add_photo.setVisibility(View.GONE);
                 imageRotationDegrees = 0;
                 imageScaleY = 1;
@@ -184,6 +200,7 @@ public class AddImageActivity extends BaseDialogActivity implements View.OnClick
                 preview.setColorFilter(null);
                 ivInvertColor.setImageResource(R.drawable.invert_colors_24px);
             } else {
+                mapPickedColor.clear();
                 ImageUtils.invertColor(preview);
                 ivInvertColor.setImageResource(R.drawable.invert_colors_off_24px);
             }
@@ -191,13 +208,20 @@ public class AddImageActivity extends BaseDialogActivity implements View.OnClick
             isInvertedColor = !isInvertedColor;
         });
 
+        ivFillColor = findViewById(R.id.img_fill_color);
+
+        ivFillColor.setOnClickListener(v -> {
+            mapPickedColor.clear();
+            ColorUtils.colorPickerLegacy(AddImageActivity.this, v, mapPickedColor,this::onColorFillterPicked);
+        });
+
         copyContainer = findViewById(R.id.copy_container);
         tvOringinalName = findViewById(R.id.tv_copy_name);
         tvRidName = findViewById(R.id.tv_copy_name_rid);
         tvXmlName = findViewById(R.id.tv_copy_name_xml);
-        ivCopyName = findViewById(R.id.iv_copy_name);
-        ivCopyRidName = findViewById(R.id.iv_copy_name_rid);
-        ivCopyXmlName = findViewById(R.id.iv_copy_name_xml);
+        ImageView ivCopyName = findViewById(R.id.iv_copy_name);
+        ImageView ivCopyRidName = findViewById(R.id.iv_copy_name_rid);
+        ImageView ivCopyXmlName = findViewById(R.id.iv_copy_name_xml);
 
         ivCopyName.setOnClickListener(v -> TextUtils.copyToClipboard(AddImageActivity.this, tvOringinalName.getText().toString()));
         ivCopyRidName.setOnClickListener(v -> TextUtils.copyToClipboard(AddImageActivity.this, tvRidName.getText().toString()));
@@ -317,6 +341,16 @@ public class AddImageActivity extends BaseDialogActivity implements View.OnClick
 
     private void setImageFromFile(String path) {
         imageFilePath = path;
+        try {
+            if (!imageFilePath.contains(Configs.resImagesFolderDir)) {
+                backupOringinalFilePath = ToolCore.getTempImageFilePath(sc_id) + "/" + FilesTools.getFileName(path);
+                FilesTools.startCopy(path, ToolCore.getTempImageFilePath(sc_id));
+                imageFilePath = backupOringinalFilePath;
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "setImageFromFile: ", e);
+        }
+
         preview.setImageBitmap(iB.a(path, 1024, 1024));
         int indexOfFilenameExtension = path.lastIndexOf(".");
         if (path.endsWith(".9.png")) {
@@ -431,6 +465,12 @@ public class AddImageActivity extends BaseDialogActivity implements View.OnClick
             try {
                 publishProgress("Now processing..");
                 if (!activity.multipleImagesPicked) {
+                    if (activity.isInvertedColor) {
+                        DRProjectImage.invertColor(activity.imageFilePath);
+                    } else if (activity.mapPickedColor.containsKey("selected_color")) {
+                        DRProjectImage.fillColor(Integer.parseInt(Objects.requireNonNull(activity.mapPickedColor.get("selected_color")).toString()), activity.imageFilePath);
+                    }
+
                     if (!activity.editing) {
                         var image = new ProjectResourceBean(ProjectResourceBean.PROJECT_RES_TYPE_FILE,
                                 Helper.getText(activity.ed_input_edittext).trim(), activity.imageFilePath);
@@ -457,10 +497,6 @@ public class AddImageActivity extends BaseDialogActivity implements View.OnClick
                         image.flipVertical = activity.imageScaleY;
                         image.flipHorizontal = activity.imageScaleX;
                         image.isEdited = true;
-                    }
-
-                    if (activity.isInvertedColor) {
-                        DRProjectImage.invertColor(activity.imageFilePath);
                     }
                 } else {
                     var toAdd = new ArrayList<ProjectResourceBean>();
@@ -535,5 +571,16 @@ public class AddImageActivity extends BaseDialogActivity implements View.OnClick
         tvOringinalName.setText(name);
         tvRidName.setText("R.drawable." + name);
         tvXmlName.setText("@drawable/" + name);
+    }
+
+    private void onColorFillterPicked() {
+        if (!mapPickedColor.containsKey("selected_color")) return;
+
+        if (isInvertedColor) {
+            ivInvertColor.setImageResource(R.drawable.invert_colors_24px);
+            isInvertedColor = false;
+        }
+
+        preview.setColorFilter(Integer.parseInt(Objects.requireNonNull(mapPickedColor.get("selected_color")).toString()));
     }
 }

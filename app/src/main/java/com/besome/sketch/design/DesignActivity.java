@@ -100,6 +100,7 @@ import extensions.anbui.daydream.activity.project.git.DayDreamGitActionsActivity
 import extensions.anbui.daydream.git.DayDreamGitTools;
 import extensions.anbui.daydream.git.GitQuickLook;
 import extensions.anbui.daydream.project.DRProjectTracker;
+import extensions.anbui.daydream.tools.project.CleanUpCore;
 import mod.agus.jcoderz.editor.manage.permission.ManagePermissionActivity;
 import mod.agus.jcoderz.editor.manage.resource.ManageResourceActivity;
 import mod.hey.studios.activity.managers.assets.ManageAssetsActivity;
@@ -631,6 +632,7 @@ public class DesignActivity extends BaseAppCompatActivity implements View.OnClic
     public void onDestroy() {
         super.onDestroy();
         unregisterReceiver(buildCancelReceiver);
+        CleanUpCore.cleanAfterExitDesign(sc_id);
     }
 
     @Override
