@@ -4,7 +4,8 @@ import java.util.ArrayList;
 
 import a.a.a.Gx;
 import a.a.a.Lx;
-import extensions.anbui.daydream.java.JavaCodeGenerator;
+import extensions.anbui.daydream.java.generator.DRFirebaseCodeGenerator;
+import extensions.anbui.daydream.java.generator.DRJavaCodeGenerator;
 import mod.hilal.saif.events.EventsHandler;
 import pro.sketchware.R;
 import pro.sketchware.blocks.generator.components.analyzers.BlockReturnAnalyzer;
@@ -696,10 +697,7 @@ public class ManageEvent {
                     targetId + ".setOnScrollListener(new AbsListView.OnScrollListener() {\r\n" +
                             listenerLogic + "\r\n" +
                             "});";
-            case "authsignInWithPhoneAuth" ->
-                    targetId + "_phoneAuthListener = new OnCompleteListener<AuthResult>() {\r\n" +
-                            listenerLogic + "\r\n" +
-                            "};";
+            case "authsignInWithPhoneAuth" -> DRFirebaseCodeGenerator.authsignInWithPhoneAuth(targetId, listenerLogic);
             case "FragmentStatePagerAdapter" -> {
                 String className = Lx.a(targetId + "Fragment", false);
                 yield "public class " + className + " extends FragmentStatePagerAdapter {\r\n" +
@@ -733,10 +731,7 @@ public class ManageEvent {
                     targetId + "_onFailureLink = new OnFailureListener() {\r\n" +
                             listenerLogic + "\r\n" +
                             "};";
-            case "authUpdatePasswordComplete" ->
-                    targetId + "_updatePasswordListener = new OnCompleteListener<Void>() {\r\n" +
-                            listenerLogic + "\r\n" +
-                            "};";
+            case "authUpdatePasswordComplete" -> DRFirebaseCodeGenerator.authUpdatePasswordComplete(targetId, listenerLogic);
             case "OnGridItemClickListener" ->
                     targetId + ".setOnItemClickListener(new AdapterView.OnItemClickListener() {\r\n" +
                             listenerLogic + "\r\n" +
@@ -749,14 +744,8 @@ public class ManageEvent {
                     targetId + ".setOnTimeChangedListener(new TimePicker.OnTimeChangedListener() {\r\n" +
                             listenerLogic + "\r\n" +
                             "});";
-            case "authDeleteUserComplete" ->
-                    targetId + "_deleteUserListener = new OnCompleteListener<Void>() {\r\n" +
-                            listenerLogic + "\r\n" +
-                            "};";
-            case "authUpdateProfileComplete" ->
-                    targetId + "_updateProfileListener = new OnCompleteListener<Void>() {\r\n" +
-                            listenerLogic + "\r\n" +
-                            "};";
+            case "authDeleteUserComplete" -> DRFirebaseCodeGenerator.authDeleteUserComplete(targetId, listenerLogic);
+            case "authUpdateProfileComplete" -> DRFirebaseCodeGenerator.authUpdateProfileComplete(targetId, listenerLogic);
             case "OnPageChangeListener" ->
                     targetId + ".addOnPageChangeListener(new ViewPager.OnPageChangeListener() {\r\n" +
                             listenerLogic + "\r\n" +
@@ -765,14 +754,8 @@ public class ManageEvent {
                     targetId + ".setOnErrorListener(new MediaPlayer.OnErrorListener() {\r\n" +
                             listenerLogic + "\r\n" +
                             "});";
-            case "authEmailVerificationSent" ->
-                    targetId + "_emailVerificationSentListener = new OnCompleteListener<Void>() {\r\n" +
-                            listenerLogic + "\r\n" +
-                            "};";
-            case "authUpdateEmailComplete" ->
-                    targetId + "_updateEmailListener = new OnCompleteListener<Void>() {\r\n" +
-                            listenerLogic + "\r\n" +
-                            "};";
+            case "authEmailVerificationSent" -> DRFirebaseCodeGenerator.authEmailVerificationSent(targetId, listenerLogic);
+            case "authUpdateEmailComplete" -> DRFirebaseCodeGenerator.authUpdateEmailComplete(targetId, listenerLogic);
             case "OnPreparedListener" ->
                     targetId + ".setOnPreparedListener(new MediaPlayer.OnPreparedListener() {\r\n" +
                             listenerLogic + "\r\n" +
@@ -810,10 +793,7 @@ public class ManageEvent {
                     targetId + ".setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {\r\n" +
                             listenerLogic + "\r\n" +
                             "});";
-            case "googleSignInListener" ->
-                    targetId + "_googleSignInListener = new OnCompleteListener<AuthResult>() {\r\n" +
-                            listenerLogic + "\r\n" +
-                            "};";
+            case "googleSignInListener" -> DRFirebaseCodeGenerator.googleSignInListener(targetId, listenerLogic);
             case "interstitialAdLoadCallback" ->
                     "_" + targetId + "_interstitial_ad_load_callback = new InterstitialAdLoadCallback() {\r\n" +
                             listenerLogic + "\r\n" +
@@ -829,7 +809,7 @@ public class ManageEvent {
                     "_" + targetId + "_rewarded_ad_load_callback = new RewardedAdLoadCallback() {\r\n" +
                             listenerLogic + "\r\n" +
                             "};";
-            case "onUserEarnedRewardListener" -> JavaCodeGenerator.setOnUserEarnedRewardListenerEvent(targetId, listenerLogic);
+            case "onUserEarnedRewardListener" -> DRJavaCodeGenerator.setOnUserEarnedRewardListenerEvent(targetId, listenerLogic);
             default -> EventsHandler.getListenerCode(listenerName, targetId, listenerLogic);
         };
     }

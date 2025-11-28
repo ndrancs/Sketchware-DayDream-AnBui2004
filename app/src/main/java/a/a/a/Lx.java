@@ -11,7 +11,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 
-import extensions.anbui.daydream.java.JavaCodeGenerator;
+import extensions.anbui.daydream.java.generator.DRFirebaseCodeGenerator;
+import extensions.anbui.daydream.java.generator.DRJavaCodeGenerator;
 import mod.agus.jcoderz.editor.event.ManageEvent;
 import mod.agus.jcoderz.handle.component.ConstVarComponent;
 import mod.hey.studios.build.BuildSettings;
@@ -1638,7 +1639,7 @@ public class Lx {
 
     public static String getListenerCode(String eventName, String componentName, String eventLogic) {
         return switch (eventName) {
-            case "onClickListener" -> JavaCodeGenerator.setOnClickListenerEvent(componentName, eventLogic);
+            case "onClickListener" -> DRJavaCodeGenerator.setOnClickListenerEvent(componentName, eventLogic);
             case "sensorEventListener" -> {
                 String sensorEventListenerName = "_" + componentName + "_sensor_listener";
                 yield sensorEventListenerName + " = new SensorEventListener() {\r\n"
@@ -1703,10 +1704,7 @@ public class Lx {
                     "_" + componentName.replace("binding.", "") + "_controller.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {\r\n"
                             + eventLogic + "\r\n"
                             + "});";
-            case "authCreateUserComplete" ->
-                    "_" + componentName + "_create_user_listener = new OnCompleteListener<AuthResult>() {\r\n"
-                            + eventLogic + "\r\n"
-                            + "};";
+            case "authCreateUserComplete" -> DRFirebaseCodeGenerator.authCreateUserComplete(componentName, eventLogic);
             case "webViewClient" -> componentName + ".setWebViewClient(new WebViewClient() {\r\n"
                     + eventLogic + "\r\n"
                     + "});";
@@ -1736,10 +1734,7 @@ public class Lx {
                     componentName + ".setOnItemClickListener(new AdapterView.OnItemClickListener() {\r\n"
                             + eventLogic + "\r\n"
                             + "});";
-            case "authSignInUserComplete" ->
-                    "_" + componentName + "_sign_in_listener = new OnCompleteListener<AuthResult>() {\r\n"
-                            + eventLogic + "\r\n"
-                            + "};";
+            case "authSignInUserComplete" -> DRFirebaseCodeGenerator.authSignInUserComplete(componentName, eventLogic);
             case "onSeekBarChangeListener" ->
                     componentName + ".setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {\r\n"
                             + eventLogic + "\r\n"
@@ -1776,11 +1771,8 @@ public class Lx {
                             + "public void onProviderDisabled(String provider) {\r\n"
                             + "}\r\n"
                             + "};";
-            case "authResetEmailSent" ->
-                    "_" + componentName + "_reset_password_listener = new OnCompleteListener<Void>() {\r\n"
-                            + eventLogic + "\r\n"
-                            + "};";
-            case "onCheckChangedListener" -> JavaCodeGenerator.setOnCheckedChangedListenerEvent(componentName, eventLogic);
+            case "authResetEmailSent" -> DRFirebaseCodeGenerator.authResetEmailSent(componentName, eventLogic);
+            case "onCheckChangedListener" -> DRJavaCodeGenerator.setOnCheckedChangedListenerEvent(componentName, eventLogic);
             case "onUploadProgressListener" ->
                     "_" + componentName + "_upload_progress_listener = new OnProgressListener<UploadTask.TaskSnapshot>() {\r\n"
                             + eventLogic + "\r\n"

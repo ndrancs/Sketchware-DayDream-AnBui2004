@@ -14,8 +14,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
-import extensions.anbui.daydream.java.JavaCodeGenerator;
-import extensions.anbui.daydream.utils.TextUtils;
+import extensions.anbui.daydream.java.generator.DRJavaCodeGenerator;
 import mod.hey.studios.editor.manage.block.ExtraBlockInfo;
 import mod.hey.studios.editor.manage.block.v2.BlockLoader;
 import mod.hey.studios.moreblock.ReturnMoreblockManager;
@@ -386,14 +385,14 @@ public class Fx {
                 break;
             case "if":
                 stack = bean.subStack1;
-                opcode = JavaCodeGenerator.ifLogic(params.get(0), a(String.valueOf(stack), ""));
+                opcode = DRJavaCodeGenerator.ifLogic(params.get(0), a(String.valueOf(stack), ""));
                 break;
             case "ifElse":
                 stack = bean.subStack1;
                 String ifBlock = stack >= 0 ? a(String.valueOf(stack), "") : "";
                 stack = bean.subStack2;
                 String elseBlock = stack >= 0 ? a(String.valueOf(stack), "") : "";
-                opcode = JavaCodeGenerator.ifElseLogic(params.get(0), ifBlock, elseBlock);
+                opcode = DRJavaCodeGenerator.ifElseLogic(params.get(0), ifBlock, elseBlock);
                 break;
             case "break":
                 opcode = "break;";
@@ -413,13 +412,13 @@ public class Fx {
                 opcode = String.format("%s %s %s", params.get(0), bean.opCode, params.get(1));
                 break;
             case ">":
-                opcode = JavaCodeGenerator.compareLargerNumbers(params.get(0), params.get(1));
+                opcode = DRJavaCodeGenerator.compareLargerNumbers(params.get(0), params.get(1));
                 break;
             case "<":
-                opcode = JavaCodeGenerator.compareSmallerNumbers(params.get(0), params.get(1));
+                opcode = DRJavaCodeGenerator.compareSmallerNumbers(params.get(0), params.get(1));
                 break;
             case "=":
-                opcode = JavaCodeGenerator.compareEqualNumbers(params.get(0), params.get(1));
+                opcode = DRJavaCodeGenerator.compareEqualNumbers(params.get(0), params.get(1));
                 break;
             case "&&":
             case "||":
@@ -900,13 +899,13 @@ public class Fx {
                 opcode = String.format("%s.vibrate((long)(%s));", params.get(0), params.get(1));
                 break;
             case "timerAfter":
-                opcode = JavaCodeGenerator.timerDelay(params.get(0), (bean.subStack1 >= 0) ? a(String.valueOf(bean.subStack1), "") : "", params.get(1));
+                opcode = DRJavaCodeGenerator.timerDelay(params.get(0), (bean.subStack1 >= 0) ? a(String.valueOf(bean.subStack1), "") : "", params.get(1));
                 break;
             case "timerEvery":
-                opcode = JavaCodeGenerator.timerRepeatEvery(params.get(0), (bean.subStack1 >= 0) ? a(String.valueOf(bean.subStack1), "") : "", params.get(1), params.get(2));
+                opcode = DRJavaCodeGenerator.timerRepeatEvery(params.get(0), (bean.subStack1 >= 0) ? a(String.valueOf(bean.subStack1), "") : "", params.get(1), params.get(2));
                 break;
             case "timerCancel":
-                opcode = JavaCodeGenerator.timerCancel(params.get(0));
+                opcode = DRJavaCodeGenerator.timerCancel(params.get(0));
                 break;
             case "firebaseAdd":
                 opcode = String.format("%s.child(%s).updateChildren(%s);", params.get(0), params.get(1), params.get(2));

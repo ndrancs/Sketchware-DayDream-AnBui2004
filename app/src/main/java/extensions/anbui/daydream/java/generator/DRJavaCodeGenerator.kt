@@ -1,9 +1,12 @@
-package extensions.anbui.daydream.java
+package extensions.anbui.daydream.java.generator
 
 import extensions.anbui.daydream.configs.Configs
 import extensions.anbui.daydream.project.ProjectBuildConfigs
 
-object JavaCodeGenerator {
+object DRJavaCodeGenerator {
+    /**
+     * If else
+     */
     @JvmStatic
     fun ifLogic(condition: String, logic: String): String {
         if (logic.isEmpty() || condition == "false") return ""
@@ -50,6 +53,10 @@ object JavaCodeGenerator {
         }
     }
 
+
+    /**
+     * Timer
+     */
     @JvmStatic
     fun timerDelay(componentName: String, logic: String, delay: String): String {
         if (logic.isEmpty()) {
@@ -82,24 +89,14 @@ object JavaCodeGenerator {
     }
 
     @JvmStatic
-    fun timerCancel(componentName: String) : String {
+    fun timerCancel(componentName: String): String {
         return "try { $componentName.cancel(); } catch (Exception ignored) {}"
     }
 
-    @JvmStatic
-    fun runOnUiThread(logic: String): String {
-        return if (isUseLambda(Configs.currentProjectID)) {
-            if (isUseSingleLineLambda(logic)) {
-                "runOnUiThread(() -> ${logic.dropLast(1)});"
-            } else {
-                "runOnUiThread(() -> {\r\n$logic\r\n});"
-            }
-        } else {
-            "runOnUiThread(new Runnable() {\r\n@Override\r\npublic void run() {\r\n$logic\r\n}\r\n});"
-        }
-    }
 
-
+    /**
+     * Click
+     */
     @JvmStatic
     fun setOnClickListenerEvent(componentName: String, logic: String): String {
         return if (isUseLambda(Configs.currentProjectID)) {
@@ -132,6 +129,10 @@ object JavaCodeGenerator {
         }
     }
 
+
+    /**
+     * Switch and checkbox
+     */
     @JvmStatic
     fun setOnCheckedChangedListenerEvent(componentName: String, logic: String): String {
         return if (isUseLambda(Configs.currentProjectID)) {
@@ -148,6 +149,10 @@ object JavaCodeGenerator {
         }
     }
 
+
+    /**
+     * Admob
+     */
     @JvmStatic
     fun setOnUserEarnedRewardListenerEvent(rewardedAdID: String, logic: String): String {
         return if (isUseLambda(Configs.currentProjectID)) {
@@ -169,6 +174,9 @@ object JavaCodeGenerator {
         }
     }
 
+    /**
+     * Core
+     */
     @JvmStatic
     fun processEventLogicCodeWithLambda(
         componentName: String,
@@ -255,6 +263,10 @@ object JavaCodeGenerator {
         return !ProjectBuildConfigs.isUseJava7(projectID)
     }
 
+
+    /**
+     * Number
+     */
     @JvmStatic
     fun compareEqualNumbers(number1: String, number2: String): String {
         var processedLogic = "$number1 == $number2"
@@ -293,5 +305,22 @@ object JavaCodeGenerator {
         }
 
         return processedLogic
+    }
+
+
+    /**
+     * runOnUiThread
+     */
+    @JvmStatic
+    fun runOnUiThread(logic: String): String {
+        return if (isUseLambda(Configs.currentProjectID)) {
+            if (isUseSingleLineLambda(logic)) {
+                "runOnUiThread(() -> ${logic.dropLast(1)});"
+            } else {
+                "runOnUiThread(() -> {\r\n$logic\r\n});"
+            }
+        } else {
+            "runOnUiThread(new Runnable() {\r\n@Override\r\npublic void run() {\r\n$logic\r\n}\r\n});"
+        }
     }
 }
