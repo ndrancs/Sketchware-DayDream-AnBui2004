@@ -2,6 +2,7 @@ package extensions.anbui.daydream.java.generator
 
 import extensions.anbui.daydream.configs.Configs
 import extensions.anbui.daydream.project.ProjectBuildConfigs
+import extensions.anbui.daydream.utils.TextUtils
 
 object DRJavaCodeGenerator {
     /**
@@ -63,11 +64,21 @@ object DRJavaCodeGenerator {
             return ""
         }
 
-        return "$componentName = new TimerTask() {\r\n@Override\r\npublic void run() {\r\n${
-            runOnUiThread(
-                logic
-            )
-        }\r\n}\r\n};\r\n_timer.schedule($componentName, (int)$delay);"
+        return if (TextUtils.isNumberOnly(delay) && Integer.parseInt(delay) == 0) {
+            logic
+        } else {
+            "$componentName = new TimerTask() {\r\n@Override\r\npublic void run() {\r\n${
+                runOnUiThread(
+                    logic
+                )
+            }\r\n}\r\n};\r\n_timer.schedule($componentName, " +
+                    (if (TextUtils.isNumberOnly(delay))
+                        delay
+                    else
+                        "(int) $delay") +
+                    ");"
+        }
+
     }
 
     @JvmStatic
@@ -85,12 +96,22 @@ object DRJavaCodeGenerator {
             runOnUiThread(
                 logic
             )
-        }\r\n}\r\n};\r\n_timer.scheduleAtFixedRate($componentName, (int)$delay, (int)$every);"
+        }\r\n}\r\n};\r\n_timer.scheduleAtFixedRate($componentName, "  +
+                (if (TextUtils.isNumberOnly(delay))
+                    delay
+                else
+                    "(int) $delay") +
+                ", " +
+                (if (TextUtils.isNumberOnly(every))
+                    every
+                else
+                    "(int) $every") +
+                ");"
     }
 
     @JvmStatic
     fun timerCancel(componentName: String): String {
-        return "try { $componentName.cancel(); } catch (Exception ignored) {}"
+        return "if ($componentName != null) {\r\ntry { $componentName.cancel(); } catch (Exception ignored) {}\r\n}"
     }
 
 

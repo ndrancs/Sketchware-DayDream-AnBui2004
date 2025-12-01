@@ -13,6 +13,12 @@ object TextUtils {
     }
 
     @JvmStatic
+    fun isNumberOnly(content: String): Boolean {
+        //Includes do not accept empty strings.
+        return content.matches("\\d+".toRegex())
+    }
+
+    @JvmStatic
     fun copyToClipboard(context: Context, text: String?) {
         val clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
         val clip = ClipData.newPlainText("From Sketchware DayDream", text)
