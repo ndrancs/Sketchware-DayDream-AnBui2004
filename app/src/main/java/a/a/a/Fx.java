@@ -15,6 +15,7 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 import extensions.anbui.daydream.java.generator.DRJavaCodeGenerator;
+import extensions.anbui.daydream.java.generator.DRListViewCodeGenerator;
 import mod.hey.studios.editor.manage.block.ExtraBlockInfo;
 import mod.hey.studios.editor.manage.block.v2.BlockLoader;
 import mod.hey.studios.moreblock.ReturnMoreblockManager;
@@ -796,7 +797,7 @@ public class Fx {
                 opcode = String.format("%s.getCheckedItemCount()", params.get(0));
                 break;
             case "listSmoothScrollTo":
-                opcode = String.format("%s.smoothScrollToPosition((int)(%s));", params.get(0), params.get(1));
+                opcode = DRListViewCodeGenerator.listSmoothScrollTo(params.get(0), params.get(1));
                 break;
             case "spnSetData":
                 opcode = String.format("%s.setAdapter(new ArrayAdapter<String>(getBaseContext(), android.R.layout.simple_spinner_dropdown_item, %s));", params.get(0), params.get(1));
