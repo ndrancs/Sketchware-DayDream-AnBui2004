@@ -14,6 +14,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
+import extensions.anbui.daydream.java.generator.DRArrayListCodeGenerator;
 import extensions.anbui.daydream.java.generator.DRJavaCodeGenerator;
 import extensions.anbui.daydream.java.generator.DRListViewCodeGenerator;
 import mod.hey.studios.editor.manage.block.ExtraBlockInfo;
@@ -353,7 +354,7 @@ public class Fx {
                 opcode = String.format("{\r\nHashMap<String, Object> _item = new HashMap<>();\r\n_item.put(%s, %s);\r\n%s.add((int)%s, _item);\r\n}", params.get(0), params.get(1), params.get(3), params.get(2));
                 break;
             case "getAtListMap":
-                opcode = String.format("%s.get((int)%s).get(%s).toString()", params.get(2), params.get(0), params.get(1));
+                opcode = DRArrayListCodeGenerator.getAtListMap(params.get(2), params.get(0), params.get(1));
                 break;
             case "setListMap":
                 opcode = String.format("%s.get((int)%s).put(%s, %s);", params.get(3), params.get(2), params.get(0), params.get(1));

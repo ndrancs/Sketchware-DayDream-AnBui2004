@@ -72,7 +72,7 @@ object DRJavaCodeGenerator {
                     logic
                 )
             }\r\n}\r\n};\r\n_timer.schedule($componentName, " +
-                    (if (TextUtils.isNumberOnly(delay))
+                    (if (TextUtils.isValidInteger(delay))
                         delay
                     else
                         "(int) $delay") +
@@ -97,12 +97,12 @@ object DRJavaCodeGenerator {
                 logic
             )
         }\r\n}\r\n};\r\n_timer.scheduleAtFixedRate($componentName, "  +
-                (if (TextUtils.isNumberOnly(delay))
+                (if (TextUtils.isValidInteger(delay))
                     delay
                 else
                     "(int) $delay") +
                 ", " +
-                (if (TextUtils.isNumberOnly(every))
+                (if (TextUtils.isValidInteger(every))
                     every
                 else
                     "(int) $every") +
