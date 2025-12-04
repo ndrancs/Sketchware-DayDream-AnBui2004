@@ -17,6 +17,7 @@ import java.util.stream.Collectors;
 import extensions.anbui.daydream.java.generator.DRArrayListCodeGenerator;
 import extensions.anbui.daydream.java.generator.DRJavaCodeGenerator;
 import extensions.anbui.daydream.java.generator.DRListViewCodeGenerator;
+import extensions.anbui.daydream.java.generator.DRObjectAnimatorCodeGenerator;
 import mod.hey.studios.editor.manage.block.ExtraBlockInfo;
 import mod.hey.studios.editor.manage.block.v2.BlockLoader;
 import mod.hey.studios.moreblock.ReturnMoreblockManager;
@@ -1096,7 +1097,7 @@ public class Fx {
                 opcode = String.format("%s.setFloatValues((float)(%s), (float)(%s));", params.get(0), params.get(1), params.get(2));
                 break;
             case "objectanimatorSetDuration":
-                opcode = String.format("%s.setDuration((int)(%s));", params.get(0), params.get(1));
+                opcode = DRObjectAnimatorCodeGenerator.objectanimatorSetDuration(params.get(0), params.get(1));
                 break;
             case "objectanimatorSetRepeatMode":
                 opcode = String.format("%s.setRepeatMode(ValueAnimator.%s);", params.get(0), params.get(1));
