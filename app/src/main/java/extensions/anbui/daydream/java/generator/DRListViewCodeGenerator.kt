@@ -1,10 +1,10 @@
 package extensions.anbui.daydream.java.generator
 
-import extensions.anbui.daydream.utils.TextUtils
+import extensions.anbui.daydream.java.generator.DRJavaCodeGenerator.castToIntIfNeeded
 
 object DRListViewCodeGenerator {
     @JvmStatic
     fun listSmoothScrollTo(targetId: String, position: String): String {
-        return "${targetId}.smoothScrollToPosition(${if (TextUtils.isValidInteger(position)) "" else "(int) "}${position});"
+        return "${targetId}.smoothScrollToPosition(${castToIntIfNeeded(position)});"
     }
 }

@@ -1,10 +1,10 @@
 package extensions.anbui.daydream.java.generator
 
-import extensions.anbui.daydream.utils.TextUtils
+import extensions.anbui.daydream.java.generator.DRJavaCodeGenerator.castToIntIfNeeded
 
 object DRArrayListCodeGenerator {
     @JvmStatic
     fun getAtListMap(targetId: String, position: String, keyName: String): String {
-        return "${targetId}.get(${if (TextUtils.isValidInteger(position)) "" else "(int) "}${position}).get(${keyName}).toString()"
+        return "${targetId}.get(${castToIntIfNeeded(position)}).get(${keyName}).toString()"
     }
 }
