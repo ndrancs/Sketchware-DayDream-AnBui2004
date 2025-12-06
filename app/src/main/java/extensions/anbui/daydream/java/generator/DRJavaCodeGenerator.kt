@@ -278,7 +278,10 @@ fun isUseSingleLineLambda(logic: String): Boolean {
     val lines = logic.lines().filter { it.isNotBlank() }
 
     if (lines.size == 1 && !logic.isEmpty()) {
-        return !logic.startsWith("//") &&
+        val numberOfSemicolonsOutsideQuotationMarks = TextUtils.countACharacterOutsideCharacterPairs(logic.replace("\\\"", ""), ';', "\"")
+
+        return numberOfSemicolonsOutsideQuotationMarks <= 1 &&
+                !logic.startsWith("//") &&
                 !logic.startsWith("*/") &&
                 !logic.startsWith("if (") &&
                 !logic.startsWith("for (") &&

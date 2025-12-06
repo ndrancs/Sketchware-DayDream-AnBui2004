@@ -30,4 +30,34 @@ object TextUtils {
         clipboard.setPrimaryClip(clip)
         Toast.makeText(context, "Copied.", Toast.LENGTH_SHORT).show()
     }
+
+    @JvmStatic
+    fun countACharacter(text: String, characterToCount: Char): Int {
+        return text.count { it == characterToCount }
+    }
+
+    @JvmStatic
+    fun countACharacterInsideCharacterPairs(text: String, characterToCount: Char, characterPair: String): Int {
+        val regex = "${characterPair}([^${characterPair}]*)${characterPair}".toRegex()
+
+        var total = 0
+        regex.findAll(text).forEach { match ->
+            val content = match.groupValues[1]
+            total += content.count { it == characterToCount }
+        }
+        return total
+    }
+
+    @JvmStatic
+    fun countACharacterOutsideCharacterPairs(text: String, characterToCount: Char, characterPair: String): Int {
+        val regex = "${characterPair}([^${characterPair}]*)${characterPair}".toRegex()
+
+        val total = countACharacter(text, characterToCount)
+        var totalInside = 0
+        regex.findAll(text).forEach { match ->
+            val content = match.groupValues[1]
+            totalInside += content.count { it == characterToCount }
+        }
+        return total - totalInside
+    }
 }
