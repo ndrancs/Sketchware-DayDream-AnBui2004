@@ -7,6 +7,7 @@ import com.besome.sketch.editor.LogicEditorActivity;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import extensions.anbui.daydream.blocks.DRBlockHandler;
 import mod.hilal.saif.activities.tools.ConfigActivity;
 import pro.sketchware.R;
 import pro.sketchware.blocks.ExtraBlocks;
@@ -1433,6 +1434,8 @@ public class BlocksHandler {
         hashMap.put("palette", "-1");
         hashMap.put("spec", "%m.cardview setCornerRadius %d");
         arrayList.add(hashMap);
+
+        DRBlockHandler.addViewBlocks(arrayList);
 
         hashMap = new HashMap<>();
         hashMap.put("name", "setCardElevation");

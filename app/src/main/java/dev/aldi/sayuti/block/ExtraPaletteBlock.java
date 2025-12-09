@@ -21,6 +21,7 @@ import a.a.a.Ox;
 import a.a.a.jC;
 import a.a.a.jq;
 import a.a.a.kq;
+import extensions.anbui.daydream.blocks.DRPaletteBlock;
 import mod.agus.jcoderz.beans.ViewBeans;
 import mod.hey.studios.editor.view.IdGenerator;
 import mod.hey.studios.moreblock.ReturnMoreblockManager;
@@ -539,6 +540,7 @@ public class ExtraPaletteBlock {
                 logicEditor.a(" ", "setCornerRadiusView");
                 logicEditor.a(" ", "setGradientBackground");
                 logicEditor.a(" ", "setRadiusAndStrokeView");
+                DRPaletteBlock.addViewBlocks(logicEditor);
             {
                 boolean editTextUsed = isWidgetUsed("EditText")
                         || extraBlocks.isCustomVarUsed("EditText");
