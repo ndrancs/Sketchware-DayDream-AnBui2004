@@ -16,10 +16,22 @@ object DRBlockHandler {
     @JvmStatic
     fun addStringBlocks(arrayList : ArrayList<HashMap<String, Any>>) {
         val hashMap: HashMap<String, Any> = HashMap()
-        hashMap["name"] = "stringIsEmpty"
+        hashMap["name"] = "varStringIsEmpty"
         hashMap["type"] = "b"
         hashMap["code"] = "%s.isEmpty()"
         hashMap["color"] = "#EE7D16"
+        hashMap["palette"] = "-1"
+        hashMap["spec"] = "%m.varStr isEmpty"
+        arrayList.add(hashMap)
+    }
+
+    @JvmStatic
+    fun addStringOperatorBlocks(arrayList : ArrayList<HashMap<String, Any>>) {
+        val hashMap: HashMap<String, Any> = HashMap()
+        hashMap["name"] = "stringIsEmpty"
+        hashMap["type"] = "b"
+        hashMap["code"] = "%s.isEmpty()"
+        hashMap["color"] = "#5CB722"
         hashMap["palette"] = "-1"
         hashMap["spec"] = "%s isEmpty"
         arrayList.add(hashMap)

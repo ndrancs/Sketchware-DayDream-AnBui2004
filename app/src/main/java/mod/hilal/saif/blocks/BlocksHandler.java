@@ -2512,6 +2512,8 @@ public class BlocksHandler {
         hashMap.put("spec", "string %s.inputOnly");
         arrayList.add(hashMap);
 
+        DRBlockHandler.addStringOperatorBlocks(arrayList);
+
         hashMap = new HashMap<>();
         hashMap.put("name", "RepeatKnownNumDescending");
         hashMap.put("type", "c");
@@ -2802,6 +2804,7 @@ public class BlocksHandler {
         }
         logicEditorActivity.a("b", "stringEquals");
         logicEditorActivity.a("b", "stringContains");
+        DRPaletteBlock.addStringOperatorBlocks(logicEditorActivity);
         if (showBuiltIn()) {
             logicEditorActivity.a("b", "stringMatches");
         }
