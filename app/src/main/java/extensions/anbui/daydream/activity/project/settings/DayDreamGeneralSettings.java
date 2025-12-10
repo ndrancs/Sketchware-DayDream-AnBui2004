@@ -80,7 +80,6 @@ public class DayDreamGeneralSettings extends AppCompatActivity {
     }
 
     private void goToSettings(Class<?> cls) {
-        DRProjectTracker.startNow(projectID);
         Intent intent = new Intent(DayDreamGeneralSettings.this, cls);
         intent.putExtra("sc_id", projectID);
         startActivity(intent);

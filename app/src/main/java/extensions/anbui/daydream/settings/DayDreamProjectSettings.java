@@ -435,7 +435,7 @@ public class DayDreamProjectSettings {
 
     public static String readDayDreamDataFile(String projectID) {
         if (!DRProjectTracker.getConfigData().isEmpty()) {
-            Log.i(TAG, "readDayDreamDataFile: Data retrieved from DRProjectTracker.");
+            Log.i(TAG, "readDayDreamDataFile: Data retrieved from DRProjectTracker.\n" + DRProjectTracker.getConfigData());
             return DRProjectTracker.getConfigData();
         }
 
@@ -448,5 +448,6 @@ public class DayDreamProjectSettings {
     public static void writeDayDreamDataFile(String projectID, String content) {
         Log.i(TAG, "writeDayDreamDataFile: " + projectID + " " + content);
         FileUtils.writeTextFile(FileUtils.getInternalStorageDir() + Configs.projectDataFolderDir + projectID + "/DataDayDream.json", content);
+        DRProjectTracker.startNow(projectID);
     }
 }
