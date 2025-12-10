@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import extensions.anbui.daydream.blocks.DRBlockHandler;
+import extensions.anbui.daydream.blocks.DRPaletteBlock;
 import mod.hilal.saif.activities.tools.ConfigActivity;
 import pro.sketchware.R;
 import pro.sketchware.blocks.ExtraBlocks;
@@ -62,6 +63,8 @@ public class BlocksHandler {
                 "XML Command Block: reference %s distance %d frontend %d backend %d command"
                         + " %m.Command xml name %s.inputOnly");
         arrayList.add(hashMap);
+
+        DRBlockHandler.addStringBlocks(arrayList);
 
         hashMap = new HashMap<>();
         hashMap.put("name", "viewOnClick");
@@ -2625,6 +2628,7 @@ public class BlocksHandler {
         }
         if (showAll() || isStrUsed) {
             logicEditorActivity.a(" ", "setVarString");
+            DRPaletteBlock.addStringBlocks(logicEditorActivity);
         }
         if (showAll() || isMapUsed) {
             logicEditorActivity.a(" ", "mapCreateNew");

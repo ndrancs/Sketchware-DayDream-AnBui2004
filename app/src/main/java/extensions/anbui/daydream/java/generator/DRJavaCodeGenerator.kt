@@ -308,7 +308,7 @@ fun compareEqualNumbers(number1: String, number2: String): String {
     var processedLogic = "$number1 == $number2"
 
     if (processedLogic.contains(".length()") &&
-        (processedLogic.contains("== 0") || processedLogic.contains("0 =="))
+        ((TextUtils.isValidInteger(number1) && Integer.parseInt(number1) == 0) || (TextUtils.isValidInteger(number2) && Integer.parseInt(number2) == 0))
     ) {
         processedLogic = processedLogic.replace(".length()", ".isEmpty()")
         processedLogic = processedLogic.replace(" == 0", "")
@@ -322,7 +322,7 @@ fun compareEqualNumbers(number1: String, number2: String): String {
 fun compareSmallerNumbers(number1: String, number2: String): String {
     var processedLogic = "$number1 < $number2"
 
-    if (processedLogic.contains(".length()") && processedLogic.contains("< 1")) {
+    if (processedLogic.contains(".length()") && (TextUtils.isValidInteger(number2) && Integer.parseInt(number2) == 1)) {
         processedLogic = processedLogic.replace(".length()", ".isEmpty()")
         processedLogic = processedLogic.replace(" < 1", "")
     }
@@ -334,7 +334,7 @@ fun compareSmallerNumbers(number1: String, number2: String): String {
 fun compareLargerNumbers(number1: String, number2: String): String {
     var processedLogic = "$number1 > $number2"
 
-    if (processedLogic.contains(".length()") && processedLogic.contains("> 0")) {
+    if (processedLogic.contains(".length()") && (TextUtils.isValidInteger(number2) && Integer.parseInt(number2) == 0)) {
         processedLogic = "!$processedLogic"
         processedLogic = processedLogic.replace(".length()", ".isEmpty()")
         processedLogic = processedLogic.replace(" > 0", "")

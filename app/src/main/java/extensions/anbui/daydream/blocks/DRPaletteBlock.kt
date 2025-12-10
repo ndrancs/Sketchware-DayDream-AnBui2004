@@ -7,4 +7,9 @@ object DRPaletteBlock {
     fun addViewBlocks(logicEditor : LogicEditorActivity) {
         logicEditor.a(" ", "setBackgroundResource")
     }
+
+    @JvmStatic
+    fun addStringBlocks(logicEditor : LogicEditorActivity) {
+        logicEditor.a("b", "stringIsEmpty")
+    }
 }
