@@ -15,7 +15,16 @@ object DRBlockHandler {
 
     @JvmStatic
     fun addStringBlocks(arrayList : ArrayList<HashMap<String, Any>>) {
-        val hashMap: HashMap<String, Any> = HashMap()
+        var hashMap: HashMap<String, Any> = HashMap()
+        hashMap["name"] = "setVarStringWithCondition"
+        hashMap["type"] = "s"
+        hashMap["code"] = "(%s) ? %s : %s"
+        hashMap["color"] = "#EE7D16"
+        hashMap["palette"] = "-1"
+        hashMap["spec"] = "if %b then %s else %s"
+        arrayList.add(hashMap)
+
+        hashMap = HashMap()
         hashMap["name"] = "varStringIsEmpty"
         hashMap["type"] = "b"
         hashMap["code"] = "%s.isEmpty()"

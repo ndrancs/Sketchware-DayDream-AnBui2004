@@ -10,6 +10,7 @@ object DRPaletteBlock {
 
     @JvmStatic
     fun addStringBlocks(logicEditor : LogicEditorActivity) {
+        logicEditor.a("s", "setVarStringWithCondition")
         logicEditor.a("b", "varStringIsEmpty")
     }
 
