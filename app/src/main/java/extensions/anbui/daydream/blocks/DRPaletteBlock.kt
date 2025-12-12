@@ -19,4 +19,13 @@ object DRPaletteBlock {
     fun addStringOperatorBlocks(logicEditor : LogicEditorActivity) {
 //        logicEditor.a("b", "stringIsEmpty")
     }
+
+    @JvmStatic
+    fun addSharedPreferencesBlocks(logicEditor : LogicEditorActivity) {
+        logicEditor.a("b", "getBooleanSharedPreferences")
+        logicEditor.a(" ", "putBooleanSharedPreferences")
+        logicEditor.a("d", "getIntSharedPreferences")
+        logicEditor.a(" ", "putIntSharedPreferences")
+
+    }
 }

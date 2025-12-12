@@ -978,6 +978,7 @@ public class ExtraPaletteBlock {
                     logicEditor.a("b", "fileContainsData");
                     logicEditor.a("s", "fileGetData");
                     logicEditor.a(" ", "fileSetData");
+                    DRPaletteBlock.addSharedPreferencesBlocks(logicEditor);
                     logicEditor.a(" ", "fileRemoveData");
                 }
                 if (extraBlocks.isComponentUsed(ComponentBean.COMPONENT_TYPE_DATE_PICKER_DIALOG)) {

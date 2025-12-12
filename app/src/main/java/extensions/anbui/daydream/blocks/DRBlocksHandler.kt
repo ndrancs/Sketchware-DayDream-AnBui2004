@@ -2,7 +2,15 @@ package extensions.anbui.daydream.blocks
 
 object DRBlockHandler {
     @JvmStatic
-    fun addViewBlocks(arrayList : ArrayList<HashMap<String, Any>>) {
+    fun addBlocks(arrayList: ArrayList<HashMap<String, Any>>) {
+        addViewBlocks(arrayList)
+        addStringBlocks(arrayList)
+        addStringOperatorBlocks(arrayList)
+        addSharedPreferencesBlocks(arrayList)
+    }
+
+    @JvmStatic
+    fun addViewBlocks(arrayList: ArrayList<HashMap<String, Any>>) {
         val hashMap: HashMap<String, Any> = HashMap()
         hashMap["name"] = "setBackgroundResource"
         hashMap["type"] = " "
@@ -14,7 +22,7 @@ object DRBlockHandler {
     }
 
     @JvmStatic
-    fun addStringBlocks(arrayList : ArrayList<HashMap<String, Any>>) {
+    fun addStringBlocks(arrayList: ArrayList<HashMap<String, Any>>) {
         var hashMap: HashMap<String, Any> = HashMap()
         hashMap["name"] = "concatenateVarString"
         hashMap["type"] = " "
@@ -44,7 +52,7 @@ object DRBlockHandler {
     }
 
     @JvmStatic
-    fun addStringOperatorBlocks(arrayList : ArrayList<HashMap<String, Any>>) {
+    fun addStringOperatorBlocks(arrayList: ArrayList<HashMap<String, Any>>) {
 //        val hashMap: HashMap<String, Any> = HashMap()
 //        hashMap["name"] = "stringIsEmpty"
 //        hashMap["type"] = "b"
@@ -53,5 +61,44 @@ object DRBlockHandler {
 //        hashMap["palette"] = "-1"
 //        hashMap["spec"] = "%s isEmpty"
 //        arrayList.add(hashMap)
+    }
+
+    @JvmStatic
+    fun addSharedPreferencesBlocks(arrayList: ArrayList<HashMap<String, Any>>) {
+        var hashMap: HashMap<String, Any> = HashMap()
+        hashMap["name"] = "getBooleanSharedPreferences"
+        hashMap["type"] = "b"
+        hashMap["code"] = "%s.getBoolean(%s, false)"
+        hashMap["color"] = "#2CA5E2"
+        hashMap["palette"] = "-1"
+        hashMap["spec"] = "%m.file getBoolean key %s"
+        arrayList.add(hashMap)
+
+        hashMap = HashMap()
+        hashMap["name"] = "putBooleanSharedPreferences"
+        hashMap["type"] = " "
+        hashMap["code"] = "%s.edit().putBoolean(%s, %s).apply();"
+        hashMap["color"] = "#2CA5E2"
+        hashMap["palette"] = "-1"
+        hashMap["spec"] = "%m.file putBoolean key %s value %b"
+        arrayList.add(hashMap)
+
+        hashMap = HashMap()
+        hashMap["name"] = "getIntSharedPreferences"
+        hashMap["type"] = "d"
+        hashMap["code"] = "%s.getInt(%s, 0)"
+        hashMap["color"] = "#2CA5E2"
+        hashMap["palette"] = "-1"
+        hashMap["spec"] = "%m.file getInt key %s"
+        arrayList.add(hashMap)
+
+        hashMap = HashMap()
+        hashMap["name"] = "putIntSharedPreferences"
+        hashMap["type"] = " "
+        hashMap["code"] = "%s.edit().putInt(%s, (int) %s).apply();"
+        hashMap["color"] = "#2CA5E2"
+        hashMap["palette"] = "-1"
+        hashMap["spec"] = "%m.file putInt key %s value %d"
+        arrayList.add(hashMap)
     }
 }

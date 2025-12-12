@@ -64,8 +64,6 @@ public class BlocksHandler {
                         + " %m.Command xml name %s.inputOnly");
         arrayList.add(hashMap);
 
-        DRBlockHandler.addStringBlocks(arrayList);
-
         hashMap = new HashMap<>();
         hashMap.put("name", "viewOnClick");
         hashMap.put("type", "c");
@@ -1438,8 +1436,6 @@ public class BlocksHandler {
         hashMap.put("spec", "%m.cardview setCornerRadius %d");
         arrayList.add(hashMap);
 
-        DRBlockHandler.addViewBlocks(arrayList);
-
         hashMap = new HashMap<>();
         hashMap.put("name", "setCardElevation");
         hashMap.put("type", " ");
@@ -2512,8 +2508,6 @@ public class BlocksHandler {
         hashMap.put("spec", "string %s.inputOnly");
         arrayList.add(hashMap);
 
-        DRBlockHandler.addStringOperatorBlocks(arrayList);
-
         hashMap = new HashMap<>();
         hashMap.put("name", "RepeatKnownNumDescending");
         hashMap.put("type", "c");
@@ -2601,6 +2595,8 @@ public class BlocksHandler {
         hashMap.put("palette", "-1");
         hashMap.put("spec", "get String from %m.ResString");
         arrayList.add(hashMap);
+
+        DRBlockHandler.addBlocks(arrayList);
     }
 
     private static boolean showAll() {
