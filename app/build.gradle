@@ -106,19 +106,19 @@ dependencies {
 
     implementation "androidx.appcompat:appcompat:1.7.1"
     implementation "androidx.core:core-splashscreen:1.2.0"
-    implementation "androidx.activity:activity:1.12.0"
+    implementation "androidx.activity:activity-ktx:1.12.1"
     implementation "androidx.recyclerview:recyclerview:1.4.0"
     implementation "androidx.cardview:cardview:1.0.0"
     implementation "androidx.viewpager:viewpager:1.1.0"
-    implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
+    implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.2.0"
     implementation "com.google.android.material:material:1.14.0-alpha07"
     implementation "com.airbnb.android:lottie:6.7.1"
     implementation "com.google.android.flexbox:flexbox:3.0.0"
 
     implementation "com.github.bumptech.glide:glide:5.0.5"
 
-    implementation 'androidx.exifinterface:exifinterface:1.4.1'
-    implementation "androidx.preference:preference:1.2.1"
+    implementation 'androidx.exifinterface:exifinterface:1.4.2'
+    implementation "androidx.preference:preference-ktx:1.2.1"
     implementation 'androidx.constraintlayout:constraintlayout:2.2.1'
 
     def editorGroupId = "io.github.Rosemoe.sora-editor"
@@ -132,15 +132,18 @@ dependencies {
     implementation 'io.coil-kt:coil:2.7.0'
     implementation 'io.coil-kt:coil-svg:2.7.0'
 
-    implementation "com.android.tools.build:bundletool:1.18.1"
+    android26Implementation "com.android.tools.build:bundletool:1.18.1"
+    android33Implementation "com.android.tools.build:bundletool:1.18.3"
 
     //noinspection GradleDependency copied from above dependency for not just runtime access
-    implementation "com.google.protobuf:protobuf-java:3.19.2"
+    android26Implementation "com.google.protobuf:protobuf-java:3.19.2"
+    android33Implementation "com.google.protobuf:protobuf-java:4.33.2"
     //noinspection GradleDependency
     implementation("com.android.tools:sdklib:25.3.0") {
         exclude group: "com.intellij", module: "annotations"
     }
-    implementation "com.android.tools:r8:8.11.18"
+    android26Implementation "com.android.tools:r8:8.11.18"
+    android33Implementation "com.android.tools:r8:8.13.17"
     implementation "com.github.Iyxan23:zipalign-java:1.2.2"
 
     implementation "com.google.code.gson:gson:2.13.2"
@@ -148,7 +151,7 @@ dependencies {
 
     implementation 'io.noties.markwon:core:4.6.2'
 
-    implementation "com.squareup.okhttp3:okhttp:5.3.1"
+    implementation "com.squareup.okhttp3:okhttp:5.3.2"
     implementation "com.squareup.okio:okio:3.16.4"
 
     android26Implementation "org.eclipse.jdt:ecj:3.26.0"
@@ -176,7 +179,7 @@ dependencies {
     if (analyticsEnabled) {
         new File("$projectDir/google-services.json").text = secrets
     }
-    implementation platform("com.google.firebase:firebase-bom:34.6.0")
+    implementation platform("com.google.firebase:firebase-bom:34.7.0")
     implementation "com.google.firebase:firebase-crashlytics"
     implementation "com.google.firebase:firebase-analytics"
     implementation "com.google.firebase:firebase-messaging"
