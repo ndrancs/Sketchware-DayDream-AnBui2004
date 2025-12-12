@@ -231,7 +231,7 @@ public class DayDreamGitActionsActivity extends AppCompatActivity {
                 progressDialog.dismiss();
                 if (result) {
                     if (isApplyAfterPull) {
-                        startApplyProject();
+                        applyProject();
                     } else {
                         DialogUtils.twoDialog(this,
                                 "Done",

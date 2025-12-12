@@ -157,6 +157,7 @@ public class DesignActivity extends BaseAppCompatActivity implements View.OnClic
     private ViewEditorFragment viewTabAdapter;
     private Thread buildThread;
     public static boolean needReloadProjectData = false;
+    public static boolean isFirstLaunch = true;
     private Bundle mSavedInstanceState;
     private final ActivityResultLauncher<Intent> openCollectionManager = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
         if (result.getResultCode() == RESULT_OK) {
@@ -690,14 +691,16 @@ public class DesignActivity extends BaseAppCompatActivity implements View.OnClic
             warnAboutInsufficientStorageSpace();
         }
 
-        DayDreamGitTools.checkDiff(this, sc_id, () -> {
-            saveProject();
-            Intent intent = new Intent(getApplicationContext(), DayDreamGitActionsActivity.class);
-            intent.putExtra("sc_id", sc_id);
-            intent.putExtra("action", "pullapply");
-            startActivity(intent);
-            finish();
-        });
+        if (isFirstLaunch) {
+            DayDreamGitTools.checkDiff(this, sc_id, () -> {
+                saveProject();
+                Intent intent = new Intent(getApplicationContext(), DayDreamGitActionsActivity.class);
+                intent.putExtra("sc_id", sc_id);
+                intent.putExtra("action", "pullapply");
+                startActivity(intent);
+                finish();
+            });
+        }
 
         if (needReloadProjectData) {
             ProjectLoader loader;
@@ -708,6 +711,8 @@ public class DesignActivity extends BaseAppCompatActivity implements View.OnClic
             }
             loader.execute();
         }
+
+        isFirstLaunch = false;
     }
 
     @Override

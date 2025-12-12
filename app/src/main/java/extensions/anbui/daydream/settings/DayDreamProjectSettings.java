@@ -434,7 +434,7 @@ public class DayDreamProjectSettings {
     }
 
     public static String readDayDreamDataFile(String projectID) {
-        if (!DRProjectTracker.getConfigData().isEmpty()) {
+        if (!DRProjectTracker.getConfigData().isEmpty() && DRProjectTracker.getCurrentprojectID().equals(projectID)) {
             Log.i(TAG, "readDayDreamDataFile: Data retrieved from DRProjectTracker.\n" + DRProjectTracker.getConfigData());
             return DRProjectTracker.getConfigData();
         }

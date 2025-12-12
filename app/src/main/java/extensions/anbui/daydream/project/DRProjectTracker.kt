@@ -16,12 +16,15 @@ object DRProjectTracker {
     var configData: String = ""
     @JvmStatic
     var buildConfigData: String = ""
+    @JvmStatic
+    var currentprojectID: String = ""
 
     @JvmStatic
     fun startNow(projectID: String?) {
         if (projectID == null) return
 
         Configs.currentProjectID = projectID
+        currentprojectID = projectID
         val contentDRConfigs =
             FileUtils.readTextFile(FileUtils.getInternalStorageDir() + Configs.projectDataFolderDir + projectID + "/DataDayDream.json")
         configData = contentDRConfigs.ifEmpty { "{}" }

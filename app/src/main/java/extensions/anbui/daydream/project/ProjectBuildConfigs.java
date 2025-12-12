@@ -46,7 +46,7 @@ public class ProjectBuildConfigs {
     }
 
     public static String readDataFile(String projectID) {
-        if (!DRProjectTracker.getBuildConfigData().isEmpty()) {
+        if (!DRProjectTracker.getBuildConfigData().isEmpty() && DRProjectTracker.getCurrentprojectID().equals(projectID)) {
             Log.i(TAG, "readDataFile: Data retrieved from DRProjectTracker.");
             return DRProjectTracker.getBuildConfigData();
         }

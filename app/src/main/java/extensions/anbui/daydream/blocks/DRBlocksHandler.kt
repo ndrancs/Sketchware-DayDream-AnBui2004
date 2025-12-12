@@ -16,6 +16,15 @@ object DRBlockHandler {
     @JvmStatic
     fun addStringBlocks(arrayList : ArrayList<HashMap<String, Any>>) {
         var hashMap: HashMap<String, Any> = HashMap()
+        hashMap["name"] = "concatenateVarString"
+        hashMap["type"] = " "
+        hashMap["code"] = "%s += %s;"
+        hashMap["color"] = "#EE7D16"
+        hashMap["palette"] = "-1"
+        hashMap["spec"] = "%m.varStr append %s"
+        arrayList.add(hashMap)
+
+        hashMap = HashMap()
         hashMap["name"] = "setVarStringWithCondition"
         hashMap["type"] = "s"
         hashMap["code"] = "(%s) ? %s : %s"
