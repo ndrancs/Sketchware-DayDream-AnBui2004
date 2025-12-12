@@ -11,12 +11,12 @@ object DRPaletteBlock {
     @JvmStatic
     fun addStringBlocks(logicEditor : LogicEditorActivity) {
         logicEditor.a(" ", "concatenateVarString")
-        logicEditor.a("s", "setVarStringWithCondition")
-        logicEditor.a("b", "varStringIsEmpty")
+//        logicEditor.a("s", "setVarStringWithCondition")
+//        logicEditor.a("b", "varStringIsEmpty")
     }
 
     @JvmStatic
     fun addStringOperatorBlocks(logicEditor : LogicEditorActivity) {
-        logicEditor.a("b", "stringIsEmpty")
+//        logicEditor.a("b", "stringIsEmpty")
     }
 }

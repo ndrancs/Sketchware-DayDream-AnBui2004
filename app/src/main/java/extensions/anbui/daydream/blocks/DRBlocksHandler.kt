@@ -24,34 +24,34 @@ object DRBlockHandler {
         hashMap["spec"] = "%m.varStr append %s"
         arrayList.add(hashMap)
 
-        hashMap = HashMap()
-        hashMap["name"] = "setVarStringWithCondition"
-        hashMap["type"] = "s"
-        hashMap["code"] = "(%s) ? %s : %s"
-        hashMap["color"] = "#EE7D16"
-        hashMap["palette"] = "-1"
-        hashMap["spec"] = "if %b then %s else %s"
-        arrayList.add(hashMap)
-
-        hashMap = HashMap()
-        hashMap["name"] = "varStringIsEmpty"
-        hashMap["type"] = "b"
-        hashMap["code"] = "%s.isEmpty()"
-        hashMap["color"] = "#EE7D16"
-        hashMap["palette"] = "-1"
-        hashMap["spec"] = "%m.varStr isEmpty"
-        arrayList.add(hashMap)
+//        hashMap = HashMap()
+//        hashMap["name"] = "setVarStringWithCondition"
+//        hashMap["type"] = "s"
+//        hashMap["code"] = "(%s) ? %s : %s"
+//        hashMap["color"] = "#EE7D16"
+//        hashMap["palette"] = "-1"
+//        hashMap["spec"] = "if %b then %s else %s"
+//        arrayList.add(hashMap)
+//
+//        hashMap = HashMap()
+//        hashMap["name"] = "varStringIsEmpty"
+//        hashMap["type"] = "b"
+//        hashMap["code"] = "%s.isEmpty()"
+//        hashMap["color"] = "#EE7D16"
+//        hashMap["palette"] = "-1"
+//        hashMap["spec"] = "%m.varStr isEmpty"
+//        arrayList.add(hashMap)
     }
 
     @JvmStatic
     fun addStringOperatorBlocks(arrayList : ArrayList<HashMap<String, Any>>) {
-        val hashMap: HashMap<String, Any> = HashMap()
-        hashMap["name"] = "stringIsEmpty"
-        hashMap["type"] = "b"
-        hashMap["code"] = "%s.isEmpty()"
-        hashMap["color"] = "#5CB722"
-        hashMap["palette"] = "-1"
-        hashMap["spec"] = "%s isEmpty"
-        arrayList.add(hashMap)
+//        val hashMap: HashMap<String, Any> = HashMap()
+//        hashMap["name"] = "stringIsEmpty"
+//        hashMap["type"] = "b"
+//        hashMap["code"] = "%s.isEmpty()"
+//        hashMap["color"] = "#5CB722"
+//        hashMap["palette"] = "-1"
+//        hashMap["spec"] = "%s isEmpty"
+//        arrayList.add(hashMap)
     }
 }

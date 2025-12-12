@@ -43,6 +43,7 @@ import a.a.a.GB;
 import extensions.anbui.daydream.configs.Configs;
 import extensions.anbui.daydream.file.FilesTools;
 import extensions.anbui.daydream.git.GitQuickLook;
+import extensions.anbui.daydream.setup.DRSetup;
 import mod.hey.studios.project.backup.BackupFactory;
 import mod.hey.studios.project.backup.BackupRestoreManager;
 import mod.hey.studios.util.Helper;
@@ -287,6 +288,7 @@ public class MainActivity extends BasePermissionAppCompatActivity {
         backupRestoreManager = new BackupRestoreManager(this, projectsFragment);
         Configs.mainActivity = this;
         Configs.forMinSDK = getResources().getInteger(R.integer.for_min_sdk);
+        DRSetup.startNow(this);
     }
 
     private Fragment getFragmentForNavId(int navItemId) {
