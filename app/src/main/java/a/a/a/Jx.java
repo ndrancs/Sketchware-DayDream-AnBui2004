@@ -20,8 +20,10 @@ import java.util.regex.Pattern;
 
 import extensions.anbui.daydream.configs.Configs;
 import extensions.anbui.daydream.library.DRFeatureManager;
+import extensions.anbui.daydream.project.DRProjectTracker;
 import extensions.anbui.daydream.project.ProjectBuildConfigs;
 import extensions.anbui.daydream.project.ProjectLibrary;
+import extensions.anbui.daydream.project.DRProjectView;
 import extensions.anbui.daydream.settings.DayDreamProjectSettings;
 import extensions.anbui.daydream.project.ProjectUtils;
 import mod.agus.jcoderz.beans.ViewBeans;
@@ -537,7 +539,7 @@ public class Jx {
                     sb.append("}").append(EOL);
                 }
 
-                if (projectFileBean.fileName.equals("main")) {
+                if (DRProjectView.isLauncherActivity(sc_id, projectFileBean.fileName)) {
                     if (DRFeatureManager.isGoogleAnalyticsEnabled(sc_id)) {
                         sb.append("FirebaseAnalytics.getInstance(this);").append(EOL);
                     }
@@ -824,7 +826,7 @@ public class Jx {
                     addImport("androidx.biometric.*");
                 }
 
-                if (ProjectUtils.convertJavaNameToXMLName(projectFileBean.fileName).equals("main")) {
+                if (DRProjectView.isLauncherActivity(DRProjectTracker.getCurrentprojectID(), projectFileBean.fileName)) {
                     if (DRFeatureManager.isGoogleAnalyticsEnabled(Configs.currentProjectID)) {
                         addImport("com.google.firebase.analytics.FirebaseAnalytics");
                     }

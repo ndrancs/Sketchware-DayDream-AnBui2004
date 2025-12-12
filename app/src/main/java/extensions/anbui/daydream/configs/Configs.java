@@ -17,6 +17,7 @@ public class Configs {
     public static final String projectMySourceFolderDir = mainDataDir + "mysc/";
     public static final String projectInfoFolderDir = mainDataDir + "mysc/list/";
     public static final String projectDataFolderDir = mainDataDir + "data/";
+    public static final String customActivityLauncherConfigDataPath = "/Injection/androidmanifest/activity_launcher.txt";
     public static final String projectLocalLibFolderDir = mainDataDir + "libs/local_libs/";
     public static final String resFolderDir = mainDataDir + "resources/";
     public static final String resBlocksFolderDir = resFolderDir + "block/";

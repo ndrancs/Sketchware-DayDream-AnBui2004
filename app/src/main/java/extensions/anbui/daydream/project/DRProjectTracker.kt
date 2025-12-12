@@ -17,6 +17,8 @@ object DRProjectTracker {
     @JvmStatic
     var buildConfigData: String = ""
     @JvmStatic
+    var viewData: String = ""
+    @JvmStatic
     var currentprojectID: String = ""
 
     @JvmStatic
@@ -32,6 +34,8 @@ object DRProjectTracker {
         val contentBuildConfigs =
             FileUtils.readTextFile(FileUtils.getInternalStorageDir() + Configs.projectDataFolderDir + projectID + "/build_config")
         buildConfigData = contentBuildConfigs.ifEmpty { "{}" }
+
+        viewData = DRProjectView.read(projectID)
 
         Log.i(TAG, "Loaded configs data.")
     }

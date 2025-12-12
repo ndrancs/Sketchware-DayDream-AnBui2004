@@ -116,7 +116,7 @@ public class ProjectData {
             //If a new header is encountered (a line starting with '@').
             if (trimmed.startsWith("@")) {
                 //If you are capturing the target block, save the old block first.
-                if (capturing && !currentBlock.isEmpty()) {
+                if (capturing && currentBlock.length() > 0) {
                     results.add(currentBlock.toString().trim());
                     currentBlock.setLength(0);
                 }
@@ -138,7 +138,7 @@ public class ProjectData {
         }
 
         //Save last block if capturing.
-        if (capturing && !currentBlock.isEmpty()) {
+        if (capturing && currentBlock.length() > 0) {
             results.add(currentBlock.toString().trim());
         }
 
@@ -171,7 +171,7 @@ public class ProjectData {
                 //If the line contains the keyword.
                 if (line.contains(keyWord)) {
                     //If there is an old block, save it.
-                    if (!currentBlock.isEmpty()) {
+                    if (currentBlock.length() > 0) {
                         results.add(currentBlock.toString().trim());
                         currentBlock.setLength(0);
                     }
@@ -180,7 +180,7 @@ public class ProjectData {
             }
 
             //Add block last
-            if (!currentBlock.isEmpty()) {
+            if (currentBlock.length() > 0) {
                 results.add(currentBlock.toString().trim());
             }
 
