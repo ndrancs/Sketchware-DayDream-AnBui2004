@@ -539,7 +539,7 @@ public class Jx {
                     sb.append("}").append(EOL);
                 }
 
-                if (DRProjectView.isLauncherActivity(sc_id, projectFileBean.fileName)) {
+                if (DRProjectView.isActivityLauncher(sc_id, projectFileBean.fileName)) {
                     if (DRFeatureManager.isGoogleAnalyticsEnabled(sc_id)) {
                         sb.append("FirebaseAnalytics.getInstance(this);").append(EOL);
                     }
@@ -826,7 +826,7 @@ public class Jx {
                     addImport("androidx.biometric.*");
                 }
 
-                if (DRProjectView.isLauncherActivity(DRProjectTracker.getCurrentprojectID(), projectFileBean.fileName)) {
+                if (DRProjectView.isActivityLauncher(DRProjectTracker.getCurrentprojectID(), projectFileBean.fileName)) {
                     if (DRFeatureManager.isGoogleAnalyticsEnabled(Configs.currentProjectID)) {
                         addImport("com.google.firebase.analytics.FirebaseAnalytics");
                     }

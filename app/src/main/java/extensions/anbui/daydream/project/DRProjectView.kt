@@ -5,17 +5,17 @@ import extensions.anbui.daydream.configs.Configs
 import extensions.anbui.daydream.file.FileUtils
 import extensions.anbui.daydream.project.DRProjectTracker.currentprojectID
 import extensions.anbui.daydream.project.DRProjectTracker.viewData
-import extensions.anbui.daydream.project.ProjectInjection.getLauncherActivity
+import extensions.anbui.daydream.project.ProjectInjection.getActivityLauncher
 import extensions.anbui.daydream.tools.ToolCore
 
 object DRProjectView {
     var TAG: String = Configs.universalTAG + "ProjectView"
 
     @JvmStatic
-    fun isLauncherActivity(projectID: String, viewName: String?): Boolean {
-        Log.i(TAG, "isLauncherActivity: $projectID, $viewName")
+    fun isActivityLauncher(projectID: String, viewName: String?): Boolean {
+        Log.i(TAG, "isActivityLauncher: $projectID, $viewName")
         if (isViewExist(projectID, viewName)) {
-            return getLauncherActivity(projectID) == viewName
+            return getActivityLauncher(projectID) == viewName
         }
         return false
     }

@@ -19,6 +19,8 @@ object DRProjectTracker {
     @JvmStatic
     var viewData: String = ""
     @JvmStatic
+    var activityLauncher: String = ""
+    @JvmStatic
     var currentprojectID: String = ""
 
     @JvmStatic
@@ -36,6 +38,8 @@ object DRProjectTracker {
         buildConfigData = contentBuildConfigs.ifEmpty { "{}" }
 
         viewData = DRProjectView.read(projectID)
+
+        activityLauncher = ProjectInjection.readActivityLauncher(projectID)
 
         Log.i(TAG, "Loaded configs data.")
     }
