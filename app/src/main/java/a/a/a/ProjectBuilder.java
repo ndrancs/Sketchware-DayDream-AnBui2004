@@ -787,6 +787,9 @@ public class ProjectBuilder {
 
                 if (DRFeatureManager.isShizukuEnabled(Configs.currentProjectID, null))
                     builtInLibraryManager.addLibrary(BuiltInLibraries.DEV_RIKKA_SHIZUKU_PROVIDER);
+
+                if (DRFeatureManager.isAndroidBillingEnabled(Configs.currentProjectID, null))
+                    builtInLibraryManager.addLibrary(BuiltInLibraries.ANDROID_BILLING);
             }
         }
 

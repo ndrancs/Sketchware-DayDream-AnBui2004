@@ -196,6 +196,20 @@ object DRFeatureManager {
     }
 
     @JvmStatic
+    fun isAndroidBillingEnabled(projectID : String, activityName : String?) : Boolean {
+        if (DayDreamProjectSettings.isEnableDayDream(projectID)) {
+            return DayDreamProjectSettings.isUseAndroidBilling(projectID)
+                    && LibraryUtils.isAllowUseAndroidBilling(projectID)
+                    && if (activityName.isNullOrEmpty())
+                true
+            else
+                DayDreamProjectSettings.isImportAndroidBilling(projectID, activityName)
+        }
+
+        return false
+    }
+
+    @JvmStatic
     fun isNeedAddNetworkPermision(projectID : String) : Boolean {
         if (DayDreamProjectSettings.isEnableDayDream(projectID)) {
             return (DayDreamProjectSettings.isUniversalUseMedia3(projectID) && LibraryUtils.isAllowUseAndroidXMedia3(projectID))

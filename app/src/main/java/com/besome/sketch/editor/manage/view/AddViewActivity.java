@@ -189,6 +189,7 @@ public class AddViewActivity extends BaseAppCompatActivity {
             binding.swImportandroixcredentialmanager.setChecked(DayDreamProjectSettings.isImportAndroidXCredentialManager(Configs.currentProjectID, projectFileBean.fileName));
             binding.swImportshizuku.setChecked(DayDreamProjectSettings.isImportShizuku(Configs.currentProjectID, projectFileBean.fileName));
             binding.swImportglidetransformations.setChecked(DayDreamProjectSettings.isImportGlideTransformations(Configs.currentProjectID, projectFileBean.fileName));
+            binding.swImportandroidbilling.setChecked(DayDreamProjectSettings.isImportAndroidBilling(Configs.currentProjectID, projectFileBean.fileName));
         }
 
         binding.lnEdgetoedge.setOnClickListener(v -> binding.edgetoedge.toggle());
@@ -201,6 +202,7 @@ public class AddViewActivity extends BaseAppCompatActivity {
         binding.lnImportandroixcredentialmanager.setOnClickListener(v -> binding.swImportandroixcredentialmanager.toggle());
         binding.lnImportshizuku.setOnClickListener(v -> binding.swImportshizuku.toggle());
         binding.lnImportglidetransformations.setOnClickListener(v -> binding.swImportglidetransformations.toggle());
+        binding.lnImportandroidbilling.setOnClickListener(v -> binding.swImportandroidbilling.toggle());
 
         if (!ProjectLibrary.isEnabledAppCompat(Configs.currentProjectID)) {
             binding.lnEdgetoedge.setEnabled(false);
@@ -274,6 +276,12 @@ public class AddViewActivity extends BaseAppCompatActivity {
             binding.lnImportglidetransformations.setVisibility(View.GONE);
         }
 
+        if (!(DayDreamProjectSettings.isEnableDayDream(Configs.currentProjectID)
+                && DayDreamProjectSettings.isUseAndroidBilling(Configs.currentProjectID)
+                && LibraryUtils.isAllowUseAndroidBilling(Configs.currentProjectID))) {
+            binding.lnImportandroidbilling.setVisibility(View.GONE);
+        }
+
         binding.lnClone.setOnClickListener(v -> {
             Intent intent = new Intent(this, DayDreamCloneClassActivity.class);
             intent.putExtra("sc_id", Configs.currentProjectID);
@@ -314,6 +322,7 @@ public class AddViewActivity extends BaseAppCompatActivity {
         DayDreamProjectSettings.setImportAndroidXCredentialManager(Configs.currentProjectID, filename, binding.swImportandroixcredentialmanager.isChecked());
         DayDreamProjectSettings.setImportShizuku(Configs.currentProjectID, filename, binding.swImportshizuku.isChecked());
         DayDreamProjectSettings.setImportGlideTransformations(Configs.currentProjectID, filename, binding.swImportglidetransformations.isChecked());
+        DayDreamProjectSettings.setImportAndroidBilling(Configs.currentProjectID, filename, binding.swImportandroidbilling.isChecked());
     }
 
     @Override

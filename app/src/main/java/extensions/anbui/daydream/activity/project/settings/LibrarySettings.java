@@ -48,6 +48,7 @@ public class LibrarySettings extends AppCompatActivity {
         binding.swUseandroixcredentialmanager.setChecked(DayDreamProjectSettings.isUniversalUseAndroidXCredentialManager(projectID));
         binding.swUseshizuku.setChecked(DayDreamProjectSettings.isUseShizuku(projectID));
         binding.swGlidetransformations.setChecked(DayDreamProjectSettings.isGlideTransformations(projectID));
+        binding.swUseandroidbilling.setChecked(DayDreamProjectSettings.isUseAndroidBilling(projectID));
 
         binding.swUsemedia3.setChecked((DayDreamProjectSettings.isUniversalUseMedia3(projectID)));
         binding.swUsemedia3.setOnCheckedChangeListener((buttonView, isChecked) -> DayDreamProjectSettings.setUniversalUseMedia3(projectID, isChecked));
@@ -55,7 +56,7 @@ public class LibrarySettings extends AppCompatActivity {
         binding.swUseandroixcredentialmanager.setOnCheckedChangeListener((buttonView, isChecked) -> DayDreamProjectSettings.setUniversalUseAndroidXCredentialManager(projectID, isChecked));
         binding.swUseshizuku.setOnCheckedChangeListener((buttonView, isChecked) -> DayDreamProjectSettings.setUseShizuku(projectID, isChecked));
         binding.swGlidetransformations.setOnCheckedChangeListener((buttonView, isChecked) -> DayDreamProjectSettings.setGlideTransformations(projectID, isChecked));
-
+        binding.swUseandroidbilling.setOnCheckedChangeListener((buttonView, isChecked) -> DayDreamProjectSettings.setUseAndroidBilling(projectID, isChecked));
 
         binding.lnForceaddworkmanager.setOnClickListener(v -> binding.swForceaddworkmanager.toggle());
         binding.lnUsemedia3.setOnClickListener(v -> binding.swUsemedia3.toggle());
@@ -63,6 +64,7 @@ public class LibrarySettings extends AppCompatActivity {
         binding.lnUseandroixcredentialmanager.setOnClickListener(v -> binding.swUseandroixcredentialmanager.toggle());
         binding.lnUseshizuku.setOnClickListener(v -> binding.swUseshizuku.toggle());
         binding.lnGlidetransformations.setOnClickListener(v -> binding.swGlidetransformations.toggle());
+        binding.lnUseandroidbilling.setOnClickListener(v -> binding.swUseandroidbilling.toggle());
 
 
         initializeForceAddWorkmanager();
@@ -70,6 +72,7 @@ public class LibrarySettings extends AppCompatActivity {
         initializeUseAndroidXBrowser();
         initializeUseAndroidXCredentialManager();
         initializeUseShizuku();
+        initializeUseAndroidBilling();
     }
 
     private void initializeForceAddWorkmanager() {
@@ -135,6 +138,22 @@ public class LibrarySettings extends AppCompatActivity {
         if (!finalstatus) {
             binding.lnUseshizuku.setEnabled(false);
             binding.lnUseshizuku.setAlpha(0.5f);
+        }
+    }
+
+    private void initializeUseAndroidBilling() {
+        boolean finalstatus = true;
+        if (!ProjectLibrary.isEnabledFirebase(projectID)) {
+            finalstatus = false;
+            binding.tvUseandroidbillingnote.setText("To use, enable Firebase. " + binding.tvUseandroidbillingnote.getText().toString());
+        } else if (!ProjectLibrary.isEnabledAppCompat(projectID)) {
+            finalstatus = false;
+            binding.tvUseandroidbillingnote.setText("To use, enable AppCompat. " + binding.tvUseandroidbillingnote.getText().toString());
+        }
+
+        if (!finalstatus) {
+            binding.lnUseandroidbilling.setEnabled(false);
+            binding.lnUseandroidbilling.setAlpha(0.5f);
         }
     }
 }

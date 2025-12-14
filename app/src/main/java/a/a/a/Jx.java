@@ -835,6 +835,10 @@ public class Jx {
                 if (DRFeatureManager.isShizukuEnabled(Configs.currentProjectID, projectFileBean.fileName)) {
                     addImport("rikka.shizuku.*");
                 }
+
+                if (DRFeatureManager.isAndroidBillingEnabled(Configs.currentProjectID, projectFileBean.fileName)) {
+                    addImport("com.android.billingclient.api.*");
+                }
             }
         }
 

@@ -135,6 +135,16 @@ public class DayDreamProjectSettings {
         setDataBoolean(projectID, activityName, "importGlideTransformations", isEnable);
     }
 
+    public static boolean isImportAndroidBilling(String projectID, String activityName) {
+        Log.i(TAG, "isImportAndroidBilling: " + projectID + " " + activityName);
+        return getDataBoolean(projectID, ProjectUtils.convertJavaNameToXMLName(activityName), "importAndroidBilling");
+    }
+
+    public static void setImportAndroidBilling(String projectID, String activityName, boolean isEnable) {
+        Log.i(TAG, "setImportAndroidBilling: " + projectID + " " + activityName + " " + isEnable);
+        setDataBoolean(projectID, activityName, "importAndroidBilling", isEnable);
+    }
+
     //Universal settings
 
     public static boolean isEnableDayDream(String projectID) {
@@ -275,6 +285,16 @@ public class DayDreamProjectSettings {
     public static void setUseShizuku(String projectID, boolean isEnable) {
         Log.i(TAG, "setUseShizuku: " + projectID + " " + isEnable);
         setUniversalSettings(projectID, "useShizuku", isEnable);
+    }
+
+    public static boolean isUseAndroidBilling(String projectID) {
+        Log.i(TAG, "isUseAndroidBilling: " + projectID);
+        return getUniversalSettings(projectID, "useAndroidBilling");
+    }
+
+    public static void setUseAndroidBilling(String projectID, boolean isEnable) {
+        Log.i(TAG, "setUseAndroidBilling: " + projectID + " " + isEnable);
+        setUniversalSettings(projectID, "useAndroidBilling", isEnable);
     }
 
     public static boolean isUseTheme(String projectID) {

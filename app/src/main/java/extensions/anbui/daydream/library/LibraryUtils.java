@@ -62,6 +62,12 @@ public class LibraryUtils {
                 && ProjectConfigs.isMinSDKNewerThan23(projectID));
     }
 
+    public static boolean isAllowUseAndroidBilling(String projectID) {
+        Log.i(TAG, "isAllowUseAndroidBilling: " + projectID);
+        return (ProjectLibrary.isEnabledAppCompat(projectID)
+                && ProjectLibrary.isEnabledFirebase(projectID));
+    }
+
     public static boolean isAllowUseGit() {
         Log.i(TAG, "isAllowUseGit");
         return Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU;

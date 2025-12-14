@@ -23,6 +23,7 @@ public class BuiltInLibraries {
 
     // None final so that field values won't be optimized into code, and to allow easy changing of library names due to that
 
+    public static String ANDROID_BILLING = "billing-8.2.0";
     public static String ANDROIDX_ACTIVITY = "activity-1.10.1";
     public static String ANDROIDX_ANNOTATION = "annotation-1.5.1";
     public static String ANDROIDX_ANNOTATION_ANNOTATION_JVM = "annotation-jvm-1.9.1";
@@ -116,6 +117,9 @@ public class BuiltInLibraries {
     public static String ANIMAL_SNIFFER_ANNOTATIONS = "animal-sniffer-annotations-1.26";
     public static String CIRCLEIMAGEVIEW = "circleimageview-3.1.0";
     public static String CODEVIEW = "CodeView-0.4.0";
+    public static String COM_GOOGLE_ANDROID_DATATRANSPORT_TRANSPORT_API = "transport-api-4.0.0";
+    public static String COM_GOOGLE_ANDROID_DATATRANSPORT_TRANSPORT_BACKEND_CCT = "transport-backend-cct-4.0.0";
+    public static String COM_GOOGLE_ANDROID_DATATRANSPORT_TRANSPORT_RUNTIME = "transport-runtime-4.0.0";
     public static String COM_GOOGLE_ANDROID_GMS_PLAY_SERVICES_MEASUREMENT = "play-services-measurement-23.0.0";
     public static String COM_GOOGLE_ANDROID_GMS_PLAY_SERVICES_MEASUREMENT_API = "play-services-measurement-api-23.0.0";
     public static String COM_GOOGLE_ANDROID_GMS_PLAY_SERVICES_MEASUREMENT_IMPL = "play-services-measurement-impl-23.0.0";
@@ -135,6 +139,9 @@ public class BuiltInLibraries {
     public static String FIREBASE_COMPONENTS = "firebase-components-19.0.0";
     public static String FIREBASE_DATABASE = "firebase-database-22.0.0";
     public static String FIREBASE_DATABASE_COLLECTION = "firebase-database-collection-18.0.1";
+    public static String FIREBASE_ENCODERS = "firebase-encoders-17.0.0";
+    public static String FIREBASE_ENCODERS_JSON = "firebase-encoders-json-18.0.1";
+    public static String FIREBASE_ENCODERS_PROTO = "firebase-encoders-proto-16.0.0";
     public static String FIREBASE_IID = "firebase-iid-19.0.0";
     public static String FIREBASE_IID_INTEROP = "firebase-iid-interop-17.1.0";
     public static String FIREBASE_MEASUREMENT_CONNECTOR = "firebase-measurement-connector-19.0.0";
@@ -258,6 +265,12 @@ public class BuiltInLibraries {
             new BuiltInLibrary(ORG_JETBRAINS_KOTLINX_KOTLINX_SERIALIZATION_PROTOBUF_JVM, List.of(JETBRAINS_KOTLIN_STDLIB,
                     ORG_JETBRAINS_KOTLINX_KOTLINX_SERIALIZATION_CORE_JVM)),
             //==========Kotlin==========
+
+            //==========Android===========
+            new BuiltInLibrary(ANDROID_BILLING, List.of(ANDROIDX_ACTIVITY, COM_GOOGLE_ANDROID_DATATRANSPORT_TRANSPORT_API,
+                    COM_GOOGLE_ANDROID_DATATRANSPORT_TRANSPORT_BACKEND_CCT, COM_GOOGLE_ANDROID_DATATRANSPORT_TRANSPORT_RUNTIME,
+                    PLAY_SERVICES_BASE, PLAY_SERVICES_BASEMENT, PLAY_SERVICES_LOCATION, PLAY_SERVICES_TASKS)),
+            //==========Android===========
 
             //==========AndroidX==========
             //Core & Annotation
@@ -467,6 +480,13 @@ public class BuiltInLibraries {
                     COM_GOOGLE_ERRORPRONE_ERROR_PRONE_ANNOTATIONS), "com.google.android.material"),
             //==========Material==========
 
+            //==========Google Data Transport==========
+            new BuiltInLibrary(COM_GOOGLE_ANDROID_DATATRANSPORT_TRANSPORT_API, List.of(ANDROIDX_ANNOTATION)),
+            new BuiltInLibrary(COM_GOOGLE_ANDROID_DATATRANSPORT_TRANSPORT_BACKEND_CCT, List.of(COM_GOOGLE_ANDROID_DATATRANSPORT_TRANSPORT_API,
+                    COM_GOOGLE_ANDROID_DATATRANSPORT_TRANSPORT_RUNTIME, FIREBASE_ENCODERS, FIREBASE_ENCODERS_JSON)),
+            new BuiltInLibrary(COM_GOOGLE_ANDROID_DATATRANSPORT_TRANSPORT_RUNTIME, List.of(COM_GOOGLE_ANDROID_DATATRANSPORT_TRANSPORT_API, FIREBASE_ENCODERS, FIREBASE_ENCODERS_PROTO, ANDROIDX_ANNOTATION, JAKARTA_INJECT_JAKARTA_INJECT_API)),
+            //==========Google Data Transport==========
+
             //==========Google Firebase==========
             //Core & Common
             new BuiltInLibrary(FIREBASE_COMMON, List.of(FIREBASE_COMPONENTS, COM_GOOGLE_FIREBASE_FIREBASE_ANNOTATIONS,
@@ -517,6 +537,11 @@ public class BuiltInLibraries {
             //Installations
             new BuiltInLibrary(COM_GOOGLE_FIREBASE_FIREBASE_INSTALLATIONS, List.of(PLAY_SERVICES_TASKS, FIREBASE_COMMON, FIREBASE_COMPONENTS, COM_GOOGLE_FIREBASE_FIREBASE_INSTALLATIONS_INTEROP)),
             new BuiltInLibrary(COM_GOOGLE_FIREBASE_FIREBASE_INSTALLATIONS_INTEROP, List.of(PLAY_SERVICES_TASKS, ANDROIDX_ANNOTATION)),
+
+            //Encoders
+            new BuiltInLibrary(FIREBASE_ENCODERS, List.of(ANDROIDX_ANNOTATION)),
+            new BuiltInLibrary(FIREBASE_ENCODERS_JSON, List.of(ANDROIDX_ANNOTATION, FIREBASE_ENCODERS, ORG_JETBRAINS_KOTLIN_KOTLIN_STDLIB_JDK8)),
+            new BuiltInLibrary(FIREBASE_ENCODERS_PROTO, List.of(ANDROIDX_ANNOTATION, FIREBASE_ENCODERS)),
             //==========Google Firebase==========
 
             //==========Play Services==========
