@@ -277,6 +277,36 @@ public class DayDreamProjectSettings {
         setUniversalSettings(projectID, "useGoogleAnalytics", isEnable);
     }
 
+    public static boolean isUseOneSignal(String projectID) {
+        Log.i(TAG, "isUseOneSignal: " + projectID);
+        return getUniversalSettings(projectID, "useOneSignal");
+    }
+
+    public static void setUseOneSignal(String projectID, boolean isEnable) {
+        Log.i(TAG, "setUseOneSignal: " + projectID + " " + isEnable);
+        setUniversalSettings(projectID, "useOneSignal", isEnable);
+    }
+
+    public static String getOneSignalAppId(String projectID) {
+        Log.i(TAG, "isOneSignalAppId: " + projectID);
+        return getUniversalSettingsString(projectID, "oneSignalAppId");
+    }
+
+    public static void setOneSignalAppId(String projectID, String value) {
+        Log.i(TAG, "setOneSignalAppId: " + projectID + " " + value);
+        setUniversalSettingsString(projectID, "oneSignalAppId", value);
+    }
+
+    public static boolean isAutoInitializeOneSignal(String projectID) {
+        Log.i(TAG, "isAutoInitializeOneSignal: " + projectID);
+        return getUniversalSettings(projectID, "autoInitializeOneSignal");
+    }
+
+    public static void setAutoInitializeOneSignal(String projectID, boolean isEnable) {
+        Log.i(TAG, "setAutoInitializeOneSignal: " + projectID + " " + isEnable);
+        setUniversalSettings(projectID, "autoInitializeOneSignal", isEnable);
+    }
+
     public static boolean isUseShizuku(String projectID) {
         Log.i(TAG, "isUseShizuku: " + projectID);
         return getUniversalSettings(projectID, "useShizuku");
@@ -355,6 +385,16 @@ public class DayDreamProjectSettings {
     public static void setUniversalSettingsInt(String projectID, String settingName, int value) {
         Log.i(TAG, "setUniversalSettingsInt: " + projectID + " " + settingName + " " + value);
         setDataInt(projectID, "Universal", settingName, value);
+    }
+
+    public static String getUniversalSettingsString(String projectID, String settingName) {
+        Log.i(TAG, "getUniversalSettingsString: " + projectID + " " + settingName);
+        return getDataString(projectID, "Universal", settingName);
+    }
+
+    public static void setUniversalSettingsString(String projectID, String settingName, String value) {
+        Log.i(TAG, "setUniversalSettingsString: " + projectID + " " + settingName + " " + value);
+        setDataString(projectID, "Universal", settingName, value);
     }
 
     //Read and write data
@@ -468,6 +508,6 @@ public class DayDreamProjectSettings {
     public static void writeDayDreamDataFile(String projectID, String content) {
         Log.i(TAG, "writeDayDreamDataFile: " + projectID + " " + content);
         FileUtils.writeTextFile(FileUtils.getInternalStorageDir() + Configs.projectDataFolderDir + projectID + "/DataDayDream.json", content);
-        DRProjectTracker.startNow(projectID);
+        DRProjectTracker.startNow(projectID, false);
     }
 }

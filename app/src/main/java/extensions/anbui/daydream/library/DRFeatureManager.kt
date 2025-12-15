@@ -5,18 +5,19 @@ import extensions.anbui.daydream.settings.DayDreamProjectSettings
 
 object DRFeatureManager {
     @JvmStatic
-    fun isThemeEnabled(projectID : String) : Boolean {
+    fun isThemeEnabled(projectID: String): Boolean {
         return DayDreamProjectSettings.isEnableDayDream(projectID) &&
-            DayDreamProjectSettings.isUseTheme(projectID) &&
-            LibraryUtils.isAllowUseTheme(projectID)
+                DayDreamProjectSettings.isUseTheme(projectID) &&
+                LibraryUtils.isAllowUseTheme(projectID)
     }
 
     @JvmStatic
-    fun isDynamicColorEnabled(projectID : String) : Boolean {
+    fun isDynamicColorEnabled(projectID: String): Boolean {
         if (DayDreamProjectSettings.isEnableDayDream(projectID) &&
-                DayDreamProjectSettings.isUseTheme(projectID) &&
-                LibraryUtils.isAllowUseTheme(projectID) &&
-                LibraryUtils.isAllowUseDynamicColor(projectID)) {
+            DayDreamProjectSettings.isUseTheme(projectID) &&
+            LibraryUtils.isAllowUseTheme(projectID) &&
+            LibraryUtils.isAllowUseDynamicColor(projectID)
+        ) {
 
             return DayDreamProjectSettings.isUseDynamicColor(projectID)
         }
@@ -25,13 +26,20 @@ object DRFeatureManager {
     }
 
     @JvmStatic
-    fun isDisableAutomaticPermissionRequestsEnabled(projectID : String, activityName: String?) : Boolean {
+    fun isDisableAutomaticPermissionRequestsEnabled(
+        projectID: String,
+        activityName: String?
+    ): Boolean {
         if (LibraryUtils.isAllowUseWindowInsetsHandling(projectID)) {
             return if (DayDreamProjectSettings.isEnableDayDream(projectID)
-                && DayDreamProjectSettings.isUniversalDisableAutomaticPermissionRequests(projectID)) {
+                && DayDreamProjectSettings.isUniversalDisableAutomaticPermissionRequests(projectID)
+            ) {
                 true
             } else if (!activityName.isNullOrEmpty()) {
-                DayDreamProjectSettings.isDisableAutomaticPermissionRequests(projectID, activityName)
+                DayDreamProjectSettings.isDisableAutomaticPermissionRequests(
+                    projectID,
+                    activityName
+                )
             } else {
                 false
             }
@@ -41,10 +49,11 @@ object DRFeatureManager {
     }
 
     @JvmStatic
-    fun isEdgeToEdgeEnabled(projectID : String, xmlName : String?) : Boolean {
+    fun isEdgeToEdgeEnabled(projectID: String, xmlName: String?): Boolean {
         if (LibraryUtils.isAllowUseEdgeToEdge(projectID)) {
             return if (DayDreamProjectSettings.isEnableDayDream(projectID) &&
-                DayDreamProjectSettings.isUniversalEdgeToEdge(projectID)) {
+                DayDreamProjectSettings.isUniversalEdgeToEdge(projectID)
+            ) {
                 true
             } else if (!xmlName.isNullOrEmpty()) {
                 DayDreamProjectSettings.isEnableEdgeToEdge(projectID, xmlName)
@@ -57,10 +66,11 @@ object DRFeatureManager {
     }
 
     @JvmStatic
-    fun isWindowInsetsHandlingEnabled(projectID : String, xmlName : String?) : Boolean {
+    fun isWindowInsetsHandlingEnabled(projectID: String, xmlName: String?): Boolean {
         if (LibraryUtils.isAllowUseWindowInsetsHandling(projectID)) {
             return if (DayDreamProjectSettings.isEnableDayDream(projectID)
-                && DayDreamProjectSettings.isUniversalWindowInsetsHandling(projectID)) {
+                && DayDreamProjectSettings.isUniversalWindowInsetsHandling(projectID)
+            ) {
                 true
             } else if (!xmlName.isNullOrEmpty()) {
                 DayDreamProjectSettings.isEnableWindowInsetsHandling(projectID, xmlName)
@@ -73,10 +83,11 @@ object DRFeatureManager {
     }
 
     @JvmStatic
-    fun isContentProtectionEnabled(projectID : String, xmlName : String?) : Boolean {
+    fun isContentProtectionEnabled(projectID: String, xmlName: String?): Boolean {
         if (LibraryUtils.isAllowUseWindowInsetsHandling(projectID)) {
             return if (DayDreamProjectSettings.isEnableDayDream(projectID)
-                && DayDreamProjectSettings.isUniversalContentProtection(projectID)) {
+                && DayDreamProjectSettings.isUniversalContentProtection(projectID)
+            ) {
                 true
             } else if (!xmlName.isNullOrEmpty()) {
                 DayDreamProjectSettings.isContentProtection(projectID, xmlName)
@@ -89,77 +100,77 @@ object DRFeatureManager {
     }
 
     @JvmStatic
-    fun isOnBackInvokedCallbackEnabled(projectID : String, activityName : String?) : Boolean {
+    fun isOnBackInvokedCallbackEnabled(projectID: String, activityName: String?): Boolean {
         if (LibraryUtils.isAllowUseWindowInsetsHandling(projectID)) {
             return DayDreamProjectSettings.isEnableDayDream(projectID)
                     && DayDreamProjectSettings.isUninversalEnableOnBackInvokedCallback(projectID)
                     && if (activityName.isNullOrEmpty())
-                          true
-                       else
-                          ProjectLogic.isThisActivityHaveOnBackPressed(projectID, activityName)
+                true
+            else
+                ProjectLogic.isThisActivityHaveOnBackPressed(projectID, activityName)
         }
 
         return false
     }
 
     @JvmStatic
-    fun isAndroidXWorkManagerEnabled(projectID : String, activityName : String?) : Boolean {
+    fun isAndroidXWorkManagerEnabled(projectID: String, activityName: String?): Boolean {
         if (DayDreamProjectSettings.isEnableDayDream(projectID)) {
             return DayDreamProjectSettings.isForceAddWorkManager(projectID)
                     && LibraryUtils.isAllowUseAndroidXWorkManager(projectID)
                     && if (activityName.isNullOrEmpty())
-                          true
-                       else
-                           DayDreamProjectSettings.isImportWorkManager(projectID, activityName)
+                true
+            else
+                DayDreamProjectSettings.isImportWorkManager(projectID, activityName)
         }
 
         return false
     }
 
     @JvmStatic
-    fun isAndroidXMedia3Enabled(projectID : String, activityName : String?) : Boolean {
+    fun isAndroidXMedia3Enabled(projectID: String, activityName: String?): Boolean {
         if (DayDreamProjectSettings.isEnableDayDream(projectID)) {
             return DayDreamProjectSettings.isUniversalUseMedia3(projectID)
                     && LibraryUtils.isAllowUseAndroidXMedia3(projectID)
                     && if (activityName.isNullOrEmpty())
-                          true
-                       else
-                           DayDreamProjectSettings.isImportAndroidXMedia3(projectID, activityName)
+                true
+            else
+                DayDreamProjectSettings.isImportAndroidXMedia3(projectID, activityName)
         }
 
         return false
     }
 
     @JvmStatic
-    fun isAndroidXBrowserEnabled(projectID : String, activityName : String?) : Boolean {
+    fun isAndroidXBrowserEnabled(projectID: String, activityName: String?): Boolean {
         if (DayDreamProjectSettings.isEnableDayDream(projectID)) {
             return DayDreamProjectSettings.isUniversalUseAndroidXBrowser(projectID)
                     && LibraryUtils.isAllowUseAndroidXBrowser(projectID)
                     && if (activityName.isNullOrEmpty())
-                          true
-                       else
-                          DayDreamProjectSettings.isImportAndroidXBrowser(projectID, activityName)
+                true
+            else
+                DayDreamProjectSettings.isImportAndroidXBrowser(projectID, activityName)
         }
 
         return false
     }
 
     @JvmStatic
-    fun isAndroidXCredentialManagerEnabled(projectID : String, activityName : String?) : Boolean {
+    fun isAndroidXCredentialManagerEnabled(projectID: String, activityName: String?): Boolean {
         if (DayDreamProjectSettings.isEnableDayDream(projectID)) {
             return DayDreamProjectSettings.isUniversalUseAndroidXCredentialManager(projectID)
                     && LibraryUtils.isAllowUseAndroidXCredentialManager(projectID)
                     && if (activityName.isNullOrEmpty())
-                          true
-                       else
-                          DayDreamProjectSettings.isImportAndroidXCredentialManager(projectID, activityName)
+                true
+            else
+                DayDreamProjectSettings.isImportAndroidXCredentialManager(projectID, activityName)
         }
 
         return false
     }
 
     @JvmStatic
-    fun isGoogleAnalyticsEnabled(projectID : String) : Boolean {
+    fun isGoogleAnalyticsEnabled(projectID: String): Boolean {
         if (DayDreamProjectSettings.isEnableDayDream(projectID)) {
             return DayDreamProjectSettings.isUseGoogleAnalytics(projectID)
                     && LibraryUtils.isAllowUseGoogleAnalytics(projectID)
@@ -169,34 +180,49 @@ object DRFeatureManager {
     }
 
     @JvmStatic
-    fun isGlidetransformationsEnabled(projectID : String, activityName : String?) : Boolean {
+    fun isGlidetransformationsEnabled(projectID: String, activityName: String?): Boolean {
         if (DayDreamProjectSettings.isEnableDayDream(projectID)) {
             return DayDreamProjectSettings.isGlideTransformations(projectID)
                     && if (activityName.isNullOrEmpty())
-                          true
-                       else
-                           DayDreamProjectSettings.isImportGlideTransformations(projectID, activityName)
+                true
+            else
+                DayDreamProjectSettings.isImportGlideTransformations(projectID, activityName)
         }
 
         return false
     }
 
     @JvmStatic
-    fun isShizukuEnabled(projectID : String, activityName : String?) : Boolean {
+    fun isOneSignalEnabled(projectID: String, activityName: String?): Boolean {
+        if (DayDreamProjectSettings.isEnableDayDream(projectID)) {
+            return DayDreamProjectSettings.isUseOneSignal(projectID)
+                    && DayDreamProjectSettings.getOneSignalAppId(projectID).isNotEmpty()
+                    && LibraryUtils.isAllowUseOneSignal(projectID)
+                    && if (activityName.isNullOrEmpty())
+                true
+            else
+                DayDreamProjectSettings.isAutoInitializeOneSignal(projectID)
+        }
+
+        return false
+    }
+
+    @JvmStatic
+    fun isShizukuEnabled(projectID: String, activityName: String?): Boolean {
         if (DayDreamProjectSettings.isEnableDayDream(projectID)) {
             return DayDreamProjectSettings.isUseShizuku(projectID)
                     && LibraryUtils.isAllowUseShizuku(projectID)
                     && if (activityName.isNullOrEmpty())
-                          true
-                       else
-                          DayDreamProjectSettings.isImportShizuku(projectID, activityName)
+                true
+            else
+                DayDreamProjectSettings.isImportShizuku(projectID, activityName)
         }
 
         return false
     }
 
     @JvmStatic
-    fun isAndroidBillingEnabled(projectID : String, activityName : String?) : Boolean {
+    fun isAndroidBillingEnabled(projectID: String, activityName: String?): Boolean {
         if (DayDreamProjectSettings.isEnableDayDream(projectID)) {
             return DayDreamProjectSettings.isUseAndroidBilling(projectID)
                     && LibraryUtils.isAllowUseAndroidBilling(projectID)
@@ -210,11 +236,17 @@ object DRFeatureManager {
     }
 
     @JvmStatic
-    fun isNeedAddNetworkPermision(projectID : String) : Boolean {
+    fun isNeedAddNetworkPermision(projectID: String): Boolean {
         if (DayDreamProjectSettings.isEnableDayDream(projectID)) {
-            return (DayDreamProjectSettings.isUniversalUseMedia3(projectID) && LibraryUtils.isAllowUseAndroidXMedia3(projectID))
-                || (DayDreamProjectSettings.isUniversalUseAndroidXBrowser(projectID) && LibraryUtils.isAllowUseAndroidXBrowser(projectID))
-                || (DayDreamProjectSettings.isUniversalUseAndroidXCredentialManager(projectID)) && LibraryUtils.isAllowUseAndroidXCredentialManager(projectID)
+            return (DayDreamProjectSettings.isUniversalUseMedia3(projectID) && LibraryUtils.isAllowUseAndroidXMedia3(
+                projectID
+            ))
+                    || (DayDreamProjectSettings.isUniversalUseAndroidXBrowser(projectID) && LibraryUtils.isAllowUseAndroidXBrowser(
+                projectID
+            ))
+                    || (DayDreamProjectSettings.isUniversalUseAndroidXCredentialManager(projectID)) && LibraryUtils.isAllowUseAndroidXCredentialManager(
+                projectID
+            )
         }
 
         return false

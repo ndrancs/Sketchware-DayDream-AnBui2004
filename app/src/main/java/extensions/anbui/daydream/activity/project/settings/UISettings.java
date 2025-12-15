@@ -23,7 +23,7 @@ public class UISettings extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         if (getIntent().hasExtra("sc_id")) {
             projectID = getIntent().getStringExtra("sc_id");
-            DRProjectTracker.startNow(projectID);
+            DRProjectTracker.startNow(projectID, false);
         } else {
             finish();
             return;

@@ -1,5 +1,6 @@
 package extensions.anbui.daydream.activity.project.settings;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.activity.EdgeToEdge;
@@ -7,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.Objects;
 
+import extensions.anbui.daydream.activity.project.settings.library.OneSignalSettingsActivity;
 import extensions.anbui.daydream.configs.Configs;
 import extensions.anbui.daydream.library.LibraryUtils;
 import extensions.anbui.daydream.project.DRProjectTracker;
@@ -27,7 +29,7 @@ public class LibrarySettings extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         if (getIntent().hasExtra("sc_id")) {
             projectID = getIntent().getStringExtra("sc_id");
-            DRProjectTracker.startNow(projectID);
+            DRProjectTracker.startNow(projectID, false);
         } else {
             finish();
             return;
@@ -65,6 +67,7 @@ public class LibrarySettings extends AppCompatActivity {
         binding.lnUseshizuku.setOnClickListener(v -> binding.swUseshizuku.toggle());
         binding.lnGlidetransformations.setOnClickListener(v -> binding.swGlidetransformations.toggle());
         binding.lnUseandroidbilling.setOnClickListener(v -> binding.swUseandroidbilling.toggle());
+        binding.lnUseonesignal.setOnClickListener(v -> goToSettings(OneSignalSettingsActivity.class));
 
 
         initializeForceAddWorkmanager();
@@ -73,6 +76,7 @@ public class LibrarySettings extends AppCompatActivity {
         initializeUseAndroidXCredentialManager();
         initializeUseShizuku();
         initializeUseAndroidBilling();
+        initializeUseOneSignal();
     }
 
     private void initializeForceAddWorkmanager() {
@@ -155,5 +159,27 @@ public class LibrarySettings extends AppCompatActivity {
             binding.lnUseandroidbilling.setEnabled(false);
             binding.lnUseandroidbilling.setAlpha(0.5f);
         }
+    }
+
+    private void initializeUseOneSignal() {
+        boolean finalstatus = true;
+        if (!ProjectLibrary.isEnabledFirebase(projectID)) {
+            finalstatus = false;
+            binding.tvUseonesignalnote.setText("To use, enable Firebase. " + binding.tvUseonesignalnote.getText().toString());
+        } else if (!ProjectLibrary.isEnabledAppCompat(projectID)) {
+            finalstatus = false;
+            binding.tvUseonesignalnote.setText("To use, enable AppCompat. " + binding.tvUseonesignalnote.getText().toString());
+        }
+
+        if (!finalstatus) {
+            binding.lnUseonesignal.setEnabled(false);
+            binding.lnUseonesignal.setAlpha(0.5f);
+        }
+    }
+
+    private void goToSettings(Class<?> cls) {
+        Intent intent = new Intent(this, cls);
+        intent.putExtra("sc_id", projectID);
+        startActivity(intent);
     }
 }

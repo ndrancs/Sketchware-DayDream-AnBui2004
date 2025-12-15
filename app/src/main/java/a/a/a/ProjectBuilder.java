@@ -790,6 +790,14 @@ public class ProjectBuilder {
 
                 if (DRFeatureManager.isAndroidBillingEnabled(Configs.currentProjectID, null))
                     builtInLibraryManager.addLibrary(BuiltInLibraries.ANDROID_BILLING);
+
+                if (DRFeatureManager.isOneSignalEnabled(Configs.currentProjectID, null)) {
+                    builtInLibraryManager.addLibrary(BuiltInLibraries.ONESIGNAL_CORE);
+                    builtInLibraryManager.addLibrary(BuiltInLibraries.ONESIGNAL_LOCATION);
+                    builtInLibraryManager.addLibrary(BuiltInLibraries.ONESIGNAL_NOTIFICATIONS);
+                    builtInLibraryManager.addLibrary(BuiltInLibraries.ONESIGNAL_IN_APP_MESSAGES);
+
+                }
             }
         }
 

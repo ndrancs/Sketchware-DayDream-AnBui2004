@@ -460,7 +460,7 @@ public class DesignActivity extends BaseAppCompatActivity implements View.OnClic
             sc_id = savedInstanceState.getString("sc_id");
         }
 
-        DRProjectTracker.startNow(sc_id);
+        DRProjectTracker.startNow(sc_id, false);
 
         r = new DB(getApplicationContext(), "P1");
         t = new DB(getApplicationContext(), "P12");
@@ -684,7 +684,7 @@ public class DesignActivity extends BaseAppCompatActivity implements View.OnClic
             finish();
         }
 
-        DRProjectTracker.startNow(sc_id);
+        DRProjectTracker.startNow(sc_id, false);
 
         long freeMegabytes = GB.c();
         if (freeMegabytes < 100L && freeMegabytes > 0L) {
@@ -1161,7 +1161,7 @@ public class DesignActivity extends BaseAppCompatActivity implements View.OnClic
             if (activity == null) return;
 
             activity.runOnUiThread(() -> {
-                DRProjectTracker.startNow(sc_id);
+                DRProjectTracker.startNow(sc_id, false);
                 updateRunButton(true);
                 activity.r.a("P1I10", true);
                 activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);

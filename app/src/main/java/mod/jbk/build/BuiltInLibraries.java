@@ -69,6 +69,7 @@ public class BuiltInLibraries {
     public static String ANDROIDX_LEGACY_SUPPORT_CORE_UTILS = "legacy-support-core-utils-1.0.0";
     public static String ANDROIDX_LEGACY_SUPPORT_V13 = "legacy-support-v13-1.0.0";
     public static String ANDROIDX_LEGACY_SUPPORT_V4 = "legacy-support-v4-1.0.0";
+    //ANDROIDX_LEGACY_SUPPORT_V4 = ANDROIDX_CORE + ANDROIDX_FRAGMENT + ANDROIDX_LEGACY_SUPPORT_CORE_UTILS + ANDROIDX_LEGACY_SUPPORT_CORE_UI + ANDROIDX_MEDIA
     public static String ANDROIDX_LIFECYCLE_COMMON = "lifecycle-common-2.6.2";
     public static String ANDROIDX_LIFECYCLE_LIVEDATA = "lifecycle-livedata-2.6.2";
     public static String ANDROIDX_LIFECYCLE_LIVEDATA_CORE = "lifecycle-livedata-core-2.6.2";
@@ -113,7 +114,8 @@ public class BuiltInLibraries {
     public static String ANDROIDX_VERSIONEDPARCELABLE = "versionedparcelable-1.1.1";
     public static String ANDROIDX_VIEWPAGER = "viewpager-1.0.0";
     public static String ANDROIDX_VIEWPAGER2 = "viewpager2-1.0.0";
-    public static String ANDROIDX_WORK_RUNTIME = "work-runtime-2.10.3";
+    public static String ANDROIDX_WORK_RUNTIME = "work-runtime-2.10.5";
+    //ANDROIDX_WORK_RUNTIME_KTX = ANDROIDX_WORK_RUNTIME + JETBRAINS_KOTLIN_STDLIB + ORG_JETBRAINS_KOTLINX_KOTLINX_COROUTINES_ANDROID
     public static String ANIMAL_SNIFFER_ANNOTATIONS = "animal-sniffer-annotations-1.26";
     public static String CIRCLEIMAGEVIEW = "circleimageview-3.1.0";
     public static String CODEVIEW = "CodeView-0.4.0";
@@ -164,7 +166,7 @@ public class BuiltInLibraries {
     public static String JETBRAINS_KOTLIN_STDLIB = "kotlin-stdlib-2.0.21";
     //    public static String KERMIT_ANDROID = "kermit-android-2.0.4";
 //    public static String KERMIT_CORE_ANDROID = "kermit-core-android-2.0.4";
-    public static String KOTLIN_STDLIB_JDK7 = "kotlin-stdlib-jdk7-1.6.21";
+    public static String KOTLIN_STDLIB_JDK7 = "kotlin-stdlib-jdk7-1.7.10";
     //    public static String KTOR_CLIENT_CONTENT_NEGOTIATION_JVM = "ktor-client-content-negotiation-jvm-3.0.1";
 //    public static String KTOR_CLIENT_CORE_JVM = "ktor-client-core-jvm-3.0.1";
 //    public static String KTOR_EVENTS_JVM = "ktor-events-jvm-3.0.1";
@@ -182,6 +184,10 @@ public class BuiltInLibraries {
     public static String OKHTTP = "okhttp-4.12.0";
     public static String OKIO = "okio-1.17.6";
     public static String OKIO_JVM = "okio-jvm-3.6.0";
+    public static String ONESIGNAL_CORE = "core-5.1.13";
+    public static String ONESIGNAL_NOTIFICATIONS = "notifications-5.1.13";
+    public static String ONESIGNAL_IN_APP_MESSAGES = "in-app-messages-5.1.13";
+    public static String ONESIGNAL_LOCATION = "location-5.1.13";
     public static String ORG_HAMCREAST_HAMCREAST_CORE = "hamcrest-core-1.3";
     public static String ORG_JETBRAINS_KOTLIN_KOTLIN_ANDROID_EXTENSIONS_RUNTIME = "kotlin-android-extensions-runtime-1.9.22";
     public static String ORG_JETBRAINS_KOTLIN_KOTLIN_PARCELIZE_RUNTIME = "kotlin-parcelize-runtime-1.9.22";
@@ -670,9 +676,28 @@ public class BuiltInLibraries {
             //==========Shizuku==========
             new BuiltInLibrary(DEV_RIKKA_SHIZUKU_PROVIDER, List.of(ANDROIDX_ANNOTATION, DEV_RIKKA_SHIZUKU_API)),
             new BuiltInLibrary(DEV_RIKKA_SHIZUKU_API, List.of(DEV_RIKKA_SHIZUKU_AIDL, DEV_RIKKA_SHIZUKU_SHARED, ANDROIDX_ANNOTATION)),
-            new BuiltInLibrary(DEV_RIKKA_SHIZUKU_AIDL, List.of()),
+            new BuiltInLibrary(DEV_RIKKA_SHIZUKU_AIDL),
             new BuiltInLibrary(DEV_RIKKA_SHIZUKU_SHARED, List.of(DEV_RIKKA_SHIZUKU_AIDL, ANDROIDX_ANNOTATION)),
             //==========Shizuku==========
+
+            //==========OneSignal==========
+            new BuiltInLibrary(ONESIGNAL_CORE, List.of(ANDROIDX_APPCOMPAT, ANDROIDX_CORE, ANDROIDX_FRAGMENT,
+                    ANDROIDX_LEGACY_SUPPORT_CORE_UTILS, ANDROIDX_LEGACY_SUPPORT_CORE_UI, ANDROIDX_MEDIA, KOTLIN_STDLIB_JDK7,
+                    ORG_JETBRAINS_KOTLINX_KOTLINX_COROUTINES_CORE_JVM,
+                    ORG_JETBRAINS_KOTLINX_KOTLINX_COROUTINES_ANDROID), "com.onesignal.core"),
+            new BuiltInLibrary(ONESIGNAL_NOTIFICATIONS, List.of(ANDROIDX_WORK_RUNTIME,
+                    FIREBASE_MESSAGING, ONESIGNAL_CORE, KOTLIN_STDLIB_JDK7,
+                    ORG_JETBRAINS_KOTLINX_KOTLINX_COROUTINES_CORE_JVM,
+                    ORG_JETBRAINS_KOTLINX_KOTLINX_COROUTINES_ANDROID), "com.onesignal.notifications"),
+            new BuiltInLibrary(ONESIGNAL_IN_APP_MESSAGES, List.of(ANDROIDX_BROWSER, ANDROIDX_CARDVIEW,
+                    ONESIGNAL_CORE, ONESIGNAL_NOTIFICATIONS,
+                    KOTLIN_STDLIB_JDK7,
+                    ORG_JETBRAINS_KOTLINX_KOTLINX_COROUTINES_CORE_JVM,
+                    ORG_JETBRAINS_KOTLINX_KOTLINX_COROUTINES_ANDROID), "com.onesignal.inAppMessages"),
+            new BuiltInLibrary(ONESIGNAL_LOCATION, List.of(ONESIGNAL_CORE, KOTLIN_STDLIB_JDK7,
+                    ORG_JETBRAINS_KOTLINX_KOTLINX_COROUTINES_CORE_JVM,
+                    ORG_JETBRAINS_KOTLINX_KOTLINX_COROUTINES_ANDROID), "com.onesignal.location"),
+            //==========OneSignal==========
 
             //==========Http Legacy==========
             //Used to maintain compatibility for older apps or libraries that still use Apache HTTP Client on Android 6.0+

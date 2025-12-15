@@ -27,7 +27,7 @@ class ThemeSettings : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         if (intent.hasExtra("sc_id")) {
             projectID = intent.getStringExtra("sc_id")
-            DRProjectTracker.startNow(projectID)
+            DRProjectTracker.startNow(projectID, false)
         } else {
             finish()
             return

@@ -56,6 +56,12 @@ public class LibraryUtils {
                 && ProjectLibrary.isEnabledFirebase(projectID));
     }
 
+    public static boolean isAllowUseOneSignal(String projectID) {
+        Log.i(TAG, "isAllowUseOneSignal: " + projectID);
+        return (ProjectLibrary.isEnabledAppCompat(projectID)
+                && ProjectLibrary.isEnabledFirebase(projectID));
+    }
+
     public static boolean isAllowUseShizuku(String projectID) {
         Log.i(TAG, "isAllowUseShizuku: " + projectID);
         return (ProjectLibrary.isEnabledAppCompat(projectID)

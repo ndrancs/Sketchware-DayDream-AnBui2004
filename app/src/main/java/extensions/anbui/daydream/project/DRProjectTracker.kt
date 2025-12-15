@@ -22,10 +22,14 @@ object DRProjectTracker {
     var activityLauncher: String = ""
     @JvmStatic
     var currentprojectID: String = ""
+    @JvmStatic
+    var isBuildForRelease: Boolean = false
 
     @JvmStatic
-    fun startNow(projectID: String?) {
+    fun startNow(projectID: String?, isForRelease: Boolean) {
         if (projectID == null) return
+
+        isBuildForRelease = isForRelease
 
         Configs.currentProjectID = projectID
         currentprojectID = projectID
@@ -42,6 +46,12 @@ object DRProjectTracker {
         activityLauncher = ProjectInjection.readActivityLauncher(projectID)
 
         Log.i(TAG, "Loaded configs data.")
+
+        if (isForRelease) {
+            Log.i(TAG, "You're in release mode.")
+        } else {
+            Log.i(TAG, "You're in debug mode.")
+        }
     }
 
     @JvmStatic

@@ -171,7 +171,7 @@ public class ExportProjectActivity extends BaseAppCompatActivity {
             sc_id = savedInstanceState.getString("sc_id");
         }
 
-        DRProjectTracker.startNow(sc_id);
+        DRProjectTracker.startNow(sc_id, false);
 
         sc_metadata = lC.b(sc_id);
         project_metadata = new yq(getApplicationContext(), wq.d(sc_id), sc_metadata);
@@ -771,6 +771,7 @@ public class ExportProjectActivity extends BaseAppCompatActivity {
             //activity.get().a((DialogInterface.OnCancelListener) this);
             // Allow user to use back button
             //activity.get().progressDialog.setCancelable(false);
+            DRProjectTracker.startNow(exportProjectActivity.sc_id, true);
         }
 
         /**
@@ -1221,6 +1222,7 @@ public class ExportProjectActivity extends BaseAppCompatActivity {
 
     //===============Export Source Code================
     private void exportSrc() {
+        DRProjectTracker.startNow(sc_id, false);
         try {
             Configs.isBuilding = true;
 

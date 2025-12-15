@@ -541,7 +541,22 @@ public class Jx {
 
                 if (DRProjectView.isActivityLauncher(sc_id, projectFileBean.fileName)) {
                     if (DRFeatureManager.isGoogleAnalyticsEnabled(sc_id)) {
-                        sb.append("FirebaseAnalytics.getInstance(this);").append(EOL);
+                        sb.append("FirebaseAnalytics.getInstance(getApplicationContext());").append(EOL);
+                    }
+                }
+
+                if (DRProjectView.isActivityLauncher(sc_id, projectFileBean.fileName)) {
+                    if (DRFeatureManager.isOneSignalEnabled(sc_id, projectFileBean.fileName)) {
+                        if (!DRProjectTracker.isBuildForRelease()) {
+                            sb.append("// Enable verbose logging for debugging (remove in production)").append(EOL);
+                            sb.append("OneSignal.getDebug().setLogLevel(LogLevel.VERBOSE);").append(EOL);
+                        }
+                        sb.append("// Initialize with your OneSignal App ID").append(EOL);
+                        sb.append("OneSignal.initWithContext(getApplicationContext(), \"").append(DayDreamProjectSettings.getOneSignalAppId(sc_id)).append("\");").append(EOL);
+                        sb.append("// Use this method to prompt for push notifications.").append(EOL);
+                        sb.append("// We recommend removing this method after testing and instead use In-App Messages to prompt for notification permission.").append(EOL);
+                        sb.append("OneSignal.getNotifications().requestPermission(false, Continue.none());").append(EOL);
+
                     }
                 }
             }
@@ -838,6 +853,15 @@ public class Jx {
 
                 if (DRFeatureManager.isAndroidBillingEnabled(Configs.currentProjectID, projectFileBean.fileName)) {
                     addImport("com.android.billingclient.api.*");
+                }
+
+                if (DRProjectView.isActivityLauncher(DRProjectTracker.getCurrentprojectID(), projectFileBean.fileName)) {
+                    if (DRFeatureManager.isOneSignalEnabled(Configs.currentProjectID, projectFileBean.fileName)) {
+                        addImport("com.onesignal.Continue");
+                        addImport("com.onesignal.OneSignal");
+                        if (!DRProjectTracker.isBuildForRelease())
+                            addImport("com.onesignal.debug.LogLevel");
+                    }
                 }
             }
         }
