@@ -2290,8 +2290,7 @@ Please try again later"</string>
 
     <string name="daydream">DayDream</string>
     <string name="beta">Beta</string>
-    <string name="extended_features">Extended features</string>
-    <string name="for_your_project_subtitile">for your project.</string>
+    <string name="daydream_subtitile">Magic for your project.</string>
 
 
 </resources>

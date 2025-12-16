@@ -24,12 +24,32 @@ object DRProjectTracker {
     var currentprojectID: String = ""
     @JvmStatic
     var isBuildForRelease: Boolean = false
+    @JvmStatic
+    var isExportForAndroidStudio: Boolean = false
+
+    @JvmStatic
+    fun startNowForAndroidStudio(projectID: String?) {
+        startNow(projectID, isForRelease = false, isForAndroidStudio = true)
+
+        Log.i(TAG, "You're in export for Android Studio mode.")
+    }
+
+    @JvmStatic
+    fun startNow(projectID: String?) {
+        startNow(projectID, isForRelease = false, isForAndroidStudio = false)
+    }
 
     @JvmStatic
     fun startNow(projectID: String?, isForRelease: Boolean) {
+        startNow(projectID, isForRelease, false)
+    }
+
+    @JvmStatic
+    fun startNow(projectID: String?, isForRelease: Boolean, isForAndroidStudio: Boolean) {
         if (projectID == null) return
 
         isBuildForRelease = isForRelease
+        isExportForAndroidStudio = isForAndroidStudio
 
         Configs.currentProjectID = projectID
         currentprojectID = projectID

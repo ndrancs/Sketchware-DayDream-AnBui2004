@@ -171,8 +171,6 @@ public class ExportProjectActivity extends BaseAppCompatActivity {
             sc_id = savedInstanceState.getString("sc_id");
         }
 
-        DRProjectTracker.startNow(sc_id, false);
-
         sc_metadata = lC.b(sc_id);
         project_metadata = new yq(getApplicationContext(), wq.d(sc_id), sc_metadata);
 
@@ -1222,7 +1220,7 @@ public class ExportProjectActivity extends BaseAppCompatActivity {
 
     //===============Export Source Code================
     private void exportSrc() {
-        DRProjectTracker.startNow(sc_id, false);
+        DRProjectTracker.startNowForAndroidStudio(sc_id);
         try {
             Configs.isBuilding = true;
 

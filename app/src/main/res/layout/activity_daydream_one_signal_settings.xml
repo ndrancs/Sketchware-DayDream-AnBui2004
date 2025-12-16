@@ -119,7 +119,7 @@
                     android:layout_height="wrap_content"
                     android:autoLink="all"
                     android:linksClickable="true"
-                    android:text="Please see OneSignal's instructions here: https://documentation.onesignal.com/docs/en/android-sdk-setup" />
+                    android:text="Read OneSignal's documents here:\n\nSetup for your Firebase project: https://documentation.onesignal.com/docs/en/android-firebase-credentials\n\nSetup for your app: https://documentation.onesignal.com/docs/en/android-sdk-setup" />
             </LinearLayout>
 
         </LinearLayout>

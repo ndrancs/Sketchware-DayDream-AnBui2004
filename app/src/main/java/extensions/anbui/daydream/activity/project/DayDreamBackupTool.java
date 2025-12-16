@@ -66,7 +66,7 @@ public class DayDreamBackupTool extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         if (getIntent().hasExtra("sc_id")) {
             projectID = getIntent().getStringExtra("sc_id");
-            DRProjectTracker.startNow(projectID, false);
+            DRProjectTracker.startNow(projectID);
         } else {
             finish();
             return;

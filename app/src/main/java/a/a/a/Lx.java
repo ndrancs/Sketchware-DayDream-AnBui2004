@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 
+import extensions.anbui.daydream.gradle.DRGradleManager;
 import extensions.anbui.daydream.java.generator.DRFirebaseCodeGenerator;
 import extensions.anbui.daydream.java.generator.DRJavaCodeGenerator;
 import mod.agus.jcoderz.editor.event.ManageEvent;
@@ -99,7 +100,7 @@ public class Lx {
         }
 
         if (metadata.isFirebaseEnabled) {
-            content.append("implementation platform('com.google.firebase:firebase-bom:34.6.0')\r\n");
+            content.append("implementation platform('com.google.firebase:firebase-bom:34.7.0')\r\n");
         }
 
         if (isLibraryNotExcluded(BuiltInLibraries.FIREBASE_AUTH, excludedLibraries) && metadata.isFirebaseAuthUsed) {
@@ -115,7 +116,7 @@ public class Lx {
         }
 
         if (isLibraryNotExcluded(BuiltInLibraries.PLAY_SERVICES_ADS, excludedLibraries) && metadata.isAdMobEnabled) {
-            content.append("implementation 'com.google.android.gms:play-services-ads:24.8.0'\r\n");
+            content.append("implementation 'com.google.android.gms:play-services-ads:24.9.0'\r\n");
         }
 
         if (isLibraryNotExcluded(BuiltInLibraries.PLAY_SERVICES_MAPS, excludedLibraries) && metadata.isMapUsed) {
@@ -127,11 +128,11 @@ public class Lx {
         }
 
         if (isLibraryNotExcluded(BuiltInLibraries.GSON, excludedLibraries) && metadata.isGsonUsed) {
-            content.append("implementation 'com.google.code.gson:gson:2.13.0'\r\n");
+            content.append("implementation 'com.google.code.gson:gson:2.13.2'\r\n");
         }
 
         if (isLibraryNotExcluded(BuiltInLibraries.OKHTTP, excludedLibraries) && metadata.isHttp3Used) {
-            content.append("implementation 'com.squareup.okhttp3:okhttp:5.3.1'\r\n");
+            content.append("implementation 'com.squareup.okhttp3:okhttp:5.3.2'\r\n");
         }
 
         ConstVarComponent extraMetadata = metadata.x;
@@ -160,12 +161,14 @@ public class Lx {
         }
 
         if (isLibraryNotExcluded(BuiltInLibraries.PLAY_SERVICES_AUTH, excludedLibraries) && extraMetadata.isFBGoogleUsed) {
-            content.append("implementation 'com.google.android.gms:play-services-auth:21.4.0'");
+            content.append("implementation 'com.google.android.gms:play-services-auth:21.4.0'\r\n");
         }
 
         if (isLibraryNotExcluded(BuiltInLibraries.FIREBASE_MESSAGING, excludedLibraries) && extraMetadata.isFCMUsed) {
-            content.append("implementation 'com.google.firebase:firebase-messaging'");
+            content.append("implementation 'com.google.firebase:firebase-messaging'\r\n");
         }
+
+        DRGradleManager.addDependencies(content);
 
         String sc_id = metadata.sc_id;
         String local_lib_file = FileUtil.getExternalStorageDir() + "/.sketchware/data/" + sc_id + "/local_library";

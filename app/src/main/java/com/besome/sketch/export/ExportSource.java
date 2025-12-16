@@ -17,6 +17,7 @@ import a.a.a.wq;
 import a.a.a.xq;
 import a.a.a.yB;
 import a.a.a.yq;
+import extensions.anbui.daydream.project.DRProjectTracker;
 import pro.sketchware.utility.FileUtil;
 
 public class ExportSource {
@@ -25,6 +26,8 @@ public class ExportSource {
     private static yq project_metadata = null;
 
     public static boolean startExport(Activity activity, String sc_id, TextView statusTextView) {
+        DRProjectTracker.startNowForAndroidStudio(sc_id);
+
         try {
 
             sc_metadata = lC.b(sc_id);

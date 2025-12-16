@@ -508,6 +508,6 @@ public class DayDreamProjectSettings {
     public static void writeDayDreamDataFile(String projectID, String content) {
         Log.i(TAG, "writeDayDreamDataFile: " + projectID + " " + content);
         FileUtils.writeTextFile(FileUtils.getInternalStorageDir() + Configs.projectDataFolderDir + projectID + "/DataDayDream.json", content);
-        DRProjectTracker.startNow(projectID, false);
+        DRProjectTracker.startNow(projectID);
     }
 }

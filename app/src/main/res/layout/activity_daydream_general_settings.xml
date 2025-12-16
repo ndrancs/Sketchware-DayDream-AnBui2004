@@ -20,7 +20,7 @@
             app:collapsedTitleTextAppearance="@style/TextAppearance.Material3.TitleMedium"
             app:expandedTitleTextAppearance="@style/TextAppearance.Material3.DisplaySmall"
             app:layout_scrollFlags="scroll|exitUntilCollapsed"
-            app:title="Extended features"
+            app:title="DayDream"
             app:subtitle="for your project.">
 
             <com.google.android.material.appbar.MaterialToolbar
@@ -266,22 +266,46 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="16dp"
-                android:visibility="gone">
+                android:orientation="vertical"
+                android:padding="16dp">
 
                 <ImageView
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    android:layout_marginRight="8dp"
-                    android:padding="4dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
                     android:scaleType="fitXY"
                     android:src="@drawable/ic_mtrl_info" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="The settings here will apply to this entire project. Some settings may not apply if you are not using AppCompat or are not using Java 8+." />
+                    android:autoLink="all"
+                    android:linksClickable="true"
+                    android:text="Please save your project before coming here so DayDream can ensure you are eligible for the features you want to use in the future." />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingBottom="16dp"
+                android:paddingHorizontal="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:autoLink="all"
+                    android:linksClickable="true"
+                    android:text="From" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/nbablab"
+                    app:tint="?attr/colorControlNormal"/>
             </LinearLayout>
 
         </LinearLayout>
@@ -314,7 +338,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Use extended features"
+                android:text="Use DayDream features"
                 android:textColor="?attr/colorPrimary"
                 android:textSize="18sp">
 

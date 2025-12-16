@@ -19,6 +19,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 import extensions.anbui.daydream.library.DRFeatureManager;
+import extensions.anbui.daydream.mainifest.DRManifestManager;
+import extensions.anbui.daydream.project.DRProjectTracker;
 import extensions.anbui.daydream.settings.DayDreamProjectSettings;
 import mod.agus.jcoderz.editor.manifest.EditorManifest;
 import mod.hey.studios.build.BuildSettings;
@@ -237,21 +239,6 @@ public class Ix {
             }
             application.addChildNode(initializationProvider);
         }
-    }
-
-    private void writeShizukuProvider(XmlBuilder applicationTag) {
-        XmlBuilder providerTag = new XmlBuilder("provider");
-        providerTag.addAttribute("android", "name", "rikka.shizuku.ShizukuProvider");
-        providerTag.addAttribute("android", "authorities", "${applicationId}.shizuku");
-        providerTag.addAttribute("android", "multiprocess", "false");
-        providerTag.addAttribute("android", "enabled", "true");
-        providerTag.addAttribute("android", "exported", "true");
-        providerTag.addAttribute("android", "permission", "android.permission.INTERACT_ACROSS_USERS_FULL");
-        XmlBuilder metadataTag = new XmlBuilder("meta-data");
-        metadataTag.addAttribute("android", "name", "moe.shizuku.client.V3_SUPPORT");
-        metadataTag.addAttribute("android", "value", "true");
-        providerTag.addChildNode(metadataTag);
-        applicationTag.addChildNode(providerTag);
     }
 
     private void writeAndroidxWorkRuntimeTags(XmlBuilder application) {
@@ -480,7 +467,8 @@ public class Ix {
             writePermission(a, "com.google.android.c2dm.permission.RECEIVE");
         }
 
-        if (DRFeatureManager.isOneSignalEnabled(c.sc_id, null)) {
+        if (DRFeatureManager.isOneSignalEnabled(c.sc_id, null) && !DRProjectTracker.isExportForAndroidStudio()) {
+            //Gradle in Android Studio will add them automatically.
             XmlBuilder permission = new XmlBuilder("permission");
             permission.addAttribute("android", "name", packageName + ".permission.C2D_MESSAGE");
             permission.addAttribute("android", "protectionLevel", "signature");
@@ -697,7 +685,7 @@ public class Ix {
         }
 
         if (DRFeatureManager.isOneSignalEnabled(c.sc_id, null)) {
-            EditorManifest.manifestOneSignal(applicationTag, packageName, c.x.param);
+            DRManifestManager.addApplicationForOneSignal(applicationTag);
         }
 
         if (c.x.isFBGoogleUsed) {
@@ -726,7 +714,7 @@ public class Ix {
         a.addChildNode(applicationTag);
 
         if (DRFeatureManager.isShizukuEnabled(c.sc_id, null))
-            writeShizukuProvider(applicationTag);
+            DRManifestManager.addApplicationForShizuku(applicationTag);
         // Needed, as crashing on my SM-A526B with Android 12 / One UI 4.1 / firmware build A526BFXXS1CVD1 otherwise
         //noinspection RegExpRedundantEscape
         return AndroidManifestInjector.mHolder(a.toCode(), c.sc_id).replaceAll("\\$\\{applicationId\\}", packageName);

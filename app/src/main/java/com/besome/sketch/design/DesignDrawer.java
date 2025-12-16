@@ -40,7 +40,7 @@ public class DesignDrawer extends LinearLayout {
 
         if (id == R.id.item_library_manager) {
             designActivity.toLibraryManager();
-        } else if (id == R.id.item_extended_features) {
+        } else if (id == R.id.item_daydream) {
             designActivity.toDayDream();
         } else if (id == R.id.item_view_manager) {
             designActivity.toViewManager();
@@ -120,7 +120,7 @@ public class DesignDrawer extends LinearLayout {
 
         addDrawerSubheaderItem(R.string.design_drawer_menu_title, content);
         addDrawerItem(R.id.item_library_manager, R.drawable.ic_mtrl_category, R.string.design_drawer_menu_title_library, R.string.design_drawer_menu_description_library, content);
-        addDrawerItem(R.id.item_extended_features, R.drawable.widgets_24px, R.string.extended_features, R.string.for_your_project_subtitile, content);
+        addDrawerItem(R.id.item_daydream, R.drawable.wand_stars_24px, R.string.daydream, R.string.daydream_subtitile, content);
         addDrawerItem(R.id.item_view_manager, R.drawable.ic_mtrl_devices, R.string.design_drawer_menu_title_view, R.string.design_drawer_menu_description_view, content);
         addDrawerItem(R.id.item_image_manager, R.drawable.ic_mtrl_image, R.string.design_drawer_menu_title_image, R.string.design_drawer_menu_description_image, content);
         addDrawerItem(R.id.item_sound_manager, R.drawable.ic_mtrl_music, R.string.design_drawer_menu_title_sound, R.string.design_drawer_menu_description_sound, content);

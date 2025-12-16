@@ -16,7 +16,7 @@ public class ProjectData {
     public static String TAG = Configs.universalTAG + "ProjectData";
 
     public static void setDataForFirstTimeProjectCreation(String projectID, boolean enableViewBinding, boolean minsdk24) {
-        DRProjectTracker.startNow(projectID, false);
+        DRProjectTracker.startNow(projectID);
         //There is some code that will temporarily block after the project is created so wait a second.
         new Thread(() -> {
             try {
