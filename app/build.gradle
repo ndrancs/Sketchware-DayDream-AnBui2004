@@ -82,12 +82,26 @@ android {
     flavorDimensions "default"
     productFlavors {
         android26 {
+            versionName "v7.0.0-daydream-android26-${shortCommitHash}"
             dimension "default"
             resValue "integer", "for_min_sdk", "26"
+            resValue "bool", "enable_relase_app", "true"
+            resValue "bool", "enable_r8", "true"
         }
         android33 {
+            versionName "v7.0.0-daydream-android33-${shortCommitHash}"
             dimension "default"
             resValue "integer", "for_min_sdk", "33"
+            resValue "bool", "enable_relase_app", "true"
+            resValue "bool", "enable_r8", "true"
+        }
+        androidEdge {
+            versionName "v7.0.0-daydream-edge-${shortCommitHash}"
+            dimension "default"
+            resValue "string", "app_name", "Sketchware DayDream Edge"
+            resValue "integer", "for_min_sdk", "33"
+            resValue "bool", "enable_relase_app", "false"
+            resValue "bool", "enable_r8", "false"
         }
     }
 
@@ -134,17 +148,20 @@ dependencies {
     implementation 'io.coil-kt:coil-svg:2.7.0'
 
     android26Implementation "com.android.tools.build:bundletool:1.18.1"
-    android33Implementation "com.android.tools.build:bundletool:1.18.3"
+    android33Implementation "com.android.tools.build:bundletool:1.18.1"
+    androidEdgeImplementation "com.android.tools.build:bundletool:1.18.3"
 
     //noinspection GradleDependency copied from above dependency for not just runtime access
     android26Implementation "com.google.protobuf:protobuf-java:3.19.2"
-    android33Implementation "com.google.protobuf:protobuf-java:4.33.2"
+    android33Implementation "com.google.protobuf:protobuf-java:3.19.2"
+    androidEdgeImplementation "com.google.protobuf:protobuf-java:4.33.2"
     //noinspection GradleDependency
     implementation("com.android.tools:sdklib:25.3.0") {
         exclude group: "com.intellij", module: "annotations"
     }
     android26Implementation "com.android.tools:r8:8.11.18"
-    android33Implementation "com.android.tools:r8:8.13.17"
+    android33Implementation "com.android.tools:r8:8.11.18"
+    androidEdgeImplementation "com.android.tools:r8:8.13.17"
     implementation "com.github.Iyxan23:zipalign-java:1.2.2"
 
     implementation "com.google.code.gson:gson:2.13.2"
@@ -157,6 +174,7 @@ dependencies {
 
     android26Implementation "org.eclipse.jdt:ecj:3.26.0"
     android33Implementation "org.eclipse.jdt:ecj:3.34.0"
+    androidEdgeImplementation "org.eclipse.jdt:ecj:3.34.0"
 
     implementation "com.github.waelchateur:kotlinc-for-sketchware:2.1.21_rc3"
     compileOnly "org.jetbrains.kotlin:kotlin-compiler:2.1.21"

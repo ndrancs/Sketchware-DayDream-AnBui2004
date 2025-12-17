@@ -179,6 +179,14 @@ public class ExportProjectActivity extends BaseAppCompatActivity {
         initializeExportSrcViews();
         initializeAppBundleExportViews();
 
+        if (!getResources().getBoolean(R.bool.enable_relase_app)) {
+            sign_apk_card.setVisibility(View.GONE);
+            export_aab_card.setVisibility(View.GONE);
+            findViewById(R.id.card_r8).setVisibility(View.GONE);
+            findViewById(R.id.card_buid_settings).setVisibility(View.GONE);
+            findViewById(R.id.notes).setVisibility(View.GONE);
+        }
+
         isSetupInOnCreate = true;
     }
 

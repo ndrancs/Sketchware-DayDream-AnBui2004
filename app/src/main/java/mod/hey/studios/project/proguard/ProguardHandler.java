@@ -9,6 +9,8 @@ import java.util.HashMap;
 import a.a.a.ProjectBuilder;
 import mod.hey.studios.util.Helper;
 import mod.jbk.build.BuildProgressReceiver;
+import pro.sketchware.R;
+import pro.sketchware.SketchApplication;
 import pro.sketchware.utility.FileUtil;
 
 public class ProguardHandler {
@@ -243,7 +245,7 @@ public class ProguardHandler {
     }
 
     public void start(BuildProgressReceiver progressReceiver, ProjectBuilder builder) throws IOException {
-        if (isShrinkingEnabled()) {
+        if (isShrinkingEnabled() && SketchApplication.getContext().getResources().getBoolean(R.bool.enable_r8)) {
             if (isR8Enabled()) {
                 progressReceiver.onProgress("Running R8 on classes...", 15);
                 builder.runR8();

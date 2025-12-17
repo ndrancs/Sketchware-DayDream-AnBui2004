@@ -108,6 +108,11 @@ public class ManageProguardActivity extends BaseAppCompatActivity
 
         initialize();
         initializeLogic();
+
+        if (!getResources().getBoolean(R.bool.enable_r8)) {
+            binding.lnPgEnabled.setAlpha(0.5f);
+            binding.lnPgEnabled.setEnabled(false);
+        }
     }
 
     private void initialize() {
