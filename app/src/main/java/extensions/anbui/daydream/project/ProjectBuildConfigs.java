@@ -12,6 +12,7 @@ import java.util.Objects;
 import extensions.anbui.daydream.configs.Configs;
 import extensions.anbui.daydream.file.FileUtils;
 import extensions.anbui.daydream.json.JsonUtils;
+import extensions.anbui.daydream.library.DRFeatureManager;
 
 public class ProjectBuildConfigs {
 
@@ -20,7 +21,7 @@ public class ProjectBuildConfigs {
     public static void setDataForFirstTimeProjectCreation(String projectID) {
         Log.i(TAG, "setDataForFirstTimeProjectCreation: " + projectID);
         String content = "{\"dexer\":\"D8\",\"classpath\":\"\",\"enable_logcat\":\"true\",\"no_http_legacy\":\"false\",\"android_jar\":\"\",\"no_warn\":\"true\",\"java_ver\":\"17\"}";
-        if (Configs.forMinSDK < 33)
+        if (DRFeatureManager.getForMinSDK() < 33)
             content = "{\"dexer\":\"D8\",\"classpath\":\"\",\"enable_logcat\":\"true\",\"no_http_legacy\":\"false\",\"android_jar\":\"\",\"no_warn\":\"true\",\"java_ver\":\"16\"}";
 
         writeDataFile(projectID, content);

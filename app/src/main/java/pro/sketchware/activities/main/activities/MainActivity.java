@@ -287,7 +287,6 @@ public class MainActivity extends BasePermissionAppCompatActivity {
 
         backupRestoreManager = new BackupRestoreManager(this, projectsFragment);
         Configs.mainActivity = this;
-        Configs.forMinSDK = getResources().getInteger(R.integer.for_min_sdk);
         DRSetup.startNow(this);
     }
 

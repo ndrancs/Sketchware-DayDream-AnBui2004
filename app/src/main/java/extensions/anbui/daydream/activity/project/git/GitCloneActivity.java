@@ -156,13 +156,13 @@ public class GitCloneActivity extends AppCompatActivity {
                             "OK",
                             true,
                             R.drawable.ic_mtrl_check,
-                            true, null, null);
+                            true, null, this::finish);
 
                     MainActivity.needRefreshProjectList = true;
                 } else {
                     DialogUtils.oneDialog(this,
                             "Error",
-                            "Unable to create project.",
+                            "Unable to create project. That repository might not contain the project files.",
                             "OK",
                             true,
                             R.drawable.ic_mtrl_warning,

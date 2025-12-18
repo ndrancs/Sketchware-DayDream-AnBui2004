@@ -5,6 +5,13 @@ import extensions.anbui.daydream.settings.DayDreamProjectSettings
 
 object DRFeatureManager {
     @JvmStatic
+    var forMinSDK: Int = 33
+    @JvmStatic
+    var isAllowRelease: Boolean = false
+    @JvmStatic
+    var isAllowR8: Boolean = false
+
+    @JvmStatic
     fun isThemeEnabled(projectID: String): Boolean {
         return DayDreamProjectSettings.isEnableDayDream(projectID) &&
                 DayDreamProjectSettings.isUseTheme(projectID) &&

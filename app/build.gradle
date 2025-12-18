@@ -95,14 +95,6 @@ android {
             resValue "bool", "enable_relase_app", "true"
             resValue "bool", "enable_r8", "true"
         }
-        androidEdge {
-            versionName "v7.0.0-daydream-edge-${shortCommitHash}"
-            dimension "default"
-            resValue "string", "app_name", "Sketchware DayDream Edge"
-            resValue "integer", "for_min_sdk", "33"
-            resValue "bool", "enable_relase_app", "false"
-            resValue "bool", "enable_r8", "false"
-        }
     }
 
     applicationVariants.all { variant ->
@@ -120,12 +112,12 @@ dependencies {
 
     implementation "androidx.appcompat:appcompat:1.7.1"
     implementation "androidx.core:core-splashscreen:1.2.0"
-    implementation "androidx.activity:activity-ktx:1.12.1"
+    implementation "androidx.activity:activity-ktx:1.12.2"
     implementation "androidx.recyclerview:recyclerview:1.4.0"
     implementation "androidx.cardview:cardview:1.0.0"
     implementation "androidx.viewpager:viewpager:1.1.0"
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.2.0"
-    implementation "com.google.android.material:material:1.14.0-alpha07"
+    implementation "com.google.android.material:material:1.14.0-alpha08"
     implementation "com.airbnb.android:lottie:6.7.1"
     implementation "com.google.android.flexbox:flexbox:3.0.0"
 
@@ -134,7 +126,7 @@ dependencies {
     implementation 'androidx.exifinterface:exifinterface:1.4.2'
     implementation "androidx.preference:preference-ktx:1.2.1"
     implementation 'androidx.constraintlayout:constraintlayout:2.2.1'
-    implementation 'androidx.activity:activity:1.12.1'
+    implementation 'androidx.activity:activity-ktx:1.12.2'
 
     def editorGroupId = "io.github.Rosemoe.sora-editor"
     implementation platform("$editorGroupId:bom:0.23.5")
@@ -148,20 +140,20 @@ dependencies {
     implementation 'io.coil-kt:coil-svg:2.7.0'
 
     android26Implementation "com.android.tools.build:bundletool:1.18.1"
-    android33Implementation "com.android.tools.build:bundletool:1.18.1"
-    androidEdgeImplementation "com.android.tools.build:bundletool:1.18.3"
+    android33Implementation "com.android.tools.build:bundletool:1.18.3"
 
     //noinspection GradleDependency copied from above dependency for not just runtime access
     android26Implementation "com.google.protobuf:protobuf-java:3.19.2"
-    android33Implementation "com.google.protobuf:protobuf-java:3.19.2"
-    androidEdgeImplementation "com.google.protobuf:protobuf-java:4.33.2"
+    android33Implementation "com.google.protobuf:protobuf-java:4.33.2"
     //noinspection GradleDependency
-    implementation("com.android.tools:sdklib:25.3.0") {
+    android26Implementation("com.android.tools:sdklib:25.3.0") {
+        exclude group: "com.intellij", module: "annotations"
+    }
+    android33Implementation("com.android.tools:sdklib:26.4.3") {
         exclude group: "com.intellij", module: "annotations"
     }
     android26Implementation "com.android.tools:r8:8.11.18"
-    android33Implementation "com.android.tools:r8:8.11.18"
-    androidEdgeImplementation "com.android.tools:r8:8.13.17"
+    android33Implementation "com.android.tools:r8:8.13.17"
     implementation "com.github.Iyxan23:zipalign-java:1.2.2"
 
     implementation "com.google.code.gson:gson:2.13.2"
@@ -174,7 +166,6 @@ dependencies {
 
     android26Implementation "org.eclipse.jdt:ecj:3.26.0"
     android33Implementation "org.eclipse.jdt:ecj:3.34.0"
-    androidEdgeImplementation "org.eclipse.jdt:ecj:3.34.0"
 
     implementation "com.github.waelchateur:kotlinc-for-sketchware:2.1.21_rc3"
     compileOnly "org.jetbrains.kotlin:kotlin-compiler:2.1.21"
@@ -190,7 +181,10 @@ dependencies {
     implementation "com.github.topjohnwu.libsu:core:5.0.4"
     implementation "dev.chrisbanes.insetter:insetter:0.6.1"
 
-    implementation("com.github.javaparser:javaparser-symbol-solver-core:3.25.3") {
+    android26Implementation("com.github.javaparser:javaparser-symbol-solver-core:3.25.3") {
+        exclude group: "com.google.guava", module: "guava"
+    }
+    android33Implementation("com.github.javaparser:javaparser-symbol-solver-core:3.27.1") {
         exclude group: "com.google.guava", module: "guava"
     }
 

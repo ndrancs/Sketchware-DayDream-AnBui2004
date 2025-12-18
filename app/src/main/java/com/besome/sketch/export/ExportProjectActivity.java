@@ -51,6 +51,7 @@ import a.a.a.yB;
 import a.a.a.yq;
 import extensions.anbui.daydream.configs.Configs;
 import extensions.anbui.daydream.fragment.FragmentUtils;
+import extensions.anbui.daydream.library.DRFeatureManager;
 import extensions.anbui.daydream.project.DRProjectTracker;
 import kellinwood.security.zipsigner.ZipSigner;
 import kellinwood.security.zipsigner.optional.CustomKeySigner;
@@ -179,7 +180,7 @@ public class ExportProjectActivity extends BaseAppCompatActivity {
         initializeExportSrcViews();
         initializeAppBundleExportViews();
 
-        if (!getResources().getBoolean(R.bool.enable_relase_app)) {
+        if (!DRFeatureManager.isAllowRelease()) {
             sign_apk_card.setVisibility(View.GONE);
             export_aab_card.setVisibility(View.GONE);
             findViewById(R.id.card_r8).setVisibility(View.GONE);

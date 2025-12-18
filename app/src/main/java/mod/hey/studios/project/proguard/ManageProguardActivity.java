@@ -11,6 +11,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import extensions.anbui.daydream.library.DRFeatureManager;
 import mod.agus.jcoderz.editor.manage.library.locallibrary.ManageLocalLibrary;
 import mod.hey.studios.code.SrcCodeEditor;
 import pro.sketchware.R;
@@ -109,7 +110,7 @@ public class ManageProguardActivity extends BaseAppCompatActivity
         initialize();
         initializeLogic();
 
-        if (!getResources().getBoolean(R.bool.enable_r8)) {
+        if (!DRFeatureManager.isAllowR8()) {
             binding.lnPgEnabled.setAlpha(0.5f);
             binding.lnPgEnabled.setEnabled(false);
         }

@@ -26,9 +26,9 @@ import android.widget.RadioGroup;
 import androidx.annotation.NonNull;
 
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
-import com.intellij.util.containers.ConcurrentFactoryMap;
 
 import extensions.anbui.daydream.configs.Configs;
+import extensions.anbui.daydream.library.DRFeatureManager;
 import mod.hey.studios.build.BuildSettings;
 import pro.sketchware.databinding.ProjectConfigLayoutBinding;
 import pro.sketchware.utility.SketchwareUtil;
@@ -59,8 +59,8 @@ public class BuildSettingsBottomSheet extends BottomSheetDialogFragment {
 
     public static String[] getAvailableJavaVersions() {
         return new String[]{SETTING_JAVA_VERSION_1_7, SETTING_JAVA_VERSION_1_8, SETTING_JAVA_VERSION_11,
-                Configs.forMinSDK < 33 ? SETTING_JAVA_VERSION_15 : SETTING_JAVA_VERSION_17,
-                Configs.forMinSDK < 33 ? SETTING_JAVA_VERSION_16 : SETTING_JAVA_VERSION_20};
+                DRFeatureManager.getForMinSDK() < 33 ? SETTING_JAVA_VERSION_15 : SETTING_JAVA_VERSION_17,
+                DRFeatureManager.getForMinSDK() < 33 ? SETTING_JAVA_VERSION_16 : SETTING_JAVA_VERSION_20};
     }
 
     public static void handleJavaVersionChange(String choice) {
@@ -134,7 +134,7 @@ public class BuildSettingsBottomSheet extends BottomSheetDialogFragment {
         views[VIEW_NO_HTTP_LEGACY] = binding.cbNoHttpLegacy;
         views[VIEW_NO_WARNINGS] = binding.cbNoWarnings;
 
-        if (Configs.forMinSDK < 33)
+        if (DRFeatureManager.getForMinSDK() < 33)
             binding.lnNote.setVisibility(View.GONE);
     }
 

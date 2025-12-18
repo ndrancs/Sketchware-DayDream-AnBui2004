@@ -194,6 +194,11 @@ class DayDreamCloneClassActivity : AppCompatActivity() {
             xmlName,
             DayDreamProjectSettings.isImportShizuku(Configs.currentProjectID, currentName)
         )
+        DayDreamProjectSettings.setImportAndroidBilling(
+            projectID,
+            xmlName,
+            DayDreamProjectSettings.isImportAndroidBilling(Configs.currentProjectID, currentName)
+        )
         DayDreamProjectSettings.setActivityType(
             projectID,
             xmlName,

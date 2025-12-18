@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import a.a.a.ProjectBuilder;
+import extensions.anbui.daydream.library.DRFeatureManager;
 import mod.hey.studios.util.Helper;
 import mod.jbk.build.BuildProgressReceiver;
 import pro.sketchware.R;
@@ -245,7 +246,7 @@ public class ProguardHandler {
     }
 
     public void start(BuildProgressReceiver progressReceiver, ProjectBuilder builder) throws IOException {
-        if (isShrinkingEnabled() && SketchApplication.getContext().getResources().getBoolean(R.bool.enable_r8)) {
+        if (isShrinkingEnabled() && DRFeatureManager.isAllowR8()) {
             if (isR8Enabled()) {
                 progressReceiver.onProgress("Running R8 on classes...", 15);
                 builder.runR8();

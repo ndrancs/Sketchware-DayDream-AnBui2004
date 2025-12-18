@@ -33,6 +33,7 @@ import extensions.anbui.daydream.activity.project.DayDreamBackupTool;
 import extensions.anbui.daydream.activity.project.DayDreamProjectTool;
 import extensions.anbui.daydream.activity.project.git.DayDreamGitActionsActivity;
 import extensions.anbui.daydream.library.LibraryUtils;
+import extensions.anbui.daydream.settings.DRSettings;
 import extensions.anbui.daydream.tools.project.DayDreamCleanUpTemporaryFiles;
 import extensions.anbui.daydream.tools.project.DayDreamCloneTool;
 import extensions.anbui.daydream.tools.project.RemoveCore;
@@ -259,10 +260,13 @@ public class ProjectsAdapter extends RecyclerView.Adapter<ProjectsAdapter.Projec
         });
 
         binding.projectBackup.setOnClickListener(v -> {
-            //backupProject(projectMap);
-            Intent intent = new Intent(activity, DayDreamBackupTool.class);
-            intent.putExtra("sc_id", yB.c(projectMap, "sc_id"));
-            activity.startActivity(intent);
+            if (DRSettings.getUseBackupTool(activity)) {
+                Intent intent = new Intent(activity, DayDreamBackupTool.class);
+                intent.putExtra("sc_id", yB.c(projectMap, "sc_id"));
+                activity.startActivity(intent);
+            } else {
+                backupProject(projectMap);
+            }
             projectOptionsBSD.dismiss();
         });
 
