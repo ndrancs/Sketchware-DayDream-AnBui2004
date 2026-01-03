@@ -443,7 +443,7 @@ public class Fx {
                 opcode = String.format("%s.lastIndexOf(%s)", params.get(1), params.get(0));
                 break;
             case "stringSub":
-                opcode = String.format("%s.substring((int)(%s), (int)(%s))", params.get(0), params.get(1), params.get(2));
+                opcode = DRJavaCodeGenerator.stringSub(params.get(0), params.get(1), params.get(2));
                 break;
             case "stringEquals":
                 opcode = String.format("%s.equals(%s)", params.get(0), params.get(1));
