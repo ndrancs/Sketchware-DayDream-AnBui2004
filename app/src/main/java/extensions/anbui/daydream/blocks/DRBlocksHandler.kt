@@ -7,6 +7,8 @@ object DRBlockHandler {
         addStringBlocks(arrayList)
         addStringOperatorBlocks(arrayList)
         addSharedPreferencesBlocks(arrayList)
+        addBasicComponentBlocks(arrayList)
+        addIntentPutExtraBlocks(arrayList)
     }
 
     @JvmStatic
@@ -99,6 +101,30 @@ object DRBlockHandler {
         hashMap["color"] = "#2CA5E2"
         hashMap["palette"] = "-1"
         hashMap["spec"] = "%m.file putInt key %s value %d"
+        arrayList.add(hashMap)
+    }
+
+    @JvmStatic
+    fun addBasicComponentBlocks(arrayList: ArrayList<HashMap<String, Any>>) {
+        val hashMap: HashMap<String, Any> = HashMap()
+        hashMap["name"] = "intentGetBoolean"
+        hashMap["type"] = "b"
+        hashMap["code"] = "getIntent().getBooleanExtra(%s, false)"
+        hashMap["color"] = "#2CA5E2"
+        hashMap["palette"] = "-1"
+        hashMap["spec"] = "Activity getExtra key %s"
+        arrayList.add(hashMap)
+    }
+
+    @JvmStatic
+    fun addIntentPutExtraBlocks(arrayList: ArrayList<HashMap<String, Any>>) {
+        val hashMap: HashMap<String, Any> = HashMap()
+        hashMap["name"] = "intentPutExtraBoolean"
+        hashMap["type"] = " "
+        hashMap["code"] = "%s.putExtra(%s, %s);"
+        hashMap["color"] = "#2CA5E2"
+        hashMap["palette"] = "-1"
+        hashMap["spec"] = "%m.intent putExtra key %s value %b"
         arrayList.add(hashMap)
     }
 }

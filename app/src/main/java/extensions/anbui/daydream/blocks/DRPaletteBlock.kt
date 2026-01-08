@@ -28,4 +28,14 @@ object DRPaletteBlock {
         logicEditor.a(" ", "putIntSharedPreferences")
 
     }
+
+    @JvmStatic
+    fun addBasicComponentBlocks(logicEditor : LogicEditorActivity) {
+        logicEditor.a("b", "intentGetBoolean")
+    }
+
+    @JvmStatic
+    fun addIntentPutExtraBlocks(logicEditor : LogicEditorActivity) {
+        logicEditor.a(" ", "intentPutExtraBoolean")
+    }
 }

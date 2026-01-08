@@ -948,6 +948,7 @@ public class ExtraPaletteBlock {
                 logicEditor.a(" ", "setTitle");
                 logicEditor.a("b", "intentHasExtra");
                 logicEditor.a("s", "intentGetString");
+                DRPaletteBlock.addBasicComponentBlocks(logicEditor);
                 logicEditor.a("f", "finishActivity");
                 logicEditor.a("f", "finishAffinity");
                 if (extraBlocks.isComponentUsed(ComponentBean.COMPONENT_TYPE_INTENT)
@@ -959,6 +960,7 @@ public class ExtraPaletteBlock {
                     logicEditor.a(" ", "intentSetScreen");
                     logicEditor.a(" ", "launchApp");
                     logicEditor.a(" ", "intentPutExtra");
+                    DRPaletteBlock.addIntentPutExtraBlocks(logicEditor);
                     logicEditor.a(" ", "intentRemoveExtra");
                     logicEditor.a(" ", "intentSetFlags");
                     logicEditor.a(" ", "startActivity");
