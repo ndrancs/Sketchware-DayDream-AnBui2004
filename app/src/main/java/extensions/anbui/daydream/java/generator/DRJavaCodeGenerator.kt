@@ -390,7 +390,7 @@ object DRJavaCodeGenerator {
         return if (TextUtils.isValidFloat(validValue)) {
             validValue
         } else {
-            if (value.contains(" ")) {
+            if (value.contains(" ") || value.contains(")")) {
                 value
             } else {
                 "(float) $value"
