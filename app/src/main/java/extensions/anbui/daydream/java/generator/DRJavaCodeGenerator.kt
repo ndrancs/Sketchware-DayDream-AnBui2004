@@ -378,4 +378,19 @@ object DRJavaCodeGenerator {
     fun castToIntIfNeeded(value: String): String {
         return (if (TextUtils.isValidInteger(value)) "" else "(int) ") + value
     }
+
+    @JvmStatic
+    fun castToFloatIfNeeded(value: String): String {
+        var validValue = value.lowercase()
+        if (validValue.endsWith("d")) {
+            validValue = validValue.removeSuffix("d") + "f"
+        } else if (!validValue.endsWith("f")) {
+            validValue += "f"
+        }
+        return if (TextUtils.isValidFloat(validValue)) {
+            validValue
+        } else {
+            "(float) $value"
+        }
+    }
 }

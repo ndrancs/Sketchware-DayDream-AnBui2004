@@ -18,6 +18,7 @@ import extensions.anbui.daydream.java.generator.DRArrayListCodeGenerator;
 import extensions.anbui.daydream.java.generator.DRJavaCodeGenerator;
 import extensions.anbui.daydream.java.generator.DRListViewCodeGenerator;
 import extensions.anbui.daydream.java.generator.DRObjectAnimatorCodeGenerator;
+import extensions.anbui.daydream.java.generator.DRViewCodeGenerator;
 import mod.hey.studios.editor.manage.block.ExtraBlockInfo;
 import mod.hey.studios.editor.manage.block.v2.BlockLoader;
 import mod.hey.studios.moreblock.ReturnMoreblockManager;
@@ -724,7 +725,7 @@ public class Fx {
                 opcode = String.format("%s.getRotation()", params.get(0));
                 break;
             case "setAlpha":
-                opcode = String.format("%s.setAlpha((float)(%s));", params.get(0), params.get(1));
+                opcode = DRViewCodeGenerator.setAlpha(params.get(0), params.get(1));
                 break;
             case "getAlpha":
                 opcode = String.format("%s.getAlpha()", params.get(0));

@@ -24,6 +24,13 @@ object TextUtils {
     }
 
     @JvmStatic
+    fun isValidFloat(content: String?): Boolean {
+        if (content.isNullOrEmpty()) return false
+        val finalnumber = content.trim().lowercase().removeSuffix("f")
+        return finalnumber.toFloatOrNull() != null
+    }
+
+    @JvmStatic
     fun copyToClipboard(context: Context, text: String?) {
         val clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
         val clip = ClipData.newPlainText("From Sketchware DayDream", text)
