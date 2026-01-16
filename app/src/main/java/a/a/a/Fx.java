@@ -1069,7 +1069,7 @@ public class Fx {
 
                 break;
             case "seekBarSetProgress":
-                opcode = String.format("%s.setProgress((int)%s);", params.get(0), params.get(1));
+                opcode = DRViewCodeGenerator.seekBarSetProgress(params.get(0), params.get(1));
 
                 break;
             case "seekBarGetProgress":

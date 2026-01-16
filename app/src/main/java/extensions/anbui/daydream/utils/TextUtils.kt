@@ -25,7 +25,7 @@ object TextUtils {
 
     @JvmStatic
     fun isValidFloat(content: String?): Boolean {
-        if (content.isNullOrEmpty()) return false
+        if (content.isNullOrEmpty() || !isNumberOnly(content.trim().lowercase().replace(".", "").removeSuffix("f"))) return false
         val finalnumber = content.trim().lowercase().removeSuffix("f")
         return finalnumber.toFloatOrNull() != null
     }

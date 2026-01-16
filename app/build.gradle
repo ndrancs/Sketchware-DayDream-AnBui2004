@@ -2,7 +2,6 @@ def secrets = System.getenv("GOOGLE_SERVICES_JSON")
 def analyticsEnabled = secrets != null
 
 apply plugin: "com.android.application"
-apply plugin: "kotlin-android"
 
 if (analyticsEnabled) {
     apply plugin: "com.google.gms.google-services"
@@ -49,10 +48,6 @@ android {
         targetCompatibility = JavaVersion.VERSION_17
     }
 
-    kotlinOptions {
-        jvmTarget = "17"
-    }
-
     androidResources {
         additionalParameters.addAll("--stable-ids", "${rootDir}/public-stable-ids.txt")
     }
@@ -69,6 +64,7 @@ android {
     buildFeatures {
         viewBinding = true
         buildConfig = true
+        resValues = true
     }
 
     configurations.implementation {
@@ -96,13 +92,19 @@ android {
             resValue "bool", "enable_r8", "true"
         }
     }
+}
 
-    applicationVariants.all { variant ->
+androidComponents {
+    onVariants(selector().all()) { variant ->
+        def buildType = variant.buildType
         def flavorName = variant.flavorName
-        def buildType = variant.buildType.name
+                ? "noflavor"
+                : variant.flavors[0].second
 
-        variant.outputs.all { output ->
-            outputFileName = "app-${buildType}-${flavorName}.apk"
+        variant.outputs.forEach { output ->
+            output.outputFileName.set(
+                    "app-${buildType}-${flavorName}.apk"
+            )
         }
     }
 }
