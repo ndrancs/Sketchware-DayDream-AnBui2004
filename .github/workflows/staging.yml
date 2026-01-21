@@ -1,0 +1,126 @@
+name: Android CI/CD
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build & Sign APK
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # Required for creating Releases
+
+    steps:
+      - name: Checkout Source
+        uses: actions/checkout@v4
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17' # Standard for modern AGP. Falls back gracefully for older projects.
+
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Validate Gradle Wrapper
+        id: gradle_check
+        run: |
+          if [ ! -f gradlew ]; then
+            echo "::warning::gradlew not found. Generating wrapper..."
+            gradle wrapper
+          fi
+          chmod +x gradlew
+
+      - name: Auto-Detect Build Task
+        id: detect_task
+        run: |
+          echo "Scanning available Gradle tasks..."
+          # Get all tasks to check for assembleRelease availability
+          TASKS=$(./gradlew tasks --all)
+          
+          if echo "$TASKS" | grep -q "assembleRelease"; then
+            echo "Found assembleRelease. Using Release configuration."
+            echo "TASK=assembleRelease" >> $GITHUB_ENV
+            echo "BUILD_TYPE=release" >> $GITHUB_ENV
+          else
+            echo "Release task not found. Falling back to assembleDebug."
+            echo "TASK=assembleDebug" >> $GITHUB_ENV
+            echo "BUILD_TYPE=debug" >> $GITHUB_ENV
+          fi
+
+      - name: Build APK
+        run: ./gradlew ${{ env.TASK }} --stacktrace
+
+      - name: Generate Temporary Keystore
+        id: keygen
+        run: |
+          echo "Generating generic keystore..."
+          keytool -genkeypair -v \
+            -keystore release.keystore \
+            -alias android_key \
+            -keyalg RSA \
+            -keysize 2048 \
+            -validity 10000 \
+            -storepass android \
+            -keypass android \
+            -dname "CN=Android,OU=GithubActions,O=Sketchware,L=Unknown,S=Unknown,C=US"
+          
+          echo "KEYSTORE_PATH=$PWD/release.keystore" >> $GITHUB_ENV
+
+      - name: Sign APK (V2 Scheme)
+        id: sign_apk
+        run: |
+          # Find the APK produced by the build
+          APK_PATH=$(find . -name "*.apk" ! -name "*-unaligned.apk" -print -quit)
+          
+          if [ -z "$APK_PATH" ]; then
+            echo "::error::No APK file found!"
+            exit 1
+          fi
+          
+          echo "Found APK: $APK_PATH"
+          
+          # Locate apksigner in build-tools
+          BUILD_TOOLS_VERSION=$(ls $ANDROID_SDK_ROOT/build-tools/ | sort -V | tail -n 1)
+          APKSIGNER="$ANDROID_SDK_ROOT/build-tools/$BUILD_TOOLS_VERSION/apksigner"
+          
+          # Align APK (Recommended before signing)
+          zipalign="$ANDROID_SDK_ROOT/build-tools/$BUILD_TOOLS_VERSION/zipalign"
+          FINAL_APK="app-signed.apk"
+          
+          echo "Aligning APK..."
+          "$zipalign" -v -p 4 "$APK_PATH" "$FINAL_APK"
+          
+          echo "Signing APK..."
+          "$APKSIGNER" sign --ks release.keystore \
+            --ks-key-alias android_key \
+            --ks-pass pass:android \
+            --key-pass pass:android \
+            "$FINAL_APK"
+          
+          # Verify signature
+          "$APKSIGNER" verify "$FINAL_APK"
+          
+          echo "SIGNED_APK_PATH=$FINAL_APK" >> $GITHUB_ENV
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Signed-APK-${{ env.BUILD_TYPE }}
+          path: ${{ env.SIGNED_APK_PATH }}
+
+      - name: Create Release
+        if: github.event_name == 'workflow_dispatch' || github.event_name == 'push'
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: build-${{ github.run_number }}
+          name: "Build ${{ github.run_number }} (${{ env.BUILD_TYPE }})"
+          body: |
+            Automated build triggered by ${{ github.event_name }}.
+            Build Type: ${{ env.BUILD_TYPE }}
+          files: ${{ env.SIGNED_APK_PATH }}
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
