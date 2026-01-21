@@ -32,10 +32,12 @@ object DRPaletteBlock {
     @JvmStatic
     fun addBasicComponentBlocks(logicEditor : LogicEditorActivity) {
         logicEditor.a("b", "intentGetBoolean")
+        logicEditor.a("d", "intentGetDouble")
     }
 
     @JvmStatic
     fun addIntentPutExtraBlocks(logicEditor : LogicEditorActivity) {
         logicEditor.a(" ", "intentPutExtraBoolean")
+        logicEditor.a(" ", "intentPutExtraDouble")
     }
 }

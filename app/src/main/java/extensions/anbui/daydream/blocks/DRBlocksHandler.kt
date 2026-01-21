@@ -106,10 +106,19 @@ object DRBlockHandler {
 
     @JvmStatic
     fun addBasicComponentBlocks(arrayList: ArrayList<HashMap<String, Any>>) {
-        val hashMap: HashMap<String, Any> = HashMap()
+        var hashMap: HashMap<String, Any> = HashMap()
         hashMap["name"] = "intentGetBoolean"
         hashMap["type"] = "b"
         hashMap["code"] = "getIntent().getBooleanExtra(%s, false)"
+        hashMap["color"] = "#2CA5E2"
+        hashMap["palette"] = "-1"
+        hashMap["spec"] = "Activity getExtra key %s"
+        arrayList.add(hashMap)
+
+        hashMap = HashMap()
+        hashMap["name"] = "intentGetDouble"
+        hashMap["type"] = "d"
+        hashMap["code"] = "getIntent().getDoubleExtra(%s, 0.0)"
         hashMap["color"] = "#2CA5E2"
         hashMap["palette"] = "-1"
         hashMap["spec"] = "Activity getExtra key %s"
@@ -118,13 +127,22 @@ object DRBlockHandler {
 
     @JvmStatic
     fun addIntentPutExtraBlocks(arrayList: ArrayList<HashMap<String, Any>>) {
-        val hashMap: HashMap<String, Any> = HashMap()
+        var hashMap: HashMap<String, Any> = HashMap()
         hashMap["name"] = "intentPutExtraBoolean"
         hashMap["type"] = " "
         hashMap["code"] = "%s.putExtra(%s, %s);"
         hashMap["color"] = "#2CA5E2"
         hashMap["palette"] = "-1"
         hashMap["spec"] = "%m.intent putExtra key %s value %b"
+        arrayList.add(hashMap)
+
+        hashMap = HashMap()
+        hashMap["name"] = "intentPutExtraDouble"
+        hashMap["type"] = " "
+        hashMap["code"] = "%s.putExtra(%s, (double) %s);"
+        hashMap["color"] = "#2CA5E2"
+        hashMap["palette"] = "-1"
+        hashMap["spec"] = "%m.intent putExtra key %s value %d"
         arrayList.add(hashMap)
     }
 }
