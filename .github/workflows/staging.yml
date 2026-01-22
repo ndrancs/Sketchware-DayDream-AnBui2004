@@ -12,13 +12,15 @@ jobs:
 
     steps:
       - name: Checkout Source
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
+        with:
+          ref: 'main'
 
       - name: Setup Java
         uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
-          java-version: '17' # Standard for modern AGP. Falls back gracefully for older projects.
+          java-version: '17'
 
       - name: Setup Android SDK
         uses: android-actions/setup-android@v3
@@ -32,21 +34,45 @@ jobs:
           fi
           chmod +x gradlew
 
-      - name: Auto-Detect Build Task
+      - name: Auto-Detect Flavor & Build Task
         id: detect_task
         run: |
           echo "Scanning available Gradle tasks..."
-          # Get all tasks to check for assembleRelease availability
           TASKS=$(./gradlew tasks --all)
           
-          if echo "$TASKS" | grep -q "assembleRelease"; then
-            echo "Found assembleRelease. Using Release configuration."
-            echo "TASK=assembleRelease" >> $GITHUB_ENV
-            echo "BUILD_TYPE=release" >> $GITHUB_ENV
+          # Helper to set the environment variables
+          set_task() {
+            echo "::notice::Selected Build Task: $1"
+            echo "TASK=$1" >> $GITHUB_ENV
+            
+            if [[ "$1" == *"Release"* ]]; then
+              echo "BUILD_TYPE=release" >> $GITHUB_ENV
+            else
+              echo "BUILD_TYPE=debug" >> $GITHUB_ENV
+            fi
+          }
+
+          # --- Detection Logic ---
+          # Priority 1: Explicit "Prod" or "Production" flavors
+          if echo "$TASKS" | grep -qw "assembleProdRelease"; then
+            set_task "assembleProdRelease"
+          elif echo "$TASKS" | grep -qw "assembleProductionRelease"; then
+            set_task "assembleProductionRelease"
+            
+          # Priority 2: Any other specific Flavor ending in Release (e.g., assembleDemoRelease)
+          # We use grep -o to extract the actual task name and head -1 to pick the first one found.
+          elif echo "$TASKS" | grep -qE "assemble[A-Z][a-zA-Z0-9]*Release"; then
+            FLAVOR_TASK=$(echo "$TASKS" | grep -oE "assemble[A-Z][a-zA-Z0-9]*Release" | head -n 1)
+            set_task "$FLAVOR_TASK"
+            
+          # Priority 3: Standard assembleRelease (No flavors defined)
+          elif echo "$TASKS" | grep -qw "assembleRelease"; then
+            set_task "assembleRelease"
+            
+          # Fallback: Debug
           else
-            echo "Release task not found. Falling back to assembleDebug."
-            echo "TASK=assembleDebug" >> $GITHUB_ENV
-            echo "BUILD_TYPE=debug" >> $GITHUB_ENV
+            echo "::warning::No Release task found. Falling back to assembleDebug."
+            set_task "assembleDebug"
           fi
 
       - name: Build APK
@@ -72,6 +98,7 @@ jobs:
         id: sign_apk
         run: |
           # Find the APK produced by the build
+          # We look into subdirectories because flavored builds put APKs in .../flavor/release/
           APK_PATH=$(find . -name "*.apk" ! -name "*-unaligned.apk" -print -quit)
           
           if [ -z "$APK_PATH" ]; then
@@ -119,6 +146,7 @@ jobs:
           body: |
             Automated build triggered by ${{ github.event_name }}.
             Build Type: ${{ env.BUILD_TYPE }}
+            Task Used: ${{ env.TASK }}
           files: ${{ env.SIGNED_APK_PATH }}
           draft: false
           prerelease: false
