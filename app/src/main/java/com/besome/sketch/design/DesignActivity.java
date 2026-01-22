@@ -596,6 +596,7 @@ public class DesignActivity extends BaseAppCompatActivity implements View.OnClic
                 }
                 refresh();
                 currentTabNumber = position;
+                invalidateOptionsMenu();
             }
         });
         viewPager.getAdapter().notifyDataSetChanged();
@@ -639,6 +640,10 @@ public class DesignActivity extends BaseAppCompatActivity implements View.OnClic
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.design_menu, menu);
+        MenuItem searchItem = menu.findItem(R.id.design_option_menu_search);
+        if (searchItem != null) {
+            searchItem.setVisible(currentTabNumber == 1);
+        }
         return true;
     }
 
@@ -651,6 +656,11 @@ public class DesignActivity extends BaseAppCompatActivity implements View.OnClic
             }
         } else if (itemId == R.id.design_option_menu_title_save_project) {
             saveProject();
+        } else if (itemId == R.id.design_option_menu_search) {
+            if (eventTabAdapter != null) {
+                eventTabAdapter.toggleSearchBar();
+            }
+            return true;
         }
 
         return super.onOptionsItemSelected(item);

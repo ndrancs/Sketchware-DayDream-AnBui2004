@@ -1,10 +1,8 @@
 package extensions.anbui.daydream.ui;
 
 import android.app.Activity;
-import android.app.AlertDialog;
+import androidx.appcompat.app.AlertDialog;
 import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.InsetDrawable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,8 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.material.color.MaterialColors;
-
-import java.util.Objects;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import extensions.anbui.daydream.configs.Configs;
 import extensions.anbui.daydream.utils.ColorUtils;
@@ -26,10 +23,7 @@ public class DialogUtils {
     public static void oneDialog(Activity _context, String _title, String _message, String _textPositiveButton, boolean _isicon, int _iconid, boolean _cancel, Runnable _onPositive, Runnable _onDismiss) {
         View buttonsView = LayoutInflater.from(_context).inflate(R.layout.daydream_dialog_layout, null);
 
-        AlertDialog dialog = new AlertDialog.Builder(_context).create();
-        InsetDrawable inset = new InsetDrawable(new ColorDrawable(Color.TRANSPARENT), 16);
-        Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawable(inset);
-        dialog.getWindow().setDimAmount(0.4f);
+        AlertDialog dialog = new MaterialAlertDialogBuilder(_context).create();
         dialog.setCancelable(_cancel);
         dialog.setView(buttonsView);
 
@@ -73,10 +67,7 @@ public class DialogUtils {
     public static void twoDialog(Activity _context, String _title, String _message, String _textPositiveButton, String _textNegativeButton, boolean _isicon, int _iconid, boolean _cancel, Runnable _onPositive, Runnable _onNegative, Runnable _onDismiss) {
         View buttonsView = LayoutInflater.from(_context).inflate(R.layout.daydream_dialog_layout, null);
 
-        AlertDialog dialog = new AlertDialog.Builder(_context).create();
-        InsetDrawable inset = new InsetDrawable(new ColorDrawable(Color.TRANSPARENT), 16);
-        Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawable(inset);
-        dialog.getWindow().setDimAmount(0.4f);
+        AlertDialog dialog = new MaterialAlertDialogBuilder(_context).create();
         dialog.setCancelable(_cancel);
         dialog.setView(buttonsView);
 
@@ -127,10 +118,7 @@ public class DialogUtils {
     public static void threeDialog(Activity _context, String _title, String _message, String _textPositiveButton, String _textNegativeButton, String _textNeutralButton, boolean _isicon, int _iconid, boolean _cancel, Runnable _onPositive, Runnable _onNegative, Runnable _onNeutral, Runnable _onDismiss) {
         View buttonsView = LayoutInflater.from(_context).inflate(R.layout.daydream_dialog_layout, null);
 
-        AlertDialog dialog = new AlertDialog.Builder(_context).create();
-        InsetDrawable inset = new InsetDrawable(new ColorDrawable(Color.TRANSPARENT), 16);
-        Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawable(inset);
-        dialog.getWindow().setDimAmount(0.4f);
+        AlertDialog dialog = new MaterialAlertDialogBuilder(_context).create();
         dialog.setCancelable(_cancel);
         dialog.setView(buttonsView);
 

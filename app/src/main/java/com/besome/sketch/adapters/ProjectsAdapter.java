@@ -24,7 +24,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
+import a.a.a.DB;
 import a.a.a.lC;
 import a.a.a.mB;
 import a.a.a.wq;
@@ -45,9 +47,11 @@ import pro.sketchware.activities.main.fragments.projects.ProjectsFragment;
 import pro.sketchware.databinding.BottomSheetProjectOptionsBinding;
 import pro.sketchware.databinding.MyprojectsItemBinding;
 
+//DR
 public class ProjectsAdapter extends RecyclerView.Adapter<ProjectsAdapter.ProjectViewHolder> {
     private final ProjectsFragment projectsFragment;
     private final Activity activity;
+    private final DB preference;
     private List<HashMap<String, Object>> shownProjects = new ArrayList<>();
     private List<HashMap<String, Object>> allProjects;
 
@@ -55,6 +59,7 @@ public class ProjectsAdapter extends RecyclerView.Adapter<ProjectsAdapter.Projec
         this.projectsFragment = projectsFragment;
         activity = projectsFragment.requireActivity();
         this.allProjects = allProjects;
+        preference = new DB(activity, "project");
     }
 
     public void setAllProjects(List<HashMap<String, Object>> projects) {
@@ -168,6 +173,13 @@ public class ProjectsAdapter extends RecyclerView.Adapter<ProjectsAdapter.Projec
             }
         }
 
+        if (isPinned(projectMap)) {
+            holder.binding.imgPin.setVisibility(View.VISIBLE);
+        } else {
+            holder.binding.imgPin.setVisibility(View.INVISIBLE);
+
+        }
+
         String version = " - " + yB.c(projectMap, "sc_ver_name") + " (" + yB.c(projectMap, "sc_ver_code") + ")";
         holder.binding.appName.setText(yB.c(projectMap, "my_ws_name") + version);
         holder.binding.projectName.setText(yB.c(projectMap, "my_app_name"));
@@ -247,12 +259,30 @@ public class ProjectsAdapter extends RecyclerView.Adapter<ProjectsAdapter.Projec
         activity.startActivity(intent);
     }
 
+    private void changePinState(HashMap<String, Object> projectMap) {
+        if (isPinned(projectMap)) {
+            preference.a("pinnedProject", "-1", true);
+        } else {
+            preference.a("pinnedProject", yB.c(projectMap, "sc_id"), true);
+        }
+        projectsFragment.refreshProjectsList();
+    }
+
+    private boolean isPinned(HashMap<String, Object> projectMap) {
+        return Objects.equals(yB.c(projectMap, "sc_id"), preference.a("pinnedProject", "-1"));
+    }
+
     private void showProjectOptionsBottomSheet(HashMap<String, Object> projectMap, int position) {
         BottomSheetDialog projectOptionsBSD = new BottomSheetDialog(activity);
         BottomSheetProjectOptionsBinding binding = BottomSheetProjectOptionsBinding.inflate(LayoutInflater.from(activity));
         projectOptionsBSD.setContentView(binding.getRoot());
 
         binding.title.setText(binding.title.getText().toString() + yB.c(projectMap, "my_ws_name"));
+
+        binding.pinProject.setOnClickListener(v -> {
+            changePinState(projectMap);
+            projectOptionsBSD.dismiss();
+        });
 
         binding.projectClone.setOnClickListener(v -> {
             DayDreamCloneTool.showDialogNow(activity, yB.c(projectMap, "sc_id"));
@@ -317,6 +347,15 @@ public class ProjectsAdapter extends RecyclerView.Adapter<ProjectsAdapter.Projec
 //            dialog.setNegativeButton(Helper.getResString(R.string.common_word_cancel), null);
 //            dialog.show();
         });
+
+        if (isPinned(projectMap)) {
+            binding.pinIcon.setImageResource(R.drawable.ic_mtrl_unpin);
+            binding.pinText.setText("Unpin project");
+        } else {
+            binding.pinIcon.setImageResource(R.drawable.ic_mtrl_pin);
+            binding.pinText.setText("Pin project");
+        }
+
         projectOptionsBSD.show();
     }
 

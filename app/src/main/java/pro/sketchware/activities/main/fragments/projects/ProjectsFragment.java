@@ -42,9 +42,6 @@ import a.a.a.DA;
 import a.a.a.DB;
 import a.a.a.lC;
 import dev.chrisbanes.insetter.Insetter;
-import extensions.anbui.daydream.activity.project.git.GitCloneActivity;
-import extensions.anbui.daydream.library.LibraryUtils;
-import extensions.anbui.daydream.project.RestoreProject;
 import mod.hey.studios.project.ProjectTracker;
 import mod.hey.studios.project.backup.BackupRestoreManager;
 import pro.sketchware.R;
@@ -75,6 +72,7 @@ public class ProjectsFragment extends DA {
     private DB preference;
     private SearchView projectsSearchView;
     private MenuProvider menuProvider;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -168,15 +166,7 @@ public class ProjectsFragment extends DA {
         });
 
         binding.iconSort.setOnClickListener(v -> showProjectSortingDialog());
-        binding.specialAction.projectOne.setOnClickListener(v -> restoreProject());
-
-        if (LibraryUtils.isAllowUseGit()) {
-            binding.specialAction.projectRestoregit.setOnClickListener(v -> startActivity(new Intent(requireContext(), GitCloneActivity.class)));
-        } else {
-            binding.specialAction.cvProjectrestoregit.setVisibility(View.GONE);
-        }
-
-        RestoreProject.setupDropFileTo(getActivity(), binding.specialAction.getRoot());
+        binding.specialAction.getRoot().setOnClickListener(v -> restoreProject());
 
         menuProvider = new MenuProvider() {
             @Override
@@ -188,15 +178,6 @@ public class ProjectsFragment extends DA {
                         @Override
                         public boolean onQueryTextChange(String s) {
                             projectsAdapter.filterData(s);
-
-                            if (s.isEmpty()) {
-                                binding.specialActionContainer.setVisibility(View.VISIBLE);
-                                binding.titleContainer.setVisibility(View.VISIBLE);
-                            } else {
-                                binding.specialActionContainer.setVisibility(View.GONE);
-                                binding.titleContainer.setVisibility(View.GONE);
-                            }
-
                             return false;
                         }
 
@@ -241,7 +222,7 @@ public class ProjectsFragment extends DA {
 
         executorService.execute(() -> {
             List<HashMap<String, Object>> loadedProjects = lC.a();
-            loadedProjects.sort(new ProjectComparator(preference.d("sortBy")));
+            loadedProjects.sort(new ProjectComparator(preference.d("sortBy"),preference.a("pinnedProject", "-1")));
 
             DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(new ProjectDiffCallback(projectsList, loadedProjects));
 

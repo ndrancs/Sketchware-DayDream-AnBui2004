@@ -71,7 +71,6 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
-import com.google.firebase.crashlytics.FirebaseCrashlytics;
 
 import java.io.File;
 import java.lang.ref.WeakReference;
@@ -111,7 +110,7 @@ import a.a.a.wB;
 import a.a.a.xB;
 import a.a.a.yq;
 import dev.aldi.sayuti.block.ExtraPaletteBlock;
-import mod.bobur.XmlToSvgConverter;
+import mod.bobur.VectorDrawableLoader;
 import mod.hey.studios.editor.view.IdGenerator;
 import mod.hey.studios.moreblock.ReturnMoreblockManager;
 import mod.hey.studios.moreblock.importer.MoreblockImporterDialog;
@@ -136,7 +135,7 @@ public class LogicEditorActivity extends BaseAppCompatActivity implements View.O
 
     private final Handler handler = new Handler();
     private final int[] v = new int[2];
-//    private final FirebaseCrashlytics crashlytics = FirebaseCrashlytics.getInstance();
+    //    private final FirebaseCrashlytics crashlytics = FirebaseCrashlytics.getInstance();
     public ProjectFileBean M;
     public PaletteBlock m;
     public BlockPane o;
@@ -167,6 +166,8 @@ public class LogicEditorActivity extends BaseAppCompatActivity implements View.O
     private ArrayList<BlockBean> savedBlockBean = new ArrayList<>();
     private final Runnable longPressed = this::r;
     private Boolean isViewBindingEnabled;
+    private SvgUtils svgUtils;
+    private final FilePathUtil fpu = new FilePathUtil();
 
     public static ArrayList<String> getAllJavaFileNames(String projectScId) {
         ArrayList<String> javaFileNames = new ArrayList<>();
@@ -534,41 +535,50 @@ public class LogicEditorActivity extends BaseAppCompatActivity implements View.O
         return a2;
     }
 
-    private ImageView setImageViewContent(String str) {
+    private ImageView setImageViewContent(String name) {
+        float dp = wB.a(this, 1.0f);
+        int size = (int) (dp * 48);
         Uri fromFile;
         float a2 = wB.a(this, 1.0f);
         ImageView imageView = new ImageView(this);
+        imageView.setLayoutParams(new LinearLayout.LayoutParams(size, size));
         imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
         int i = (int) (a2 * 48.0f);
         imageView.setLayoutParams(new LinearLayout.LayoutParams(i, i));
-        if (!"NONE".equals(str)) {
-            if (str.equals("default_image")) {
-                imageView.setImageResource(getResources().getIdentifier(str, "drawable", getContext().getPackageName()));
+        imageView.setBackgroundResource(R.drawable.bg_outline);
+
+        if ("NONE".equals(name)) {
+            return imageView;
+        }
+
+        if ("default_image".equals(name)) {
+            int resId = getResources().getIdentifier(name, "drawable", getPackageName());
+            if (resId != 0) imageView.setImageResource(resId);
+            return imageView;
+        }
+
+        File imageFile = new File(jC.d(scId).f(name));
+        if (imageFile.exists()) {
+            String path = imageFile.getAbsolutePath();
+            Uri uri = FileProvider.getUriForFile(this, getPackageName() + ".provider", imageFile);
+
+            if (path.endsWith(".xml")) {
+                svgUtils.loadImage(imageView, fpu.getSvgFullPath(scId, name));
             } else {
-                File file = new File(jC.d(scId).f(str));
-                if (file.exists()) {
-                    Context context = getContext();
-                    fromFile = FileProvider.getUriForFile(context, getContext().getPackageName() + ".provider", file);
-                    if (file.getAbsolutePath().endsWith(".xml")) {
-                        SvgUtils svgUtils = new SvgUtils(this);
-                        FilePathUtil fpu = new FilePathUtil();
-                        svgUtils.loadImage(imageView, fpu.getSvgFullPath(scId, str));
-                    } else {
-                        Glide.with(getContext()).load(fromFile).signature(kC.n()).error(R.drawable.ic_remove_grey600_24dp).into(imageView);
-                    }
-                } else {
-                    try {
-                        XmlToSvgConverter xmlToSvgConverter = new XmlToSvgConverter();
-                        xmlToSvgConverter.setImageVectorFromFile(imageView, xmlToSvgConverter.getVectorFullPath(DesignActivity.sc_id, str));
-                    } catch (Exception e) {
-//                        crashlytics.log("Converting SVG to XML.");
-//                        crashlytics.recordException(e);
-                        imageView.setImageResource(R.drawable.ic_remove_grey600_24dp);
-                    }
-                }
+                Glide.with(this)
+                        .load(uri)
+                        .signature(kC.n())
+                        .error(R.drawable.ic_remove_grey600_24dp)
+                        .into(imageView);
+            }
+        } else {
+            try {
+                new VectorDrawableLoader().setImageVectorFromFile(imageView, new VectorDrawableLoader().getVectorFullPath(DesignActivity.sc_id, name));
+            } catch (Exception e) {
+                imageView.setImageResource(R.drawable.ic_remove_grey600_24dp);
             }
         }
-        imageView.setBackgroundResource(R.drawable.bg_outline);
+
         return imageView;
     }
 
@@ -726,7 +736,7 @@ public class LogicEditorActivity extends BaseAppCompatActivity implements View.O
         binding.recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         ArrayList<String> images = jC.d(scId).m();
-        images.addAll(new XmlToSvgConverter().getVectorDrawables(DesignActivity.sc_id));
+        images.addAll(new VectorDrawableLoader().getVectorDrawables(DesignActivity.sc_id));
         if (selectingImage) {
             images.add(0, "default_image");
         } else if (selectingBackgroundImage) {
@@ -1947,6 +1957,8 @@ public class LogicEditorActivity extends BaseAppCompatActivity implements View.O
         O = findViewById(R.id.right_drawer);
         findViewById(R.id.search_header).setOnClickListener(v -> paletteSelector.showSearchDialog());
         extraPaletteBlock = new ExtraPaletteBlock(this, isViewBindingEnabled);
+
+        svgUtils = new SvgUtils(this);
     }
 
     @Override
