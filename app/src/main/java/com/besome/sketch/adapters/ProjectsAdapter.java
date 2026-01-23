@@ -277,7 +277,8 @@ public class ProjectsAdapter extends RecyclerView.Adapter<ProjectsAdapter.Projec
         BottomSheetProjectOptionsBinding binding = BottomSheetProjectOptionsBinding.inflate(LayoutInflater.from(activity));
         projectOptionsBSD.setContentView(binding.getRoot());
 
-        binding.title.setText(binding.title.getText().toString() + yB.c(projectMap, "my_ws_name"));
+        binding.title.setText(yB.c(projectMap, "my_ws_name"));
+        binding.id.setText(yB.c(projectMap, "sc_id"));
 
         binding.pinProject.setOnClickListener(v -> {
             changePinState(projectMap);
