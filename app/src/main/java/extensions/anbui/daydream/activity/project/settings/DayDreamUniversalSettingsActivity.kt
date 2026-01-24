@@ -37,10 +37,21 @@ class DayDreamUniversalSettingsActivity : AppCompatActivity() {
 
 
     fun initialize() {
-        binding.swBackuptool.setChecked(DRSettings.getUseBackupTool(this))
+        DRSettings.getUseBackupTool(this) { isUse ->
+            binding.swBackuptool.setChecked(isUse)
+        }
+        DRSettings.getAutoCleanUpAfterBuild(this) { isClean ->
+            binding.swAutocleanafterbuild.setChecked(isClean);
+        }
+
         binding.swBackuptool.setOnCheckedChangeListener { _, isChecked ->
             DRSettings.setUseBackupTool(this, isChecked)
         }
         binding.lnBackuptool.setOnClickListener { _ -> binding.swBackuptool.toggle() }
+
+        binding.swAutocleanafterbuild.setOnCheckedChangeListener { _, isChecked ->
+            DRSettings.setAutoCleanUpAfterBuild(this, isChecked)
+        }
+        binding.lnAutocleanafterbuild.setOnClickListener { _ -> binding.swAutocleanafterbuild.toggle() }
     }
 }

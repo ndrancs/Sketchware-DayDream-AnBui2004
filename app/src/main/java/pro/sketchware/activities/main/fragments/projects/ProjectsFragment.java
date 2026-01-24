@@ -42,6 +42,9 @@ import a.a.a.DA;
 import a.a.a.DB;
 import a.a.a.lC;
 import dev.chrisbanes.insetter.Insetter;
+import extensions.anbui.daydream.activity.project.git.GitCloneActivity;
+import extensions.anbui.daydream.library.LibraryUtils;
+import extensions.anbui.daydream.project.RestoreProject;
 import mod.hey.studios.project.ProjectTracker;
 import mod.hey.studios.project.backup.BackupRestoreManager;
 import pro.sketchware.R;
@@ -50,6 +53,7 @@ import pro.sketchware.databinding.MyprojectsBinding;
 import pro.sketchware.databinding.SortProjectDialogBinding;
 import pro.sketchware.utility.UI;
 
+//DR
 public class ProjectsFragment extends DA {
     private final ExecutorService executorService = Executors.newSingleThreadExecutor();
     private final List<HashMap<String, Object>> projectsList = new ArrayList<>();
@@ -166,7 +170,15 @@ public class ProjectsFragment extends DA {
         });
 
         binding.iconSort.setOnClickListener(v -> showProjectSortingDialog());
-        binding.specialAction.getRoot().setOnClickListener(v -> restoreProject());
+        binding.specialAction.projectOne.setOnClickListener(v -> restoreProject());
+
+        if (LibraryUtils.isAllowUseGit()) {
+            binding.specialAction.projectRestoregit.setOnClickListener(v -> startActivity(new Intent(requireContext(), GitCloneActivity.class)));
+        } else {
+            binding.specialAction.cvProjectrestoregit.setVisibility(View.GONE);
+        }
+
+        RestoreProject.setupDropFileTo(getActivity(), binding.specialAction.getRoot());
 
         menuProvider = new MenuProvider() {
             @Override

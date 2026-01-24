@@ -291,13 +291,16 @@ public class ProjectsAdapter extends RecyclerView.Adapter<ProjectsAdapter.Projec
         });
 
         binding.projectBackup.setOnClickListener(v -> {
-            if (DRSettings.getUseBackupTool(activity)) {
-                Intent intent = new Intent(activity, DayDreamBackupTool.class);
-                intent.putExtra("sc_id", yB.c(projectMap, "sc_id"));
-                activity.startActivity(intent);
-            } else {
-                backupProject(projectMap);
-            }
+            DRSettings.getUseBackupTool(activity, isUse -> {
+                if (isUse) {
+                    Intent intent = new Intent(activity, DayDreamBackupTool.class);
+                    intent.putExtra("sc_id", yB.c(projectMap, "sc_id"));
+                    activity.startActivity(intent);
+                } else {
+                    backupProject(projectMap);
+                }
+            });
+
             projectOptionsBSD.dismiss();
         });
 

@@ -195,4 +195,8 @@ public class FilesTools {
         File file = new File(path);
         return file.getName();
     }
+
+    public static File[] getFilesList(String path) {
+        return new File(path).listFiles();
+    }
 }

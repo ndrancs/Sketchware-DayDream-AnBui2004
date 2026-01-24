@@ -100,6 +100,7 @@ import extensions.anbui.daydream.activity.project.git.DayDreamGitActionsActivity
 import extensions.anbui.daydream.git.DayDreamGitTools;
 import extensions.anbui.daydream.git.GitQuickLook;
 import extensions.anbui.daydream.project.DRProjectTracker;
+import extensions.anbui.daydream.settings.DRSettings;
 import extensions.anbui.daydream.tools.project.CleanUpCore;
 import mod.agus.jcoderz.editor.manage.permission.ManagePermissionActivity;
 import mod.agus.jcoderz.editor.manage.resource.ManageResourceActivity;
@@ -1335,6 +1336,7 @@ public class DesignActivity extends BaseAppCompatActivity implements View.OnClic
                 isCanceling = false;
                 isBuilding = false;
                 activity.runOnUiThread(this::onPostExecute);
+                DRSettings.getAutoCleanUpAfterBuild(activity, isClean -> new Thread(() -> CleanUpCore.cleanUpAfterBuildInDesign(sc_id)).start());
             }
         }
 
