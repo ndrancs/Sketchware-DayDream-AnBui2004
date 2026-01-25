@@ -49,6 +49,7 @@ import pro.sketchware.databinding.DialogSelectApkToSignBinding;
 import pro.sketchware.utility.FileUtil;
 import pro.sketchware.utility.SketchwareUtil;
 
+//DR
 public class AppSettings extends BaseAppCompatActivity {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -58,7 +59,7 @@ public class AppSettings extends BaseAppCompatActivity {
         setContentView(binding.getRoot());
 
         {
-            View view = binding.appBarLayout;
+            View view = binding.main;
             int left = view.getPaddingLeft();
             int top = view.getPaddingTop();
             int right = view.getPaddingRight();
@@ -66,7 +67,7 @@ public class AppSettings extends BaseAppCompatActivity {
 
             ViewCompat.setOnApplyWindowInsetsListener(view, (v, i) -> {
                 Insets insets = i.getInsets(WindowInsetsCompat.Type.systemBars() | WindowInsetsCompat.Type.displayCutout());
-                v.setPadding(left + insets.left, top + insets.top, right + insets.right, bottom + insets.bottom);
+                v.setPadding(left + insets.left, top, right + insets.right, bottom);
                 return i;
             });
         }
