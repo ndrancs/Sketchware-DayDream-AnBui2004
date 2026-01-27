@@ -100,7 +100,7 @@
         android:layout_height="36dp"
         android:background="?attr/selectableItemBackgroundBorderless"
         android:scaleType="centerInside"
-        android:src="@drawable/selector_ic_expand_more_24"
+        android:src="@drawable/ic_mtrl_more_vertical"
         app:tint="?attr/colorControlNormal" />
 
 </LinearLayout>

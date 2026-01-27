@@ -190,6 +190,15 @@ public class ProjectsFragment extends DA {
                         @Override
                         public boolean onQueryTextChange(String s) {
                             projectsAdapter.filterData(s);
+
+                            if (s.isEmpty()) {
+                                binding.specialActionContainer.setVisibility(View.VISIBLE);
+                                binding.titleContainer.setVisibility(View.VISIBLE);
+                            } else {
+                                binding.specialActionContainer.setVisibility(View.GONE);
+                                binding.titleContainer.setVisibility(View.GONE);
+                            }
+
                             return false;
                         }
 
