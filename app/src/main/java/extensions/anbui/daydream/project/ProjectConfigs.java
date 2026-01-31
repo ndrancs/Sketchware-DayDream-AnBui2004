@@ -23,7 +23,7 @@ public class ProjectConfigs {
         if (minsdk24) {
             finalresult += "\"min_sdk\":\"24\"";
         } else {
-            finalresult += "\"min_sdk\":\"21\"";
+            finalresult += "\"min_sdk\":\"23\"";
         }
         if (enableViewBinding) {
             finalresult += ",\"enable_viewbinding\":\"true\"";
