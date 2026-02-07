@@ -100,6 +100,7 @@ import extensions.anbui.daydream.activity.project.git.DayDreamGitActionsActivity
 import extensions.anbui.daydream.git.DayDreamGitTools;
 import extensions.anbui.daydream.git.GitQuickLook;
 import extensions.anbui.daydream.project.DRProjectTracker;
+import extensions.anbui.daydream.settings.DRSettings;
 import extensions.anbui.daydream.tools.project.CleanUpCore;
 import mod.agus.jcoderz.editor.manage.permission.ManagePermissionActivity;
 import mod.agus.jcoderz.editor.manage.resource.ManageResourceActivity;
@@ -596,6 +597,7 @@ public class DesignActivity extends BaseAppCompatActivity implements View.OnClic
                 }
                 refresh();
                 currentTabNumber = position;
+                invalidateOptionsMenu();
             }
         });
         viewPager.getAdapter().notifyDataSetChanged();
@@ -639,6 +641,10 @@ public class DesignActivity extends BaseAppCompatActivity implements View.OnClic
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.design_menu, menu);
+        MenuItem searchItem = menu.findItem(R.id.design_option_menu_search);
+        if (searchItem != null) {
+            searchItem.setVisible(currentTabNumber == 1);
+        }
         return true;
     }
 
@@ -651,6 +657,11 @@ public class DesignActivity extends BaseAppCompatActivity implements View.OnClic
             }
         } else if (itemId == R.id.design_option_menu_title_save_project) {
             saveProject();
+        } else if (itemId == R.id.design_option_menu_search) {
+            if (eventTabAdapter != null) {
+                eventTabAdapter.toggleSearchBar();
+            }
+            return true;
         }
 
         return super.onOptionsItemSelected(item);
@@ -1325,6 +1336,7 @@ public class DesignActivity extends BaseAppCompatActivity implements View.OnClic
                 isCanceling = false;
                 isBuilding = false;
                 activity.runOnUiThread(this::onPostExecute);
+                DRSettings.getAutoCleanUpAfterBuild(activity, isClean -> new Thread(() -> CleanUpCore.cleanUpAfterBuildInDesign(sc_id)).start());
             }
         }
 

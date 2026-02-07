@@ -10,6 +10,7 @@ import android.net.Uri;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
+import android.view.ViewParent;
 
 import androidx.annotation.IdRes;
 import androidx.annotation.NonNull;
@@ -31,6 +32,7 @@ import pro.sketchware.R;
 import pro.sketchware.activities.about.AboutActivity;
 import pro.sketchware.utility.UI;
 
+//DR
 public class MainDrawer extends NavigationView {
     private static final int DEF_STYLE_RES = R.style.Widget_SketchwarePro_NavigationView_Main;
 
@@ -62,6 +64,7 @@ public class MainDrawer extends NavigationView {
             initializeSocialLinks(item.getItemId());
             initializeDrawerItems(item.getItemId());
 
+            close();
             // Return false to prevent selection
             return false;
         });
@@ -130,5 +133,17 @@ public class MainDrawer extends NavigationView {
         }
 
         return (Activity) context;
+    }
+
+    private void close() {
+        ViewParent parent = getParent();
+        while (parent != null) {
+            if (parent instanceof androidx.drawerlayout.widget.DrawerLayout) {
+                ((androidx.drawerlayout.widget.DrawerLayout) parent)
+                        .closeDrawer(this);
+                return;
+            }
+            parent = parent.getParent();
+        }
     }
 }

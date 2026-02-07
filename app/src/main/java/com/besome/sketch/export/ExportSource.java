@@ -18,6 +18,8 @@ import a.a.a.xq;
 import a.a.a.yB;
 import a.a.a.yq;
 import extensions.anbui.daydream.project.DRProjectTracker;
+import extensions.anbui.daydream.settings.DRSettings;
+import extensions.anbui.daydream.tools.project.CleanUpCore;
 import pro.sketchware.utility.FileUtil;
 
 public class ExportSource {
@@ -76,6 +78,8 @@ public class ExportSource {
             /* It makes no sense that those methods aren't static */
 
             updateStatus(statusTextView, "Exported source code for Android Studio.");
+
+            DRSettings.getAutoCleanUpAfterBuild(activity, isClean -> new Thread(() -> CleanUpCore.removeTemporaryFiles(sc_id)).start());
 
             return true;
         } catch (Exception e) {

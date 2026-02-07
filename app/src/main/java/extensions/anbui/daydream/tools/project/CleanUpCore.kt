@@ -26,6 +26,23 @@ object CleanUpCore {
     }
 
     @JvmStatic
+    fun cleanUpAfterBuildInDesign(projectID: String?) {
+        for (f in FilesTools.getFilesList(FileUtils.getInternalStorageDir() + Configs.projectMySourceFolderDir + projectID).orEmpty()) {
+            if (!f.name.equals("bin")) {
+                FilesTools.deleteFileOrDirectory(Path.of(f.absolutePath))
+            }
+        }
+
+        if (FileUtils.isFileExist(FileUtils.getInternalStorageDir() + Configs.projectMySourceFolderDir + projectID + "/bin")) {
+            for (f in FilesTools.getFilesList(FileUtils.getInternalStorageDir() + Configs.projectMySourceFolderDir + projectID + "/bin").orEmpty()) {
+                if (!f.name.endsWith(".apk")) {
+                    FilesTools.deleteFileOrDirectory(Path.of(f.absolutePath))
+                }
+            }
+        }
+    }
+
+    @JvmStatic
     fun cleanAfterExitDesign(projectID: String?): Boolean {
         try {
             FilesTools.deleteFileOrDirectory(Path.of(ToolCore.getTempImageFilePath(projectID)))

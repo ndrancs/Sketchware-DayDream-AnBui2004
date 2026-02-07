@@ -39,7 +39,7 @@ public class BuiltInLibraries {
     public static String ANDROIDX_COLLECTION_JVM = "collection-jvm-1.5.0";
     public static String ANDROIDX_CONCURRENT_CONCURRENT_FUTURES_KTX = "concurrent-futures-ktx-1.3.0";
     public static String ANDROIDX_CONCURRENT_FUTURES = "concurrent-futures-1.3.0";
-    public static String ANDROIDX_CONSTRAINTLAYOUT = "constraintlayout-2.1.2";
+    public static String ANDROIDX_CONSTRAINTLAYOUT = "constraintlayout-2.2.1";
     public static String ANDROIDX_CONSTRAINTLAYOUT_CORE = "constraintlayout-core-1.1.1";
     public static String ANDROIDX_COORDINATORLAYOUT = "coordinatorlayout-1.1.0";
     public static String ANDROIDX_CORE = "core-1.17.0";
@@ -180,7 +180,7 @@ public class BuiltInLibraries {
 //    public static String KTOR_WEBSOCKETS_JVM = "ktor-websockets-jvm-3.0.1";
 //    public static String KTOR_WEBSOCKETS_SERIALIZATION_JVM = "ktor-websocket-serialization-jvm-3.0.1";
     public static String LOTTIE = "lottie-3.4.0";
-    public static String MATERIAL = "material-1.14.0-alpha08";
+    public static String MATERIAL = "material-1.14.0-alpha09";
     public static String OKHTTP = "okhttp-4.12.0";
     public static String OKIO = "okio-1.17.6";
     public static String OKIO_JVM = "okio-jvm-3.6.0";

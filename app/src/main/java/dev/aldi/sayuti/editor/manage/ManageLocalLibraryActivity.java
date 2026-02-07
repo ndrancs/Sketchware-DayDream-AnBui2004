@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.graphics.Insets;
@@ -29,7 +30,6 @@ import com.google.gson.Gson;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -46,6 +46,7 @@ import pro.sketchware.databinding.ViewItemLocalLibBinding;
 import pro.sketchware.databinding.ViewItemLocalLibSearchBinding;
 import pro.sketchware.utility.SketchwareUtil;
 
+//DR
 public class ManageLocalLibraryActivity extends BaseAppCompatActivity {
     private final LibraryAdapter adapter = new LibraryAdapter();
     private final SearchAdapter searchAdapter = new SearchAdapter();
@@ -156,7 +157,7 @@ public class ManageLocalLibraryActivity extends BaseAppCompatActivity {
 
         binding.searchBar.setNavigationOnClickListener(v -> {
             if (!mB.a()) {
-                onBackPressed();
+                getOnBackPressedDispatcher().onBackPressed();
             }
         });
 
@@ -218,6 +219,19 @@ public class ManageLocalLibraryActivity extends BaseAppCompatActivity {
         });
 
         runLoadLocalLibrariesTask();
+
+        getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                if (searchBarExpanded) {
+                    hideContextualToolbarAndClearSelection();
+                } else if (binding.searchView.isShowing()) {
+                    binding.searchView.hide();
+                } else {
+                    finish();
+                }
+            }
+        });
     }
 
     private void runLoadLocalLibrariesTask() {
@@ -263,17 +277,6 @@ public class ManageLocalLibraryActivity extends BaseAppCompatActivity {
         return count;
     }
 
-    @Override
-    public void onBackPressed() {
-        if (searchBarExpanded) {
-            hideContextualToolbarAndClearSelection();
-        } else if (binding.searchView.isShowing()) {
-            binding.searchView.hide();
-        } else {
-            super.onBackPressed();
-        }
-    }
-
     // This method is running from the background thread.
     // So, every UI operation must be called inside `runOnUiThread`.
     private void loadLibraries() {
@@ -282,7 +285,12 @@ public class ManageLocalLibraryActivity extends BaseAppCompatActivity {
             projectUsedLibs = getLocalLibraries(scId);
         }
 
-        localLibraries.sort(Comparator.comparing(lib -> !isUsedLibrary(lib.getName())));
+        //This code helps in sorting the list of local libraries to display enabled libraries first.
+        localLibraries.sort((lib1, lib2) -> {
+            boolean isEnabled1 = isUsedLibrary(lib1.getName());
+            boolean isEnabled2 = isUsedLibrary(lib2.getName());
+            return Boolean.compare(isEnabled2, isEnabled1);
+        });
 
         runOnUiThread(() -> {
             adapter.setLocalLibraries(localLibraries);
@@ -293,7 +301,7 @@ public class ManageLocalLibraryActivity extends BaseAppCompatActivity {
     private boolean isUsedLibrary(String libraryName) {
         if (!notAssociatedWithProject) {
             for (Map<String, Object> libraryMap : projectUsedLibs) {
-                if (libraryName.equals(libraryMap.get("name").toString())) {
+                if (libraryName.equals(Objects.requireNonNull(libraryMap.get("name")).toString())) {
                     return true;
                 }
             }
@@ -379,7 +387,7 @@ public class ManageLocalLibraryActivity extends BaseAppCompatActivity {
                 binding.materialSwitch.setOnClickListener(v -> onItemClicked(binding, library.getName()));
 
                 for (Map<String, Object> libraryMap : projectUsedLibs) {
-                    if (library.getName().equals(libraryMap.get("name").toString())) {
+                    if (library.getName().equals(Objects.requireNonNull(libraryMap.get("name")).toString())) {
                         binding.materialSwitch.setChecked(true);
                     }
                 }
@@ -429,7 +437,7 @@ public class ManageLocalLibraryActivity extends BaseAppCompatActivity {
                 int indexToRemove = -1;
                 for (int i = 0; i < projectUsedLibs.size(); i++) {
                     Map<String, Object> libraryMap = projectUsedLibs.get(i);
-                    if (name.equals(libraryMap.get("name").toString())) {
+                    if (name.equals(Objects.requireNonNull(libraryMap.get("name")).toString())) {
                         indexToRemove = i;
                         break;
                     }
@@ -442,7 +450,7 @@ public class ManageLocalLibraryActivity extends BaseAppCompatActivity {
                 // Here, we need to find the dependency string if it exists
                 String dependency = null;
                 for (Map<String, Object> libraryMap : projectUsedLibs) {
-                    if (name.equals(libraryMap.get("name").toString())) {
+                    if (name.equals(Objects.requireNonNull(libraryMap.get("name")).toString())) {
                         dependency = (String) libraryMap.get("dependency");
                         break;
                     }
@@ -503,7 +511,7 @@ public class ManageLocalLibraryActivity extends BaseAppCompatActivity {
                 });
 
                 for (Map<String, Object> libraryMap : projectUsedLibs) {
-                    if (library.getName().equals(libraryMap.get("name").toString())) {
+                    if (library.getName().equals(Objects.requireNonNull(libraryMap.get("name")).toString())) {
                         binding.materialSwitch.setChecked(true);
                     }
                 }
@@ -524,7 +532,7 @@ public class ManageLocalLibraryActivity extends BaseAppCompatActivity {
                 int indexToRemove = -1;
                 for (int i = 0; i < projectUsedLibs.size(); i++) {
                     Map<String, Object> libraryMap = projectUsedLibs.get(i);
-                    if (name.equals(libraryMap.get("name").toString())) {
+                    if (name.equals(Objects.requireNonNull(libraryMap.get("name")).toString())) {
                         indexToRemove = i;
                         break;
                     }
@@ -537,7 +545,7 @@ public class ManageLocalLibraryActivity extends BaseAppCompatActivity {
                 // Here, we need to find the dependency string if it exists
                 String dependency = null;
                 for (Map<String, Object> libraryMap : projectUsedLibs) {
-                    if (name.equals(libraryMap.get("name").toString())) {
+                    if (name.equals(Objects.requireNonNull(libraryMap.get("name")).toString())) {
                         dependency = (String) libraryMap.get("dependency");
                         break;
                     }
@@ -559,8 +567,12 @@ public class ManageLocalLibraryActivity extends BaseAppCompatActivity {
                     }
                 }
             }
-
-            filteredLocalLibraries.sort(Comparator.comparing(lib -> !isUsedLibrary(lib.getName())));
+            // Sorts the filtered search results to ensure enabled libraries still appear at the top.
+            filteredLocalLibraries.sort((lib1, lib2) -> {
+                boolean isEnabled1 = isUsedLibrary(lib1.getName());
+                boolean isEnabled2 = isUsedLibrary(lib2.getName());
+                return Boolean.compare(isEnabled2, isEnabled1);
+            });
 
             notifyDataSetChanged();
         }

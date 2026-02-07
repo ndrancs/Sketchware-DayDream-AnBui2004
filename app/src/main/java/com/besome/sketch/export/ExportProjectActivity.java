@@ -53,6 +53,8 @@ import extensions.anbui.daydream.configs.Configs;
 import extensions.anbui.daydream.fragment.FragmentUtils;
 import extensions.anbui.daydream.library.DRFeatureManager;
 import extensions.anbui.daydream.project.DRProjectTracker;
+import extensions.anbui.daydream.settings.DRSettings;
+import extensions.anbui.daydream.tools.project.CleanUpCore;
 import kellinwood.security.zipsigner.ZipSigner;
 import kellinwood.security.zipsigner.optional.CustomKeySigner;
 import kellinwood.security.zipsigner.optional.LoadKeystoreException;
@@ -1025,6 +1027,7 @@ public class ExportProjectActivity extends BaseAppCompatActivity {
                 cancel(true);
             } finally {
                 Configs.isBuilding = false;
+                DRSettings.getAutoCleanUpAfterBuild(a.getApplicationContext(), isClean -> new Thread(() -> CleanUpCore.removeTemporaryFiles(sc_id)).start());
             }
         }
 
@@ -1350,6 +1353,7 @@ public class ExportProjectActivity extends BaseAppCompatActivity {
             });
         } finally {
             Configs.isBuilding = false;
+            DRSettings.getAutoCleanUpAfterBuild(this, isClean -> new Thread(() -> CleanUpCore.removeTemporaryFiles(sc_id)).start());
         }
     }
 
