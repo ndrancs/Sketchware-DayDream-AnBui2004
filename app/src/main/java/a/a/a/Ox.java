@@ -33,6 +33,7 @@ import java.util.regex.Pattern;
 import dev.aldi.sayuti.editor.injection.AppCompatInjection;
 import extensions.anbui.daydream.configs.Configs;
 import extensions.anbui.daydream.settings.DayDreamProjectSettings;
+import extensions.anbui.daydream.xml.DRXmlLayoutCreator;
 import mod.agus.jcoderz.beans.ViewBeans;
 import mod.jbk.util.LogUtil;
 import pro.sketchware.managers.inject.InjectRootLayoutManager;
@@ -67,6 +68,9 @@ public class Ox {
         } else {
             return String.format("#%08X", color);
         }
+        /*} else {
+            return String.format("#%06X", 0xFFFFFF & color);
+        }*/
     }
 
     /**
@@ -356,7 +360,11 @@ public class Ox {
             if (type == ViewBeans.VIEW_TYPE_LAYOUT_CARDVIEW) {
                 writeCardViewPadding(widgetTag, viewBean);
             } else {
-                writeViewPadding(widgetTag, viewBean);
+                if (DayDreamProjectSettings.getAdvancedPadding(buildConfig.sc_id)) {
+                    DRXmlLayoutCreator.addPadding(widgetTag, viewBean, readAttributesToReplace(viewBean));
+                } else {
+                    writeViewPadding(widgetTag, viewBean);
+                }
             }
             writeBackgroundResource(widgetTag, viewBean);
             if (viewBean.getClassInfo().a("ViewGroup")) {

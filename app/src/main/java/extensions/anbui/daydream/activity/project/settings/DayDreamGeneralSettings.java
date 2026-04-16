@@ -2,6 +2,7 @@ package extensions.anbui.daydream.activity.project.settings;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.activity.EdgeToEdge;
@@ -18,6 +19,15 @@ public class DayDreamGeneralSettings extends AppCompatActivity {
 
     private String projectID;
     private ActivityDaydreamGeneralSettingsBinding binding;
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            getOnBackPressedDispatcher().onBackPressed();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +63,7 @@ public class DayDreamGeneralSettings extends AppCompatActivity {
         binding.lnPermissionsettings.setOnClickListener(v -> goToSettings(PermissionSettings.class));
         binding.lnGooglesettings.setOnClickListener(v -> goToSettings(GoogleSettings.class));
         binding.lnBackup.setOnClickListener(v -> goToSettings(DayDreamBackupTool.class));
+        binding.lnLayoutsettings.setOnClickListener(v -> goToSettings(LayoutSettings.class));
 
         if (LibraryUtils.isAllowUseTheme(projectID)) {
             binding.lnThemesettings.setOnClickListener(v -> goToSettings(ThemeSettings.class));
@@ -77,6 +88,7 @@ public class DayDreamGeneralSettings extends AppCompatActivity {
         binding.lnPermissionsettings.setEnabled(isEnable);
         binding.lnSecuritysettings.setEnabled(isEnable);
         binding.lnBackup.setEnabled(isEnable);
+        binding.lnLayoutsettings.setEnabled(isEnable);
     }
 
     private void goToSettings(Class<?> cls) {

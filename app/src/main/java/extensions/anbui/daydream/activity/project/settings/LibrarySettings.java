@@ -2,6 +2,7 @@ package extensions.anbui.daydream.activity.project.settings;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,6 +24,15 @@ public class LibrarySettings extends AppCompatActivity {
 
     private String projectID;
     private ActivityDaydreamLibrarySettingsBinding binding;
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            getOnBackPressedDispatcher().onBackPressed();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +61,7 @@ public class LibrarySettings extends AppCompatActivity {
         binding.swUseshizuku.setChecked(DayDreamProjectSettings.isUseShizuku(projectID));
         binding.swGlidetransformations.setChecked(DayDreamProjectSettings.isGlideTransformations(projectID));
         binding.swUseandroidbilling.setChecked(DayDreamProjectSettings.isUseAndroidBilling(projectID));
+        binding.swUseretrofit2.setChecked(DayDreamProjectSettings.isUseRetrofit2(projectID));
 
         binding.swUsemedia3.setChecked((DayDreamProjectSettings.isUniversalUseMedia3(projectID)));
         binding.swUsemedia3.setOnCheckedChangeListener((buttonView, isChecked) -> DayDreamProjectSettings.setUniversalUseMedia3(projectID, isChecked));
@@ -59,6 +70,7 @@ public class LibrarySettings extends AppCompatActivity {
         binding.swUseshizuku.setOnCheckedChangeListener((buttonView, isChecked) -> DayDreamProjectSettings.setUseShizuku(projectID, isChecked));
         binding.swGlidetransformations.setOnCheckedChangeListener((buttonView, isChecked) -> DayDreamProjectSettings.setGlideTransformations(projectID, isChecked));
         binding.swUseandroidbilling.setOnCheckedChangeListener((buttonView, isChecked) -> DayDreamProjectSettings.setUseAndroidBilling(projectID, isChecked));
+        binding.swUseretrofit2.setOnCheckedChangeListener((buttonView, isChecked) -> DayDreamProjectSettings.setUseRetrofit2(projectID, isChecked));
 
         binding.lnForceaddworkmanager.setOnClickListener(v -> binding.swForceaddworkmanager.toggle());
         binding.lnUsemedia3.setOnClickListener(v -> binding.swUsemedia3.toggle());
@@ -67,6 +79,7 @@ public class LibrarySettings extends AppCompatActivity {
         binding.lnUseshizuku.setOnClickListener(v -> binding.swUseshizuku.toggle());
         binding.lnGlidetransformations.setOnClickListener(v -> binding.swGlidetransformations.toggle());
         binding.lnUseandroidbilling.setOnClickListener(v -> binding.swUseandroidbilling.toggle());
+        binding.lnUseretrofit2.setOnClickListener(v -> binding.swUseretrofit2.toggle());
         binding.lnUseonesignal.setOnClickListener(v -> goToSettings(OneSignalSettingsActivity.class));
 
 
